@@ -1,17 +1,6 @@
-// import logo from './logo.svg';
 import './App.css';
-
-const Header = () => {
-    return (
-        <div className="header">Header</div>
-    );
-}
-
-const Technology = () => {
-    return (
-        <div className="technology">Technology</div>
-    );
-}
+import Header from "./header/header.js";
+import Technology from "./technology/technology.js";
 
 const App = () => {
   return (

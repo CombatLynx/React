@@ -1,14 +1,21 @@
+import React, { Component } from "react";
 import './App.css';
-import Header from "./header/header.js";
-import Technology from "./technology/technology.js";
+import Header from "./components/Header";
+import Navbar from "./components/Navbar";
+import Content from "./components/Content";
 
-const App = () => {
-  return (
-      <div>
-          <Header/>
-          <Technology/>
-      </div>
-  );
+class App extends Component {
+    render() {
+        return (
+            <div className="app-wrapper">
+                <div className="app-wrapper__container">
+                    <Header></Header>
+                    <Navbar></Navbar>
+                    <Content></Content>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;

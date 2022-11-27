@@ -1,14 +1,17 @@
 import React, { Component } from "react";
+import classes from "./Navbar.module.css";
 
 class Navbar extends Component {
   render() {
     return (
-        <nav className="nav">
-          <div><a>Profile</a></div>
-          <div><a>Messages</a></div>
-          <div><a>News</a></div>
-          <div><a>Music</a></div>
-          <div><a>Settings</a></div>
+        <nav className={classes.nav}>
+            <ul className={classes["nav-menu"]}>
+                <li className={classes["nav-menu__item"]}><a href="#">Profile</a></li>
+                <li className={classes["nav-menu__item"]}><a href="#">Messages</a></li>
+                <li className={classes["nav-menu__item"]}><a href="#">News</a></li>
+                <li className={classes["nav-menu__item"]}><a href="#">Music</a></li>
+                <li className={classes["nav-menu__item"]}><a href="#">Settings</a></li>
+            </ul>
         </nav>
     );
   }

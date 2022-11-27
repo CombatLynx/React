@@ -1,0 +1,10 @@
+.post__item {
+    background: yellow;
+    display: flex;
+}
+
+.post__item img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}

@@ -1,0 +1,11 @@
+.nav {
+    grid-area: n;
+    background: red;
+}
+
+.nav-menu {
+    list-style-type: none;
+}
+
+.nav-menu__item {
+}

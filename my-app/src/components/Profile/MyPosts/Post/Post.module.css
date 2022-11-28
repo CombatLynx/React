@@ -1,10 +1,18 @@
-.post__item {
+.post-item {
     background: yellow;
-    display: flex;
 }
 
-.post__item img {
+.post-item img {
     width: 30px;
     height: 30px;
     object-fit: cover;
+}
+
+.post-item__header {
+}
+
+.post-item__main {
+}
+
+.post-item__likes {
 }

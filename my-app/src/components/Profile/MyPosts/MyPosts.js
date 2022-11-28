@@ -1,15 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import Post from "./Post";
 import classes from "./MyPosts.module.css";
 
-class MyPosts extends Component {
-  render() {
+const MyPosts = () => {
     return (
         <div className={classes.posts}>
-            <Post></Post>
+            <Post message="Hi"></Post>
+            <Post message="It is my first post"></Post>
         </div>
     );
-  }
 }
 
 export default MyPosts;

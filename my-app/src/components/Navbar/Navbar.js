@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import classes from "./Navbar.module.css";
 
-class Navbar extends Component {
-  render() {
+const Navbar = () => {
     return (
         <nav className={classes.nav}>
             <ul className={classes["nav-menu"]}>
@@ -14,7 +13,6 @@ class Navbar extends Component {
             </ul>
         </nav>
     );
-  }
 }
 
 export default Navbar;

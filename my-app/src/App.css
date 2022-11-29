@@ -19,7 +19,7 @@
 
 .app-wrapper__container__content {
     grid-area: c;
-    background: gray;
+    background: pink;
 }
 
 .app-wrapper__container__content img {

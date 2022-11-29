@@ -1,11 +1,21 @@
 .nav {
     grid-area: n;
-    background: red;
+    background: gray;
 }
 
 .nav-menu {
     list-style-type: none;
 }
 
-.nav-menu__item {
+.nav-menu__item a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu__item a:hover {
+    color: rgb(255, 255, 0, 0.5);
+}
+
+.nav-menu__item a.active {
+    color: gold;
 }

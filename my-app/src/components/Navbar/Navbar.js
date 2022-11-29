@@ -5,8 +5,8 @@ const Navbar = () => {
     return (
         <nav className={classes.nav}>
             <ul className={classes["nav-menu"]}>
-                <li className={classes["nav-menu__item"]}><a href="#">Profile</a></li>
-                <li className={classes["nav-menu__item"]}><a href="#">Messages</a></li>
+                <li className={classes["nav-menu__item"]}><a href="/profile">Profile</a></li>
+                <li className={classes["nav-menu__item"]}><a href="/dialogs">Messages</a></li>
                 <li className={classes["nav-menu__item"]}><a href="#">News</a></li>
                 <li className={classes["nav-menu__item"]}><a href="#">Music</a></li>
                 <li className={classes["nav-menu__item"]}><a href="#">Settings</a></li>

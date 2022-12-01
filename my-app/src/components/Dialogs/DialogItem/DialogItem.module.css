@@ -1,0 +1,7 @@
+.dialogs-items__element {
+
+}
+
+.dialogs-items__element a.active {
+    color: gold;
+}

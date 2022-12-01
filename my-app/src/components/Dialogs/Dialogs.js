@@ -1,36 +1,33 @@
 import React from "react";
 import classes from "./Dialogs.module.css";
-import {NavLink} from "react-router-dom";
+import DialogItem from "./DialogItem";
+import DialogMessage from "./DialogMessage";
+import dataPerson from "../../dataPerson.json";
+import dataMessage from "../../dataMessage.json";
 
-const setActive = ({ isActive }) => (isActive ? classes.active: '');
+const Dialogs = () => {
 
-const Dialogs = (props) => {
+    let dataPersons = dataPerson.map(
+        (dialogElement) => {
+            return <DialogItem name={dialogElement.name} id={dialogElement.id}></DialogItem>
+        }
+    );
+
+    let dataMessages = dataMessage.map(
+        (messageElement) => {
+            return <DialogMessage message={messageElement.message}></DialogMessage>
+        }
+    );
+
     return (
-      <div className={classes.dialogs}>
-          <div className={classes["dialogs-items"]}>
-              <div className={classes["dialogs-items__element"]}>
-                  <NavLink className={setActive} to="/dialogs/1">Misha1</NavLink>
-              </div>
-              <div className={classes["dialogs-items__element"]}>
-                  <NavLink className={setActive} to="/dialogs/2">Misha2</NavLink>
-              </div>
-              <div className={classes["dialogs-items__element"]}>
-                  <NavLink className={setActive} to="/dialogs/3">Misha3</NavLink>
-              </div>
-              <div className={classes["dialogs-items__element"]}>
-                  <NavLink className={setActive} to="/dialogs/4">Misha4</NavLink>
-              </div>
-              <div className={classes["dialogs-items__element"]}>
-                  <NavLink className={setActive} to="/dialogs/5">Misha5</NavLink>
-              </div>
-          </div>
-          <div className={classes["dialogs-messages"]}>
-              <NavLink to="/" className={classes["dialogs-messages__element"]}>6</NavLink>
-              <NavLink to="/" className={classes["dialogs-messages__element"]}>7</NavLink>
-              <NavLink to="/" className={classes["dialogs-messages__element"]}>8</NavLink>
-              <NavLink to="/" className={classes["dialogs-messages__element"]}>9</NavLink>
-          </div>
-      </div>
+        <div className={classes.dialogs}>
+            <div className={classes["dialogs-items"]}>
+                {dataPersons}
+            </div>
+            <div className={classes["dialogs-messages"]}>
+                {dataMessages}
+            </div>
+        </div>
     );
 }
 

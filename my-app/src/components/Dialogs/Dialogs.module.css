@@ -6,15 +6,3 @@
 .dialogs-items {
     /*display: grid;*/
 }
-
-.dialogs-items__element {
-
-}
-
-.dialogs-items__element a.active {
-    color: gold;
-}
-
-.dialogs-messages {
-    display: grid;
-}

@@ -2,18 +2,16 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem";
 import DialogMessage from "./DialogMessage";
-import dataPerson from "../../dataPerson.json";
-import dataMessage from "../../dataMessage.json";
 
-const Dialogs = () => {
+const Dialogs = (props) => {
 
-    let dataPersons = dataPerson.map(
+    let dataPersons = props.dataPerson.map(
         (dialogElement) => {
             return <DialogItem name={dialogElement.name} id={dialogElement.id}></DialogItem>
         }
     );
 
-    let dataMessages = dataMessage.map(
+    let dataMessages = props.dataMessage.map(
         (messageElement) => {
             return <DialogMessage message={messageElement.message}></DialogMessage>
         }

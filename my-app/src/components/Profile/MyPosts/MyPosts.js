@@ -1,11 +1,10 @@
 import React from "react";
 import Post from "./Post";
 import classes from "./MyPosts.module.css";
-import dataPost from "../../../dataPost.json"
 
-const MyPosts = () => {
+const MyPosts = (props) => {
 
-    let dataPosts = dataPost.map(
+    let dataPosts = props.dataPost.map(
         (dataElement) => {
             return <Post message={dataElement.message} countLikes={dataElement.countLikes}></Post>
         }

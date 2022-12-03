@@ -10,12 +10,11 @@ import Music from "./components/Music";
 import Settings from "./components/Settings";
 
 const App = (props) => {
-    debugger;
     return (
         <div className="app-wrapper">
             <div className="app-wrapper__container">
                 <Header/>
-                <Navbar/>
+                <Navbar dataNavbar={props.appState.sidebar}/>
                 <div className="app-wrapper__container__content">
                     <Routes>
                         <Route path="/" element="Hello, this is very cool social network"/>

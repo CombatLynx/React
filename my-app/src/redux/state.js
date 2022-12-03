@@ -42,6 +42,22 @@ let state = {
                 message: "npx cfcr Message"
             }
         ]
+    },
+    sidebar: {
+        friends: [
+            {
+                id: 1,
+                name: "Petya"
+            },
+            {
+                id: 2,
+                name: "Vasya"
+            },
+            {
+                id: 3,
+                name: "Kolya"
+            }
+        ]
     }
 }
 

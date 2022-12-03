@@ -10,19 +10,22 @@ import Music from "./components/Music";
 import Settings from "./components/Settings";
 
 const App = (props) => {
+    debugger;
     return (
         <div className="app-wrapper">
             <div className="app-wrapper__container">
-                <Header></Header>
-                <Navbar></Navbar>
+                <Header/>
+                <Navbar/>
                 <div className="app-wrapper__container__content">
                     <Routes>
                         <Route path="/" element="Hello, this is very cool social network"/>
-                        <Route path="/profile" element={<Profile dataPost={props.dataPost}></Profile>}/>
-                        <Route path="/dialogs" element={<Dialogs dataPerson={props.dataPerson} dataMessage={props.dataMessage}></Dialogs>}/>
-                        <Route path="/news" element={<News></News>}/>
-                        <Route path="/music" element={<Music></Music>}/>
-                        <Route path="/settings" element={<Settings></Settings>}/>
+                        <Route path="/profile"
+                               element={<Profile dataPost={props.appState.profilePage}/>}/>
+                        <Route path="/dialogs"
+                               element={<Dialogs dataMessage={props.appState.messagesPage}/>}/>
+                        <Route path="/news" element={<News/>}/>
+                        <Route path="/music" element={<Music/>}/>
+                        <Route path="/settings" element={<Settings/>}/>
                     </Routes>
                 </div>
             </div>

@@ -1,3 +1,5 @@
+import {renderEntireTree} from "../render";
+
 let state = {
     profilePage: {
         posts: [
@@ -11,7 +13,7 @@ let state = {
                 message: "It is my post",
                 countLikes: 7
             }
-        ],
+        ]
     },
     messagesPage: {
         dialogs: [
@@ -59,6 +61,18 @@ let state = {
             }
         ]
     }
+}
+
+window.state = state;
+
+export let addPost = (postMessage) => {
+    let newPost = {
+        id: 3,
+        message: postMessage,
+        countLikes: 0
+    }
+    state.profilePage.posts.push(newPost);
+    renderEntireTree(state);
 }
 
 export default state;

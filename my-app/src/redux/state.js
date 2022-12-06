@@ -13,7 +13,8 @@ let state = {
                 message: "It is my post",
                 countLikes: 7
             }
-        ]
+        ],
+        newTextPost: "default message"
     },
     messagesPage: {
         dialogs: [
@@ -65,13 +66,19 @@ let state = {
 
 window.state = state;
 
-export let addPost = (postMessage) => {
+export let addPost = () => {
     let newPost = {
         id: 3,
-        message: postMessage,
+        message: state.profilePage.newTextPost,
         countLikes: 0
     }
     state.profilePage.posts.push(newPost);
+    state.profilePage.newTextPost = '';
+    renderEntireTree(state);
+}
+
+export let updatePostText = (newText) => {
+    state.profilePage.newTextPost = newText;
     renderEntireTree(state);
 }
 

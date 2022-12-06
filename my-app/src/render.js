@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
-import {addPost} from "./redux/state";
+import {addPost, updatePostText} from "./redux/state";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -11,7 +11,7 @@ export let renderEntireTree = (state) => {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-                <App appState={state} addPost={addPost}/>
+                <App appState={state} addPost={addPost} updatePostText={updatePostText}/>
             </BrowserRouter>
         </React.StrictMode>
     );

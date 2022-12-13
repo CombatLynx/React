@@ -1,6 +1,9 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 
+const ADD_TEXT_MESSAGE = 'ADD-TEXT-MESSAGE';
+const UPDATE_TEXT_MESSAGE = 'UPDATE-TEXT-MESSAGE';
+
 let store = {
     _state: {
         profilePage: {
@@ -21,32 +24,33 @@ let store = {
         messagesPage: {
             dialogs: [
                 {
-                    id: "1",
+                    id: 1,
                     name: "Doe"
                 },
                 {
-                    id: "2",
+                    id: 2,
                     name: "Smith"
                 },
                 {
-                    id: "3",
+                    id: 3,
                     name: "Jones"
                 }
             ],
             messages: [
                 {
-                    id: "1",
+                    id: 1,
                     message: "Hi, i am chicha"
                 },
                 {
-                    id: "2",
+                    id: 2,
                     message: "Second massage"
                 },
                 {
-                    id: "3",
+                    id: 3,
                     message: "npx cfcr Message"
                 }
-            ]
+            ],
+            newTextMessage: ""
         },
         sidebar: {
             friends: [
@@ -87,6 +91,14 @@ let store = {
         } else if (action.type === UPDATE_POST_TEXT) {
             this._state.profilePage.newTextPost = action.newText;
             this._callSubscriber(this._state);
+        } else if (action.type === UPDATE_TEXT_MESSAGE) {
+            this._state.messagesPage.newTextMessage = action.newMessage;
+            this._callSubscriber(this._state);
+        } else if (action.type === ADD_TEXT_MESSAGE) {
+            let body = this._state.messagesPage.newTextMessage;
+            this._state.messagesPage.messages.push({id: 4, message: body});
+            this._state.messagesPage.newTextMessage = '';
+            this._callSubscriber(this._state);
         }
     }
 }
@@ -103,6 +115,20 @@ export const updatePostTexDispatchCreator = (newTextPost) => {
         newText: newTextPost
     }
 }
+
+export const updateTextMessageDispatchCreator = (textBody) => {
+    return {
+        type: UPDATE_TEXT_MESSAGE,
+        newMessage: textBody
+    }
+}
+
+export const addTextMessageDispatchCreator = () => {
+    return {
+        type: ADD_TEXT_MESSAGE
+    }
+}
+
 
 window.store = store;
 

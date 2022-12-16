@@ -1,8 +1,6 @@
 import React from "react";
 import Post from "./Post";
 import classes from "./MyPosts.module.css";
-import {addPostDispatchCreator, updatePostTexDispatchCreator} from "../../../redux/profile-reducer";
-import MyPostsContainer from "./MyPostsContainer";
 
 const MyPosts = (props) => {
     let dataPosts = props.dataPost.map(

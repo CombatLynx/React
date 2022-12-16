@@ -3,7 +3,7 @@ import {addTextMessageDispatchCreator, updateTextMessageDispatchCreator} from ".
 import Dialogs from "./Dialogs";
 
 const DialogsContainer = (props) => {
-    let state = props.store.getState();
+    let state = props.store.getState().messagesPage;
 
     let sendMessage = () => {
         props.store.dispatch(addTextMessageDispatchCreator());
@@ -16,9 +16,9 @@ const DialogsContainer = (props) => {
     return (
         <Dialogs sendMessage={sendMessage}
                  updateMessageText={onChangeMessageText}
-                 newTextMessage={state.messagesPage.newTextMessage}
-                 dialogs={state.messagesPage.dialogs}
-                 messages={state.messagesPage.messages}>
+                 newTextMessage={state.newTextMessage}
+                 dialogs={state.dialogs}
+                 messages={state.messages}>
         </Dialogs>
     );
 }

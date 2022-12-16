@@ -4,10 +4,10 @@ import {Route, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
-import Dialogs from "./components/Dialogs";
 import News from "./components/News";
 import Music from "./components/Music";
 import Settings from "./components/Settings";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 const App = (props) => {
     return (
@@ -19,11 +19,9 @@ const App = (props) => {
                     <Routes>
                         <Route path="/" element="Hello, this is very cool social network"/>
                         <Route path="/profile"
-                               element={<Profile dataPost={props.appState.profilePage}
-                                                 dispatch={props.dispatch}/>}/>
+                               element={<Profile store={props.store}/>}/>
                         <Route path="/dialogs"
-                               element={<Dialogs dataMessage={props.appState.messagesPage}
-                                                 dispatch={props.dispatch}/>}/>
+                               element={<DialogsContainer store={props.store}/>}/>
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/settings" element={<Settings/>}/>

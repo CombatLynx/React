@@ -2,6 +2,7 @@ import React from "react";
 import Post from "./Post";
 import classes from "./MyPosts.module.css";
 import {addPostDispatchCreator, updatePostTexDispatchCreator} from "../../../redux/profile-reducer";
+import MyPostsContainer from "./MyPostsContainer";
 
 const MyPosts = (props) => {
     let dataPosts = props.dataPost.map(
@@ -10,13 +11,13 @@ const MyPosts = (props) => {
         }
     );
 
-    let addPost = () => {
-        props.dispatch(addPostDispatchCreator());
+    let onAddPost = () => {
+        props.addPost();
     }
 
     let onChangeTextPost = (e) => {
         let textPost = e.target.value;
-        props.dispatch(updatePostTexDispatchCreator(textPost));
+        props.updatePostText(textPost);
     }
 
     return (
@@ -28,7 +29,7 @@ const MyPosts = (props) => {
                     </textarea>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             {dataPosts}

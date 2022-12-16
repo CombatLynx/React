@@ -2,29 +2,28 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem";
 import DialogMessage from "./DialogMessage";
-import {addTextMessageDispatchCreator, updateTextMessageDispatchCreator} from "../../redux/message-reducer";
 
 const Dialogs = (props) => {
 
-    let dataPersons = props.dataMessage.dialogs.map(
+    let dataPersons = props.dialogs.map(
         (dialogElement) => {
             return <DialogItem name={dialogElement.name} id={dialogElement.id}></DialogItem>
         }
     );
 
-    let dataMessages = props.dataMessage.messages.map(
+    let dataMessages = props.messages.map(
         (messageElement) => {
             return <DialogMessage message={messageElement.message}></DialogMessage>
         }
     );
 
     let sendMessage = () => {
-        props.dispatch(addTextMessageDispatchCreator());
+        props.sendMessage();
     }
 
     let onChangeMessageText = (e) => {
         let messageText = e.target.value;
-        props.dispatch(updateTextMessageDispatchCreator(messageText));
+        props.updateMessageText(messageText);
     }
 
     return (
@@ -39,7 +38,7 @@ const Dialogs = (props) => {
                 <div>
                     <textarea placeholder="Enter new message"
                               onChange={onChangeMessageText}
-                              value={props.dataMessage.newTextMessage}>
+                              value={props.newTextMessage}>
                     </textarea>
                 </div>
                 <div>

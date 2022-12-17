@@ -14,14 +14,14 @@ const App = (props) => {
         <div className="app-wrapper">
             <div className="app-wrapper__container">
                 <Header/>
-                <Navbar/>
+                <Navbar dataNavbar={props.appState.sidebar}/>
                 <div className="app-wrapper__container__content">
                     <Routes>
                         <Route path="/" element="Hello, this is very cool social network"/>
                         <Route path="/profile"
-                               element={<Profile/>}/>
+                               element={<Profile store={props.store}/>}/>
                         <Route path="/dialogs"
-                               element={<DialogsContainer/>}/>
+                               element={<DialogsContainer store={props.store}/>}/>
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/settings" element={<Settings/>}/>

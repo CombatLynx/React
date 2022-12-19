@@ -24,17 +24,17 @@ const profileReducer = (state = initialReducer, action) => {
                 id: 3,
                 message: state.newTextPost,
                 countLikes: 0
+            };
+            return {
+                ...state,
+                newTextPost: '',
+                posts: [...state.posts, newPost]
             }
-            let copyStateAdd = {...state};
-            copyStateAdd.posts = [...state.posts];
-            copyStateAdd.newTextPost = state.newTextPost;
-            copyStateAdd.posts.push(newPost);
-            copyStateAdd.newTextPost = '';
-            return copyStateAdd;
         case UPDATE_POST_TEXT:
-            let copyStateUpdate = {...state};
-            copyStateUpdate.newTextPost = action.newText;
-            return copyStateUpdate;
+            return {
+                ...state,
+                newTextPost: action.newText
+            }
         default:
             return state;
     }

@@ -4,28 +4,28 @@ const SET_USERS = 'SET-USERS';
 
 let initialReducer = {
     users: [
-        {
-            id: 1,
-            photoUrl: "https://cdn-icons-png.flaticon.com/512/35/35527.png",
-            followed: true,
-            fullName: "Misha Nefedov",
-            status: 'I am a boss',
-            location: {
-                country: "Russia",
-                city: "Ruzaevka"
-            }
-        },
-        {
-            id: 2,
-            photoUrl: "https://flomaster.club/uploads/posts/2021-11/1635852262_1-flomaster-club-p-udivlennoe-litso-narisovannoe-krasivii-ris-1.jpg",
-            followed: false,
-            fullName: "Dima Kilunov",
-            status: 'I am a not boss',
-            location: {
-                country: "Russia",
-                city: "Saransk"
-            }
-        }
+        // {
+        //     id: 1,
+        //     photoUrl: "https://cdn-icons-png.flaticon.com/512/35/35527.png",
+        //     followed: true,
+        //     fullName: "Misha Nefedov",
+        //     status: 'I am a boss',
+        //     location: {
+        //         country: "Russia",
+        //         city: "Ruzaevka"
+        //     }
+        // },
+        // {
+        //     id: 2,
+        //     photoUrl: "https://flomaster.club/uploads/posts/2021-11/1635852262_1-flomaster-club-p-udivlennoe-litso-narisovannoe-krasivii-ris-1.jpg",
+        //     followed: false,
+        //     fullName: "Dima Kilunov",
+        //     status: 'I am a not boss',
+        //     location: {
+        //         country: "Russia",
+        //         city: "Saransk"
+        //     }
+        // }
     ]
 }
 

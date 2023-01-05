@@ -1,5 +1,6 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
+const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
 
 let initialReducer = {
     posts: [
@@ -14,7 +15,8 @@ let initialReducer = {
             countLikes: 7
         }
     ],
-    newTextPost: "default message"
+    newTextPost: "default message",
+    profile: { photos: {} }
 }
 
 const profileReducer = (state = initialReducer, action) => {
@@ -35,6 +37,11 @@ const profileReducer = (state = initialReducer, action) => {
                 ...state,
                 newTextPost: action.newText
             }
+        case SET_USERS_PROFILE:
+            return {
+                ...state,
+                profile: action.usersProfile
+            }
         default:
             return state;
     }
@@ -50,6 +57,13 @@ export const updatePostTexDispatchCreator = (newTextPost) => {
     return {
         type: UPDATE_POST_TEXT,
         newText: newTextPost
+    }
+}
+
+export const setUsersProfileActionCreator = (profile) => {
+    return {
+        type: SET_USERS_PROFILE,
+        usersProfile: profile
     }
 }
 

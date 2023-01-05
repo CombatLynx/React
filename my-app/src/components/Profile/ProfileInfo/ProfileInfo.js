@@ -1,13 +1,19 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
+import Preloader from "../../common/Preloader";
 
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
+    if (!props.profile) {
+        return <Preloader></Preloader>
+    }
+
     return (
         <div className={classes["profile-info"]}>
             <img className={classes["profile-img"]}
-                src="https://img3.akspic.ru/attachments/crops/8/0/5/5/45508/45508-nauka-nebo-ozero_pejto-pustynya-ekosistema-1920x1080.jpg"
+                src={props.profile.photos.large}
                 alt="images"/>
             <div>descriptions</div>
+            <div>{props.profile.aboutMe}</div>
         </div>
     );
 }

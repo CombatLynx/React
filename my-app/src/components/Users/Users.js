@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Users.module.css";
 import userPhoto from "../../assets/images/icon-man.png";
+import {NavLink} from "react-router-dom";
 
 const Users = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -13,17 +14,22 @@ const Users = (props) => {
     return (
         <div>
             <div>
-                {pages.map( page => {
+                {pages.map(page => {
                     return <span className={props.currentPage === page ? classes["select-page"] : ""}
-                                 onClick={() => {props.onCurrentPage(page)}}>{page}</span>
+                                 onClick={() => {
+                                     props.onCurrentPage(page)
+                                 }}>{page}</span>
                 })}
             </div>
             {
                 props.users.map((user) => <div key={user.id}>
                       <span>
-                          <div><img className={classes.photo}
-                                    src={user.photos.small !== null ? user.photos.small : userPhoto} alt="image"/>
-                          </div>
+                          <div>
+                              <NavLink to={"/profile/" + user.id}>
+                                <img className={classes.photo}
+                                     src={user.photos.small !== null ? user.photos.small : userPhoto} alt="image"/>
+                              </NavLink>
+                              </div>
                           <div>{user.followed
                               ? <button onClick={() => {
                                   props.onUnfollow(user.id)

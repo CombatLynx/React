@@ -9,12 +9,13 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 const App = (props) => {
     return (
         <div className="app-wrapper">
             <div className="app-wrapper__container">
-                <Header/>
+                <HeaderContainer/>
                 <NavbarContainer/>
                 <div className="app-wrapper__container__content">
                     <Routes>

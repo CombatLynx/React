@@ -64,6 +64,7 @@ const Users = (props) => {
                               <div>{user.followed}</div>
                           </span>
                           <span>
+                              <div>userId: {user.id}</div>
                               <div>country</div>
                               <div>city</div>
                           </span>

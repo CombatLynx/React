@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
 import Preloader from "../../common/Preloader";
+import profileImage from "../../../assets/images/profileImages.jpg";
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -12,7 +13,7 @@ const ProfileInfo = (props) => {
             <img className={classes["profile-img"]}
                 src="https://gas-kvas.com/uploads/posts/2022-11/1668390100_29-gas-kvas-com-p-kartinki-prirodi-ochen-31.jpg"
                 alt="images"/>
-            <img src={props.profile.photos.large} alt="profile-img"/>
+            <img className={classes["profile-img__local"]} src={profileImage} alt="profile-img"/>
             <div>descriptions</div>
             <div>{props.profile.aboutMe}</div>
         </div>

@@ -13,7 +13,7 @@ const ProfileInfo = (props) => {
             <img className={classes["profile-img"]}
                 src="https://gas-kvas.com/uploads/posts/2022-11/1668390100_29-gas-kvas-com-p-kartinki-prirodi-ochen-31.jpg"
                 alt="images"/>
-            <img className={classes["profile-img__local"]} src={profileImage} alt="profile-img"/>
+            <img className={classes["profile-img__local"]} src={props.profile.photos.large} alt="profile-img"/>
             <div>descriptions</div>
             <div>{props.profile.aboutMe}</div>
         </div>

@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Users.module.css";
 import userPhoto from "../../assets/images/icon-man.png";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {followApi} from "../../dal/api";
 
 const Users = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -33,25 +33,17 @@ const Users = (props) => {
                               </div>
                           <div>{user.followed
                               ? <button onClick={() => {
-
-                                  axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
-                                      {
-                                          withCredentials: true
-                                      })
-                                      .then(response => {
-                                          if (response.data.resultCode === 0) {
+                                  followApi.onUnfollow(user.id)
+                                      .then(data => {
+                                          if (data.resultCode === 0) {
                                               props.onUnfollow(user.id);
                                           }
                                       });
                               }}>unfollow</button>
                               : <button onClick={() => {
-                                  axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`,
-                                      {},
-                                      {
-                                          withCredentials: true
-                                      })
-                                      .then(response => {
-                                          if (response.data.resultCode === 0) {
+                                  followApi.onFollow(user.id)
+                                      .then(data => {
+                                          if (data.resultCode === 0) {
                                               props.onFollow(user.id);
                                           }
                                       });

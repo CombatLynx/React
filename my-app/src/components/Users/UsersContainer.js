@@ -8,7 +8,52 @@ import {
     setUsersActionCreator,
     unfollowActionCreator
 } from "../../redux/user-reducer";
-import UsersClass from "./UsersClass";
+import {userApi} from "../../dal/api";
+import Preloader from "../common/Preloader";
+import Users from "./Users";
+
+class UsersContainer extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        this.props.toggleIsFetching(true);
+        userApi.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.toggleIsFetching(false);
+                this.props.setUsers(data.items);
+                this.props.setTotalCount(data.totalCount);
+            });
+    }
+
+    onCurrentPage = (currentPage) => {
+        this.props.toggleIsFetching(true);
+        this.props.setCurrentPages(currentPage);
+        userApi.getUsers(currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.toggleIsFetching(false);
+                this.props.setUsers(data.items);
+            });
+    }
+
+    render() {
+        return (
+            <>
+                <div>{this.props.isFetching ? <Preloader /> : null}</div>
+                <Users onCurrentPage={this.onCurrentPage}
+                       totalUsersCount={this.props.totalUsersCount}
+                       pageSize={this.props.pageSize}
+                       currentPage={this.props.currentPage}
+                       users={this.props.users}
+                       onFollow={this.props.onFollow}
+                       onUnfollow={this.props.onUnfollow}
+                />
+            </>
+        );
+    }
+}
 
 let mapStateToProps = (state) => {
     return {
@@ -20,13 +65,11 @@ let mapStateToProps = (state) => {
     }
 }
 
-const UsersContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
     onFollow: followActionCreator,
     onUnfollow: unfollowActionCreator,
     setUsers: setUsersActionCreator,
     setCurrentPages: setCurrentPageActionCreator,
     setTotalCount: setTotalCountActionCreator,
     toggleIsFetching: setIsFetchingActionCreator
-})(UsersClass);
-
-export default UsersContainer;
+})(UsersContainer);

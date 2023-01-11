@@ -1,4 +1,4 @@
-import {userApi} from "../dal/api";
+import {userAPI} from "../dal/api";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -124,7 +124,7 @@ export const setFollowingProgressActionCreator = (isFollow, userId) => {
 export const getUsersThunkCreator = (currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(setIsFetchingActionCreator(true));
-        userApi.getUsers(currentPage, pageSize)
+        userAPI.getUsers(currentPage, pageSize)
             .then(data => {
                 dispatch(setIsFetchingActionCreator(false));
                 dispatch(setUsersActionCreator(data.items));
@@ -137,7 +137,7 @@ export const getUsersThunkCreator = (currentPage, pageSize) => {
 export const followThunkCreator = (userId) => {
     return (dispatch) => {
         dispatch(setFollowingProgressActionCreator(true, userId));
-        userApi.onFollow(userId)
+        userAPI.onFollow(userId)
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(followActionCreator(userId));
@@ -150,7 +150,7 @@ export const followThunkCreator = (userId) => {
 export const unfollowThunkCreator = (userId) => {
     return (dispatch) => {
         dispatch(setFollowingProgressActionCreator(true, userId));
-        userApi.onUnfollow(userId)
+        userAPI.onUnfollow(userId)
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(unfollowActionCreator(userId));

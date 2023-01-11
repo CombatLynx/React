@@ -1,3 +1,5 @@
+import {userAPI} from "../dal/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
@@ -64,6 +66,15 @@ export const setUsersProfileActionCreator = (profile) => {
     return {
         type: SET_USERS_PROFILE,
         usersProfile: profile
+    }
+}
+
+export const getProfileThunkCreator = (userId) => {
+    return (dispatch) => {
+        userAPI.getProfile(userId)
+            .then(data => {
+                dispatch(setUsersProfileActionCreator(data));
+            });
     }
 }
 

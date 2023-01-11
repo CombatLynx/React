@@ -1,3 +1,5 @@
+import {authAPI} from "../dal/api";
+
 const SET_USER_DATA = 'SET-USER-DATA';
 
 let initialReducer = {
@@ -24,6 +26,18 @@ export const setAuthUserDataActionCreator = (userId, email, login) => {
     return {
         type: SET_USER_DATA,
         data: {userId, email, login}
+    }
+}
+
+export const getAuthThunkCreator = () => {
+    return (dispatch) => {
+        authAPI.getAuth()
+            .then(data => {
+                if (data.resultCode === 0) {
+                    let {id, email, login} = data.data;
+                    dispatch(setAuthUserDataActionCreator(id, email, login));
+                }
+            });
     }
 }
 

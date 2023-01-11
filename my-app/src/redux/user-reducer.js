@@ -1,3 +1,5 @@
+import {userApi} from "../dal/api";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET-USERS';
@@ -86,7 +88,7 @@ export const unfollowActionCreator = (userId) => {
 export const setUsersActionCreator = (users) => {
     return {
         type: SET_USERS,
-        users
+        users: users
     }
 }
 
@@ -117,6 +119,45 @@ export const setFollowingProgressActionCreator = (isFollow, userId) => {
         toggleIsFollowing: isFollow,
         userId: userId
     }
+}
+
+export const getUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(setIsFetchingActionCreator(true));
+        userApi.getUsers(currentPage, pageSize)
+            .then(data => {
+                dispatch(setIsFetchingActionCreator(false));
+                dispatch(setUsersActionCreator(data.items));
+                dispatch(setTotalCountActionCreator(data.totalCount));
+                dispatch(setCurrentPageActionCreator(currentPage));
+            });
+        }
+}
+
+export const followThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(setFollowingProgressActionCreator(true, userId));
+        userApi.onFollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followActionCreator(userId));
+                }
+                dispatch(setFollowingProgressActionCreator(false, userId));
+            });
+        }
+}
+
+export const unfollowThunkCreator = (userId) => {
+    return (dispatch) => {
+        dispatch(setFollowingProgressActionCreator(true, userId));
+        userApi.onUnfollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unfollowActionCreator(userId));
+                }
+                dispatch(setFollowingProgressActionCreator(false, userId));
+            });
+        }
 }
 
 export default usersReducer;

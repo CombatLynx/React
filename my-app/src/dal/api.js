@@ -11,6 +11,12 @@ export const userApi = {
             .then(response => {
                 return response.data;
             })
+    },
+    onFollow: (userId) => {
+        return instance.post(`follow/${userId}`)
+    },
+    onUnfollow: (userId) => {
+        return instance.delete(`follow/${userId}`)
     }
 }
 
@@ -26,21 +32,6 @@ export const authApi = {
 export const profileApi = {
     getProfile: (userId) => {
         return instance.get(`profile/${userId}`)
-            .then(response => {
-                return response.data;
-            })
-    }
-}
-
-export const followApi = {
-    onFollow: (userId) => {
-        return instance.post(`follow/${userId}`)
-            .then(response => {
-                return response.data;
-            })
-    },
-    onUnfollow: (userId) => {
-        return instance.delete(`follow/${userId}`)
             .then(response => {
                 return response.data;
             })

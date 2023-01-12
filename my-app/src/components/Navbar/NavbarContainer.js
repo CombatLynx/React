@@ -9,7 +9,6 @@ let mapStateToProps = (state) => {
 }
 
 function mapDispatchToProps() {
-
 }
 
 const NavbarContainer = connect(mapStateToProps, mapDispatchToProps)(Navbar);

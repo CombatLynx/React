@@ -38,16 +38,9 @@ let mapStateToProps = (state) => {
     }
 }
 
-let mapStateToPropsForRedirectComponent = (state) => {
-    return {
-        isAuth: state.auth.isAuth
-    }
-}
-
 let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
-let ConnectAuthRedirectComponent = connect(mapStateToPropsForRedirectComponent)(AuthRedirectComponent);
 
-let WithUrlDataContainerComponent = withRouter(ConnectAuthRedirectComponent);
+let WithUrlDataContainerComponent = withRouter(AuthRedirectComponent);
 
 export default connect(mapStateToProps, {
     getProfile: getProfileThunkCreator

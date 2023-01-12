@@ -1,5 +1,12 @@
 import {Navigate} from "react-router-dom";
 import React, {Component} from "react";
+import {connect} from "react-redux";
+
+let mapStateToPropsForRedirectComponent = (state) => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
 
 export const withAuthRedirect = (Component) => {
     class RedirectWrapperComponent extends React.Component {
@@ -8,5 +15,6 @@ export const withAuthRedirect = (Component) => {
             return <Component {...this.props}/>
         }
     }
-    return RedirectWrapperComponent;
+
+    return connect(mapStateToPropsForRedirectComponent)(RedirectWrapperComponent);
 }

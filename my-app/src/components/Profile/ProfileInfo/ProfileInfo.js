@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./ProfileInfo.module.css";
 import Preloader from "../../common/Preloader";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
+import title from "../../../assets/images/title.webp"
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -11,11 +12,14 @@ const ProfileInfo = (props) => {
     return (
         <div className={classes["profile-info"]}>
             <img className={classes["profile-img"]}
-                src="https://gas-kvas.com/uploads/posts/2022-11/1668390100_29-gas-kvas-com-p-kartinki-prirodi-ochen-31.jpg"
+                src={title}
                 alt="images"/>
             <img className={classes["profile-img__local"]} src={props.profile.photos.large} alt="profile-img"/>
             <div>descriptions</div>
-            <ProfileStatus status="Hello my friends"/>
+            <ProfileStatus status={props.status}
+                           profile={props.profile}
+                           updateStatusProfile={props.updateStatusProfile}
+            />
             <div>{props.profile.aboutMe}</div>
         </div>
     );

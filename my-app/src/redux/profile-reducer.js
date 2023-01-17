@@ -1,8 +1,10 @@
-import {userAPI} from "../dal/api";
+import {profileAPI} from "../dal/api";
+import {followActionCreator} from "./user-reducer";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
+const SET_USER_PROFILE_STATUS = 'SET-USER-PROFILE-STATUS';
 
 let initialReducer = {
     posts: [
@@ -18,7 +20,8 @@ let initialReducer = {
         }
     ],
     newTextPost: "default message",
-    profile: { photos: {} }
+    profile: { photos: {} },
+    status: null
 }
 
 const profileReducer = (state = initialReducer, action) => {
@@ -43,6 +46,11 @@ const profileReducer = (state = initialReducer, action) => {
             return {
                 ...state,
                 profile: action.usersProfile
+            }
+        case SET_USER_PROFILE_STATUS:
+            return {
+                ...state,
+                status: action.userStatusProfile
             }
         default:
             return state;
@@ -69,11 +77,38 @@ export const setUsersProfileActionCreator = (profile) => {
     }
 }
 
+export const setUsersStatusProfileActionCreator = (userId) => {
+    return {
+        type: SET_USER_PROFILE_STATUS,
+        userStatusProfile: userId
+    }
+}
+
 export const getProfileThunkCreator = (userId) => {
     return (dispatch) => {
-        userAPI.getProfile(userId)
+        profileAPI.getProfile(userId)
             .then(data => {
                 dispatch(setUsersProfileActionCreator(data));
+            });
+    }
+}
+
+export const getProfileStatusThunkCreator = (userId) => {
+    return (dispatch) => {
+        profileAPI.getStatusProfile(userId)
+            .then(data => {
+                dispatch(setUsersStatusProfileActionCreator(data));
+            });
+    }
+}
+
+export const updateStatusThunkCreator = (status) => {
+    return (dispatch) => {
+        profileAPI.updateStatusProfile(status)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setUsersStatusProfileActionCreator(status));
+                }
             });
     }
 }

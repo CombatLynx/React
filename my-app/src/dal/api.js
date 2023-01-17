@@ -17,12 +17,24 @@ export const userAPI = {
     },
     onUnfollow: (userId) => {
         return instance.delete(`follow/${userId}`)
-    },
+    }
+}
+
+export const profileAPI = {
     getProfile: (userId) => {
         return instance.get(`profile/${userId}`)
             .then(response => {
                 return response.data;
             })
+    },
+    getStatusProfile: (userId) => {
+        return instance.get(`profile/status/${userId}`)
+            .then(response => {
+                return response.data;
+            })
+    },
+    updateStatusProfile: (status) => {
+        return instance.put(`/profile/status`, {status: status})
     }
 }
 

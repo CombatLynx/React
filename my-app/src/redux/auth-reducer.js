@@ -47,7 +47,7 @@ export const logInThunkCreator = (email, password, rememberMe) => {
                 if (response.data.resultCode === 0) {
                     dispatch(getAuthThunkCreator())
                 } else {
-                    alert("Не верный логин или пароль")
+                    alert("Неверный логин или пароль")
                 }
             })
     }

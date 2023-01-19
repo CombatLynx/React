@@ -1,10 +1,15 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
+import {Navigate} from "react-router-dom";
 
 const Login = (props) => {
 
     const onSubmit = (formData) => {
-        console.log(formData);
+        props.onLogin(formData.email, formData.password, formData.rememberMe);
+    }
+
+    if (props.isAuth) {
+        return <Navigate to={"/profile"}/>
     }
 
     return (
@@ -19,10 +24,10 @@ const LoginForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={"login"} placeholder={"Login"} type={"text"} component={"input"}/>
+                <Field name={"email"} placeholder={"Login"} type={"email"} component={"input"}/>
             </div>
             <div>
-                <Field name={"password"} placeholder={"Password"} type={"text"} component={"input"}/>
+                <Field name={"password"} placeholder={"Password"} type={"password"} component={"input"}/>
             </div>
             <div>
                 <Field name={"rememberMe"} type={"checkbox"} component={"input"}/>

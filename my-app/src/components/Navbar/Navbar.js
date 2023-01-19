@@ -17,9 +17,6 @@ const Navbar = (props) => {
         <nav className={classes.nav}>
             <ul className={classes["nav-menu"]}>
                 <li className={classes["nav-menu__item"]}><NavLink className={setActive}
-                                                                   to="/login">Login</NavLink>
-                </li>
-                <li className={classes["nav-menu__item"]}><NavLink className={setActive}
                                                                    to="/profile">Profile</NavLink>
                 </li>
                 <li className={classes["nav-menu__item"]}><NavLink className={setActive}

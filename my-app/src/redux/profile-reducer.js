@@ -1,5 +1,4 @@
 import {profileAPI} from "../dal/api";
-import {followActionCreator} from "./user-reducer";
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';

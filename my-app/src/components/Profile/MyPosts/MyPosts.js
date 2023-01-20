@@ -1,6 +1,7 @@
 import React from "react";
 import Post from "./Post";
 import classes from "./MyPosts.module.css";
+import PostReduxForm from "./Post/PostReduxForm";
 
 const MyPosts = (props) => {
 
@@ -10,25 +11,15 @@ const MyPosts = (props) => {
         }
     )
 
-    let onAddPost = () => {
-        props.addPost();
-    }
-
-    let onChangeTextPost = (e) => {
-        let textPost = e.target.value;
-        props.updatePostText(textPost);
+    const addPostText = (values) => {
+        props.addPost(values.filedPostMessage);
     }
 
     return (
         <div className={classes.posts}>
             <div className={classes["posts-add"]}>My posts
                 <div className={classes["posts-textarea"]}>
-                    <textarea onChange={onChangeTextPost}
-                              value={props.newTextPost}>
-                    </textarea>
-                </div>
-                <div>
-                    <button onClick={onAddPost}>Add post</button>
+                    <PostReduxForm onSubmit={addPostText}/>
                 </div>
             </div>
             {dataPost}

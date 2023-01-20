@@ -20,7 +20,6 @@ const Dialogs = (props) => {
 
     const sendMessageDialogs = (values) => {
         props.sendMessage(values.fieldDialogsMessage);
-        // console.log(values);
     }
 
     return (

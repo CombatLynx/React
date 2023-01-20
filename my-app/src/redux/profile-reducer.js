@@ -1,7 +1,6 @@
 import {profileAPI} from "../dal/api";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
 const SET_USER_PROFILE_STATUS = 'SET-USER-PROFILE-STATUS';
 
@@ -18,7 +17,6 @@ let initialReducer = {
             countLikes: 7
         }
     ],
-    newTextPost: "default message",
     profile: { photos: {} },
     status: null
 }
@@ -28,18 +26,12 @@ const profileReducer = (state = initialReducer, action) => {
         case ADD_POST:
             let newPost = {
                 id: 3,
-                message: state.newTextPost,
+                message: action.filedPostMessage,
                 countLikes: 0
             };
             return {
                 ...state,
-                newTextPost: '',
                 posts: [...state.posts, newPost]
-            }
-        case UPDATE_POST_TEXT:
-            return {
-                ...state,
-                newTextPost: action.newText
             }
         case SET_USERS_PROFILE:
             return {
@@ -56,16 +48,10 @@ const profileReducer = (state = initialReducer, action) => {
     }
 }
 
-export const addPostDispatchCreator = () => {
+export const addPostDispatchCreator = (filedPostMessage) => {
     return {
-        type: ADD_POST
-    }
-}
-
-export const updatePostTexDispatchCreator = (newTextPost) => {
-    return {
-        type: UPDATE_POST_TEXT,
-        newText: newTextPost
+        type: ADD_POST,
+        filedPostMessage: filedPostMessage
     }
 }
 

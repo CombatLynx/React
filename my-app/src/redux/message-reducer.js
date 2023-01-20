@@ -1,5 +1,4 @@
 const ADD_TEXT_MESSAGE = 'ADD-TEXT-MESSAGE';
-const UPDATE_TEXT_MESSAGE = 'UPDATE-TEXT-MESSAGE';
 
 let initialReducer = {
     dialogs: [
@@ -29,8 +28,7 @@ let initialReducer = {
             id: 3,
             message: "npx cfcr Message"
         }
-    ],
-    newTextMessage: ""
+    ]
 }
 
 const messageReducer = (state = initialReducer, action) => {
@@ -38,17 +36,9 @@ const messageReducer = (state = initialReducer, action) => {
 
     switch (action.type) {
         case ADD_TEXT_MESSAGE:
-            let body = state.newTextMessage;
             stateCopy = {
                 ...state,
-                newTextMessage: '',
-                messages: [...state.messages, {id: 4, message: body}]
-            }
-            return stateCopy;
-        case UPDATE_TEXT_MESSAGE:
-            stateCopy = {
-                ...state,
-                newTextMessage: action.newMessage
+                messages: [...state.messages, {id: 4, message: action.fieldDialogsMessage}]
             }
             return stateCopy;
         default:
@@ -56,16 +46,10 @@ const messageReducer = (state = initialReducer, action) => {
     }
 }
 
-export const updateTextMessageDispatchCreator = (textMessage) => {
+export const addTextMessageDispatchCreator = (newMessageTextDialogs) => {
     return {
-        type: UPDATE_TEXT_MESSAGE,
-        newMessage: textMessage
-    }
-}
-
-export const addTextMessageDispatchCreator = () => {
-    return {
-        type: ADD_TEXT_MESSAGE
+        type: ADD_TEXT_MESSAGE,
+        fieldDialogsMessage: newMessageTextDialogs
     }
 }
 

@@ -3,6 +3,7 @@ import {Field, reduxForm} from "redux-form";
 import {Navigate} from "react-router-dom";
 import {Input} from "../common/FormsControls/FormsControls";
 import {maxLengthString, required} from "../../utils/validators";
+import classes from "../Login/Login.module.css";
 
 const maxLengthString20 = maxLengthString(20);
 
@@ -53,6 +54,12 @@ const LoginForm = (props) => {
             <div>
                 <button>Login</button>
             </div>
+            {
+                props.error &&
+                <div className={classes["form-control__general_error"]}>
+                    {props.error}
+                </div>
+            }
         </form>
     );
 }

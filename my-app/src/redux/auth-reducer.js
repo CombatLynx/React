@@ -1,4 +1,5 @@
 import {authAPI} from "../dal/api";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET-USER-DATA';
 
@@ -47,7 +48,10 @@ export const logInThunkCreator = (email, password, rememberMe) => {
                 if (response.data.resultCode === 0) {
                     dispatch(getAuthThunkCreator())
                 } else {
-                    alert("Неверный логин или пароль")
+                    let messageResponse = response.data.messages;
+                    messageResponse && messageResponse.length > 0
+                        ? dispatch(stopSubmit('login', {_error: messageResponse}))
+                        : dispatch(stopSubmit('login', {_error: `There's a mistake somewhere`}))
                 }
             })
     }

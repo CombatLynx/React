@@ -1,0 +1,5 @@
+.form-control__general_error {
+    border: 1px solid red;
+    color: red;
+    background: cornsilk;
+}

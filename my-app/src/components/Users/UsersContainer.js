@@ -30,7 +30,6 @@ class UsersContainer extends React.Component {
     }
 
     render() {
-        console.log('RENDER');
         return (
             <>
                 <div>{this.props.isFetching ? <Preloader /> : null}</div>
@@ -50,7 +49,6 @@ class UsersContainer extends React.Component {
 }
 
 let mapStateToProps = (state) => {
-    console.log('mapStateToProps');
     return {
         users: getUsers(state),
         pageSize: getPageSize(state),

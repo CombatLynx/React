@@ -3,7 +3,7 @@ import Post from "./Post";
 import classes from "./MyPosts.module.css";
 import PostReduxForm from "./Post/PostReduxForm";
 
-const MyPosts = (props) => {
+const MyPosts = React.memo(props => {
 
     let dataPost = props.dataPost.map(
         (dataElement) => {
@@ -15,6 +15,7 @@ const MyPosts = (props) => {
         props.addPost(values.filedPostMessage);
     }
 
+    console.log('MyPosts Component');
     return (
         <div className={classes.posts}>
             <div className={classes["posts-add"]}>My posts
@@ -25,6 +26,6 @@ const MyPosts = (props) => {
             {dataPost}
         </div>
     );
-}
+});
 
 export default MyPosts;

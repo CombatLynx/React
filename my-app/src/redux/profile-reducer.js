@@ -1,6 +1,7 @@
 import {profileAPI} from "../dal/api";
 
 const ADD_POST = 'ADD-POST';
+const DELETE_POST = 'DELETE-POST';
 const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
 const SET_USER_PROFILE_STATUS = 'SET-USER-PROFILE-STATUS';
 
@@ -33,6 +34,12 @@ const profileReducer = (state = initialReducer, action) => {
                 ...state,
                 posts: [...state.posts, newPost]
             }
+        case DELETE_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.postId)
+            }
+
         case SET_USERS_PROFILE:
             return {
                 ...state,
@@ -52,6 +59,13 @@ export const addPostDispatchCreator = (filedPostMessage) => {
     return {
         type: ADD_POST,
         filedPostMessage: filedPostMessage
+    }
+}
+
+export const deletePostActionCreator = (postId) => {
+    return {
+        type: DELETE_POST,
+        postId: postId
     }
 }
 

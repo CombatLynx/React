@@ -1,12 +1,12 @@
 import {userAPI} from "../dal/api";
 
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET-USERS';
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
-const SET_USERS_TOTAL_COUNT = 'SET-USERS-TOTAL-COUNT';
-const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING';
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE-IS-FOLLOWING-PROGRESS';
+const FOLLOW = 'user/FOLLOW';
+const UNFOLLOW = 'user/UNFOLLOW';
+const SET_USERS = 'user/SET-USERS';
+const SET_CURRENT_PAGE = 'user/SET-CURRENT-PAGE';
+const SET_USERS_TOTAL_COUNT = 'user/SET-USERS-TOTAL-COUNT';
+const TOGGLE_IS_FETCHING = 'user/TOGGLE-IS-FETCHING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'user/TOGGLE-IS-FOLLOWING-PROGRESS';
 
 let initialReducer = {
     users: [],
@@ -123,42 +123,36 @@ export const setFollowingProgressActionCreator = (isFollow, userId) => {
 }
 
 export const getUsersThunkCreator = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(setIsFetchingActionCreator(true));
-        userAPI.getUsers(currentPage, pageSize)
-            .then(data => {
-                dispatch(setIsFetchingActionCreator(false));
-                dispatch(setUsersActionCreator(data.items));
-                dispatch(setTotalCountActionCreator(data.totalCount));
-                dispatch(setCurrentPageActionCreator(currentPage));
-            });
-        }
+        let data = await userAPI.getUsers(currentPage, pageSize);
+        dispatch(setIsFetchingActionCreator(false));
+        dispatch(setUsersActionCreator(data.items));
+        dispatch(setTotalCountActionCreator(data.totalCount));
+        dispatch(setCurrentPageActionCreator(currentPage));
+    }
 }
 
 export const followThunkCreator = (userId) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(setFollowingProgressActionCreator(true, userId));
-        userAPI.onFollow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(followActionCreator(userId));
-                }
-                dispatch(setFollowingProgressActionCreator(false, userId));
-            });
+        let response = await userAPI.onFollow(userId);
+        if (response.data.resultCode === 0) {
+            dispatch(followActionCreator(userId));
         }
+        dispatch(setFollowingProgressActionCreator(false, userId));
+    }
 }
 
 export const unfollowThunkCreator = (userId) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(setFollowingProgressActionCreator(true, userId));
-        userAPI.onUnfollow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unfollowActionCreator(userId));
-                }
-                dispatch(setFollowingProgressActionCreator(false, userId));
-            });
+        let response = await userAPI.onUnfollow(userId);
+        if (response.data.resultCode === 0) {
+            dispatch(unfollowActionCreator(userId));
         }
+        dispatch(setFollowingProgressActionCreator(false, userId));
+    }
 }
 
 export default usersReducer;

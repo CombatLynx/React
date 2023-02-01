@@ -1,4 +1,4 @@
-const ADD_TEXT_MESSAGE = 'ADD-TEXT-MESSAGE';
+const ADD_TEXT_MESSAGE = 'message/ADD-TEXT-MESSAGE';
 
 let initialReducer = {
     dialogs: [

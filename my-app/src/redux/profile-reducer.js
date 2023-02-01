@@ -1,9 +1,9 @@
 import {profileAPI} from "../dal/api";
 
-const ADD_POST = 'ADD-POST';
-const DELETE_POST = 'DELETE-POST';
-const SET_USERS_PROFILE = 'SET-USERS-PROFILE';
-const SET_USER_PROFILE_STATUS = 'SET-USER-PROFILE-STATUS';
+const ADD_POST = 'profile/ADD-POST';
+const DELETE_POST = 'profile/DELETE-POST';
+const SET_USERS_PROFILE = 'profile/SET-USERS-PROFILE';
+const SET_USER_PROFILE_STATUS = 'profile/SET-USER-PROFILE-STATUS';
 
 let initialReducer = {
     posts: [

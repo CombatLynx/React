@@ -9,7 +9,7 @@ const Navbar = (props) => {
 
     let dataSidebar = props.dataNavbar.friends.map(
         (elemSidebar) => {
-            return <NavbarFriends name={elemSidebar.name} id={elemSidebar.id}/>
+            return <NavbarFriends key={elemSidebar.id} name={elemSidebar.name} id={elemSidebar.id}/>
         }
     );
 

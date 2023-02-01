@@ -1,7 +1,6 @@
 import React from "react";
 import classes from "./Users.module.css";
-import userPhoto from "../../assets/images/icon-man.png";
-import {NavLink} from "react-router-dom";
+import User from "./User";
 
 const Users = (props) => {
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
@@ -10,6 +9,16 @@ const Users = (props) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
+
+    let users = props.users.map(
+        (user) => {
+            return <User user={user}
+                         follow={props.follow}
+                         unfollow={props.unfollow}
+                         isFollowing={props.isFollowing}
+                         toggleIsFollowing={props.toggleIsFollowing}
+            />
+        })
 
     return (
         <div>
@@ -21,37 +30,7 @@ const Users = (props) => {
                                  }}>{page}</span>
                 })}
             </div>
-            {
-                props.users.map((user) => <div key={user.id}>
-                      <span>
-                          <div>
-                              <NavLink to={"/profile/" + user.id}>
-                                <img className={classes.photo}
-                                     src={user.photos.small !== null ? user.photos.small : userPhoto} alt="image"/>
-                              </NavLink>
-                          </div>
-                          <div>{user.followed
-                              ? <button disabled={props.isFollowing.some(id => id === user.id)} onClick={() => {
-                                  props.unfollow(user.id);
-                              }}>unfollow</button>
-                              : <button disabled={props.isFollowing.some(id => id === user.id)} onClick={() => {
-                                  props.follow(user.id);
-                              }}>follow</button>}
-                          </div>
-                      </span>
-                    <span>
-                          <span>
-                              <div>{user.name}</div>
-                              <div>{user.followed}</div>
-                          </span>
-                          <span>
-                              <div>userId: {user.id}</div>
-                              <div>country</div>
-                              <div>city</div>
-                          </span>
-                      </span>
-                </div>)
-            }
+            {users}
         </div>
     );
 }

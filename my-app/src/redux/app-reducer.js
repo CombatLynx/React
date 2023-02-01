@@ -1,6 +1,6 @@
 import {getAuthThunkCreator} from "./auth-reducer";
 
-const INITIALIZE_USER = 'INITIALIZE-USER';
+const INITIALIZE_USER = 'app/INITIALIZE-USER';
 
 let initialReducer = {
     initialized: false

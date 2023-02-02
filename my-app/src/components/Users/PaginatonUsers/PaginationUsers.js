@@ -40,6 +40,7 @@ const PaginationUsers = (props) => {
                     })
                     .map(page => {
                         return <span className={props.currentPage === page ? classes["select-page"] : ""}
+                                     key={page}
                                      onClick={() => {
                                          props.onCurrentPage(page)
                                      }}>{page}</span>

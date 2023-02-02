@@ -27,3 +27,7 @@ export const getIsFetching = (state) => {
 export const getIsFollowing = (state) => {
     return state.userPage.isFollowing;
 }
+
+export const getPortionSize = (state) => {
+    return state.userPage.portionSize;
+}

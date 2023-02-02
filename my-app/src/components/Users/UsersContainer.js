@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
-import {followThunkCreator, getUsersThunkCreator,
+import {
+    followThunkCreator, getUsersThunkCreator, portionSizeActionCreator,
     setFollowingProgressActionCreator, unfollowThunkCreator
 } from "../../redux/user-reducer";
 import Preloader from "../common/Preloader";
@@ -10,7 +11,7 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {
     getCurrentPage,
     getIsFetching, getIsFollowing,
-    getPageSize,
+    getPageSize, getPortionSize,
     getTotalUsersCount,
     getUsers
 } from "../../redux/selectors/users-selectors";
@@ -42,6 +43,7 @@ class UsersContainer extends React.Component {
                        unfollow={this.props.unfollow}
                        isFollowing={this.props.isFollowing}
                        toggleIsFollowing={this.props.toggleIsFollowing}
+                       portionSize={this.props.portionSize}
                 />
             </>
         );
@@ -55,7 +57,8 @@ let mapStateToProps = (state) => {
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        isFollowing: getIsFollowing(state)
+        isFollowing: getIsFollowing(state),
+        portionSize: getPortionSize(state)
     }
 }
 

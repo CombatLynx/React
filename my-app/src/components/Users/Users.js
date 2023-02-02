@@ -1,15 +1,8 @@
 import React from "react";
-import classes from "./Users.module.css";
 import User from "./User";
+import PaginationUsers from "./PaginatonUsers/PaginationUsers";
 
 const Users = (props) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-    }
-
     let users = props.users.map(
         (user) => {
             return <User user={user}
@@ -22,14 +15,12 @@ const Users = (props) => {
 
     return (
         <div>
-            <div>
-                {pages.map(page => {
-                    return <span className={props.currentPage === page ? classes["select-page"] : ""}
-                                 onClick={() => {
-                                     props.onCurrentPage(page)
-                                 }}>{page}</span>
-                })}
-            </div>
+            <PaginationUsers totalUsersCount={props.totalUsersCount}
+                             pageSize={props.pageSize}
+                             currentPage={props.currentPage}
+                             onCurrentPage={props.onCurrentPage}
+                             portionSize={props.portionSize}
+            />
             {users}
         </div>
     );

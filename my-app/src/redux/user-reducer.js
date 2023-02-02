@@ -4,14 +4,18 @@ const FOLLOW = 'user/FOLLOW';
 const UNFOLLOW = 'user/UNFOLLOW';
 const SET_USERS = 'user/SET-USERS';
 const SET_CURRENT_PAGE = 'user/SET-CURRENT-PAGE';
+const SET_PORTION_SIZE = 'users/SET-PORTION-SIZE';
 const SET_USERS_TOTAL_COUNT = 'user/SET-USERS-TOTAL-COUNT';
 const TOGGLE_IS_FETCHING = 'user/TOGGLE-IS-FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'user/TOGGLE-IS-FOLLOWING-PROGRESS';
+
+const limitCountUsers = 500;
 
 let initialReducer = {
     users: [],
     pageSize: 10,
     totalUsersCount: 0,
+    portionSize: 10,
     currentPage: 1,
     isFetching: false,
     isFollowing: [],
@@ -53,7 +57,12 @@ const usersReducer = (state = initialReducer, action) => {
         case SET_USERS_TOTAL_COUNT:
             return {
                 ...state,
-                totalUsersCount: action.totalCount - (action.totalCount - 200)
+                totalUsersCount: action.totalCount - (action.totalCount - limitCountUsers)
+            }
+        case SET_PORTION_SIZE:
+            return {
+                ...state,
+                portionSize: state.portionSize
             }
         case TOGGLE_IS_FETCHING:
             return {
@@ -83,6 +92,13 @@ export const unfollowActionCreator = (userId) => {
     return {
         type: UNFOLLOW,
         userId
+    }
+}
+
+export const portionSizeActionCreator = (portionSize) => {
+    return {
+        type: SET_PORTION_SIZE,
+        portionSize: portionSize
     }
 }
 

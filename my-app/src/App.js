@@ -4,16 +4,21 @@ import {Route, Routes} from "react-router-dom";
 import News from "./components/News";
 import Music from "./components/Music";
 import Settings from "./components/Settings";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
+// import DialogsContainer from "./components/Dialogs/DialogsContainer";
+// import ProfileContainer from "./components/Profile/ProfileContainer";
+// import UsersContainer from "./components/Users/UsersContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
-import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginContainer from "./components/Login/LoginContainer";
 import {connect} from "react-redux";
 import {initializeUserThunkCreator} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader";
 import {compose} from "redux";
+import {withSuspense} from "./hoc/withSuspense";
+
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
+const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
+const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 
 class App extends React.Component {
     constructor(props) {
@@ -38,18 +43,18 @@ class App extends React.Component {
                     <div className="app-wrapper__container__content">
                         <Routes>
                             <Route path='/profile/:userId'
-                                   element={<ProfileContainer/>}>
+                                   element={withSuspense(ProfileContainer)}>
                             </Route>
                             <Route path='/profile'
-                                   element={<ProfileContainer/>}/>
+                                   element={withSuspense(ProfileContainer)}/>
                             <Route path="/dialogs"
-                                   element={<DialogsContainer/>}/>
+                                   element={withSuspense(DialogsContainer)}/>
                             <Route path="/news" element={<News/>}/>
                             <Route path="/music" element={<Music/>}/>
                             <Route path="/settings" element={<Settings/>}/>
-                            <Route path="/users" element={<UsersContainer/>}/>
+                            <Route path="/users" element={withSuspense(UsersContainer)}/>
                             <Route path="/login" element={<LoginContainer/>}/>
-                            <Route path="/" element={<ProfileContainer/>}/>
+                            <Route path="/" element={withSuspense(ProfileContainer)}/>
                         </Routes>
                     </div>
                 </div>

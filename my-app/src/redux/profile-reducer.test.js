@@ -18,7 +18,6 @@ let state = {
 
 it('count posts', () => {
     let action = addPostDispatchCreator('Hello');
-
     let newState = profileReducer(state, action);
 
     expect(newState.posts[2].message).toBe('Hello');
@@ -26,7 +25,6 @@ it('count posts', () => {
 
 it('delete post', () => {
     let action = deletePostActionCreator(2);
-
     let newState = profileReducer(state, action);
 
     expect(newState.posts.length).toBe(1);

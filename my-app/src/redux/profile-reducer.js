@@ -4,6 +4,7 @@ const ADD_POST = 'profile/ADD-POST';
 const DELETE_POST = 'profile/DELETE-POST';
 const SET_USERS_PROFILE = 'profile/SET-USERS-PROFILE';
 const SET_USER_PROFILE_STATUS = 'profile/SET-USER-PROFILE-STATUS';
+const SET_SAVE_PHOTO = 'profile/SET-SAVE-PHOTO';
 
 let initialReducer = {
     posts: [
@@ -18,7 +19,7 @@ let initialReducer = {
             countLikes: 7
         }
     ],
-    profile: { photos: {} },
+    profile: null,
     status: null
 }
 
@@ -50,6 +51,11 @@ const profileReducer = (state = initialReducer, action) => {
                 ...state,
                 status: action.userStatusProfile
             }
+        case SET_SAVE_PHOTO:
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos}
+            }
         default:
             return state;
     }
@@ -73,6 +79,13 @@ export const setUsersProfileActionCreator = (profile) => {
     return {
         type: SET_USERS_PROFILE,
         usersProfile: profile
+    }
+}
+
+export const setSavePhotoActionCreator = (photos) => {
+    return {
+        type: SET_SAVE_PHOTO,
+        photos: photos
     }
 }
 
@@ -109,6 +122,15 @@ export const updateStatusThunkCreator = (status) => {
                     dispatch(setUsersStatusProfileActionCreator(status));
                 }
             });
+    }
+}
+
+export const savePhotoProfileThunkCreator = (photos) => {
+    return async (dispatch) => {
+        let response = await profileAPI.updatePhotoProfile(photos);
+        if (response.data.resultCode === 0) {
+            dispatch(setSavePhotoActionCreator(response.data.data.photos));
+        }
     }
 }
 

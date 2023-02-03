@@ -15,7 +15,6 @@ const MyPosts = React.memo(props => {
         props.addPost(values.filedPostMessage);
     }
 
-    console.log('MyPosts Component');
     return (
         <div className={classes.posts}>
             <div className={classes["posts-add"]}>My posts

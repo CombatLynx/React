@@ -8,9 +8,8 @@ import classes from "../Login/Login.module.css";
 const maxLengthString20 = maxLengthString(20);
 
 const Login = (props) => {
-
     const onSubmit = (formData) => {
-        props.onLogin(formData.email, formData.password, formData.rememberMe);
+        props.onLogin(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
 
     if (props.isAuth) {
@@ -20,7 +19,7 @@ const Login = (props) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm onSubmit={onSubmit} captcha={props.captcha}/>
         </div>
     );
 }
@@ -58,6 +57,15 @@ const LoginForm = (props) => {
                 props.error &&
                 <div className={classes["form-control__general_error"]}>
                     {props.error}
+                </div>
+            }
+            {props.captcha && <img src={props.captcha} alt={"captcha"}/>}
+            {props.captcha &&
+                <div>
+                    <Field name={"captcha"}
+                           type={"captcha"}
+                           component={"input"}
+                    />
                 </div>
             }
         </form>

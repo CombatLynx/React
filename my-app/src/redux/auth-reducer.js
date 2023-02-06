@@ -2,17 +2,20 @@ import {authAPI} from "../dal/api";
 import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'auth/SET-USER-DATA';
+const SET_CAPTCHA = 'auth/SET-CAPTCHA';
 
 let initialReducer = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    captcha: null
 }
 
 const authReducer = (state = initialReducer, action) => {
     switch (action.type) {
         case SET_USER_DATA:
+        case SET_CAPTCHA:
             return {
                 ...state,
                 ...action.data
@@ -29,6 +32,13 @@ export const setAuthUserDataActionCreator = (userId, email, login, isAuth) => {
     }
 }
 
+export const getCaptchaActionCreator = (captcha) => {
+    return {
+        type: SET_CAPTCHA,
+        data: {captcha}
+    }
+}
+
 export const getAuthThunkCreator = () => {
     return (dispatch) => {
         return authAPI.getAuth()
@@ -41,13 +51,14 @@ export const getAuthThunkCreator = () => {
     }
 }
 
-export const logInThunkCreator = (email, password, rememberMe) => {
+export const logInThunkCreator = (email, password, rememberMe, captcha) => {
     return (dispatch) => {
-        authAPI.logIn(email, password, rememberMe)
+        authAPI.logIn(email, password, rememberMe, captcha)
             .then(response => {
                 if (response.data.resultCode === 0) {
                     dispatch(getAuthThunkCreator())
                 } else {
+                    dispatch(captchaThunkCreator())
                     let messageResponse = response.data.messages;
                     messageResponse && messageResponse.length > 0
                         ? dispatch(stopSubmit('login', {_error: messageResponse}))
@@ -65,6 +76,14 @@ export const logOutThunkCreator = () => {
                     dispatch(setAuthUserDataActionCreator(null, null, null, false));
                 }
             })
+    }
+}
+
+export const captchaThunkCreator = () => {
+    return async (dispatch) => {
+        const response = await authAPI.getCaptcha();
+        const captcha = response.url;
+        dispatch(getCaptchaActionCreator(captcha));
     }
 }
 

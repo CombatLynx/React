@@ -30,7 +30,10 @@ const TimerForStaying = () => {
         <div className={classes.timer}>
             <div>Время прибывания на сайте</div>
             <div>
-                {seconds}<span>:sec</span>
+                {seconds < 10
+                    ? `0${seconds}`
+                    : `${seconds}`
+                }<span>:sec</span>
                 {minutes}<span>:min</span>
                 {hours}<span>:hours</span>
             </div>

@@ -34,8 +34,14 @@ const TimerForStaying = () => {
                     ? `0${seconds}`
                     : `${seconds}`
                 }<span>:sec</span>
-                {minutes}<span>:min</span>
-                {hours}<span>:hours</span>
+                {minutes < 10
+                    ? `0${minutes}`
+                    : `${minutes}`
+                }<span>:min</span>
+                {hours < 10
+                    ? `0${hours}`
+                    : `${hours}`
+                }<span>:hours</span>
             </div>
         </div>
     );

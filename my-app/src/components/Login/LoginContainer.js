@@ -9,7 +9,6 @@ class LoginContainer extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <>
                 <Login onLogin={this.props.onLogin}

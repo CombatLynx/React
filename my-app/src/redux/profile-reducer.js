@@ -5,6 +5,7 @@ const DELETE_POST = 'profile/DELETE-POST';
 const SET_USERS_PROFILE = 'profile/SET-USERS-PROFILE';
 const SET_USER_PROFILE_STATUS = 'profile/SET-USER-PROFILE-STATUS';
 const SET_SAVE_PHOTO = 'profile/SET-SAVE-PHOTO';
+const SET_SAVE_PROFILE = 'profile/SET-SAVE-PROFILE';
 
 let initialReducer = {
     posts: [
@@ -56,6 +57,11 @@ const profileReducer = (state = initialReducer, action) => {
                 ...state,
                 profile: {...state.profile, photos: action.photos}
             }
+        case SET_SAVE_PROFILE:
+            return {
+                ...state,
+                profile: {...state.profile, profile: action.profile}
+            }
         default:
             return state;
     }
@@ -86,6 +92,13 @@ export const setSavePhotoActionCreator = (photos) => {
     return {
         type: SET_SAVE_PHOTO,
         photos: photos
+    }
+}
+
+export const setProfileInfoActionCreator = (profile) => {
+    return {
+        type: SET_SAVE_PROFILE,
+        profile: {profile}
     }
 }
 
@@ -131,6 +144,16 @@ export const savePhotoProfileThunkCreator = (photos) => {
         if (response.data.resultCode === 0) {
             dispatch(setSavePhotoActionCreator(response.data.data.photos));
         }
+    }
+}
+
+export const saveProfileInfoThunkCreator = (profile) => {
+    return async (dispatch) => {
+        const response = await profileAPI.saveProfileInfo(profile);
+        // debugger
+        // if (response.data.resultCode === 0) {
+        //     dispatch(setProfileInfoActionCreator(response.data));
+        // }
     }
 }
 

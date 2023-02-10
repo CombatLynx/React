@@ -1,4 +1,5 @@
 import {profileAPI} from "../dal/api";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = 'profile/ADD-POST';
 const DELETE_POST = 'profile/DELETE-POST';
@@ -60,7 +61,7 @@ const profileReducer = (state = initialReducer, action) => {
         case SET_SAVE_PROFILE:
             return {
                 ...state,
-                profile: {...state.profile, profile: action.profile}
+                profile: action.profile
             }
         default:
             return state;
@@ -150,10 +151,13 @@ export const savePhotoProfileThunkCreator = (photos) => {
 export const saveProfileInfoThunkCreator = (profile) => {
     return async (dispatch) => {
         const response = await profileAPI.saveProfileInfo(profile);
-        // debugger
-        // if (response.data.resultCode === 0) {
-        //     dispatch(setProfileInfoActionCreator(response.data));
-        // }
+        if (response.data.resultCode !== 0) {
+            const messageResponse = response.data.messages;
+            messageResponse && messageResponse.length > 0
+                ? dispatch(stopSubmit('profileInfoEdit', {_error: messageResponse}))
+                : dispatch(stopSubmit('profileInfoEdit', {_error: `There's a mistake somewhere`}))
+            await Promise.reject(messageResponse);
+        }
     }
 }
 

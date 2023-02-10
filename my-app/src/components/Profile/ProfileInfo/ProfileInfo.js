@@ -22,12 +22,21 @@ const ProfileInfo = ({profile, ...props}) => {
         setEditMode(true);
     }
 
-    const onSubmitProfileInfo = (formData) => {
-        props.saveProfileInfo(formData);
+    const exitToEditMode = () => {
+        setEditMode(false);
     }
 
-    console.log(props);
-    console.log(profile);
+    const onSubmitProfileInfo = (formData) => {
+        props.saveProfileInfo(formData).then(
+            () => {
+                setEditMode(false);
+            },
+            () => {
+                throw new Error('Invalid format data');
+            }
+        )
+    }
+
     return (
         <div className={classes["profile-info"]}>
             <img className={classes["profile-img"]}
@@ -48,6 +57,7 @@ const ProfileInfo = ({profile, ...props}) => {
                                             onSubmit={onSubmitProfileInfo}
                                             profile={profile}
                                             initialValues={profile}
+                                            exitToEditMode={exitToEditMode}
                 />
                 : <ProfileInfoForm profile={profile}
                                    goToEditMode={goToEditMode}

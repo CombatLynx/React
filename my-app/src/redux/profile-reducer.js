@@ -116,13 +116,15 @@ export const getProfileStatusThunkCreator = (userId) => {
 }
 
 export const updateStatusThunkCreator = (status) => {
-    return (dispatch) => {
-        profileAPI.updateStatusProfile(status)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(setUsersStatusProfileActionCreator(status));
-                }
-            });
+    return async (dispatch) => {
+        try {
+            const response = await profileAPI.updateStatusProfile(status);
+            if (response.data.resultCode === 0) {
+                dispatch(setUsersStatusProfileActionCreator(status));
+            }
+        } catch (error) {
+            console.log('problem in updateStatus');
+        }
     }
 }
 

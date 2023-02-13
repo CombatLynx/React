@@ -1,6 +1,6 @@
 import React from "react";
 import './App.css';
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import News from "./components/News";
 import Music from "./components/Music";
 import Settings from "./components/Settings";
@@ -51,7 +51,8 @@ class App extends React.Component {
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={withSuspense(UsersContainer)}/>
                             <Route path="/login" element={<LoginContainer/>}/>
-                            <Route path="/" element={withSuspense(ProfileContainer)}/>
+                            <Route path="*" element={<div>404 NOT FOUND</div>}/>
+                            <Route path="/" element={<Navigate to='/profile'/>}/>
                         </Routes>
                     </div>
                 </div>

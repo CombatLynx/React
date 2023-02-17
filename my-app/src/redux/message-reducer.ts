@@ -1,4 +1,19 @@
-const ADD_TEXT_MESSAGE = 'message/ADD-TEXT-MESSAGE';
+const ADD_TEXT_MESSAGE: string = 'message/ADD-TEXT-MESSAGE';
+
+type DialogsType = {
+    id: number,
+    name: string
+}
+
+type MessagesType = {
+    id: number,
+    message: string
+}
+
+type InitialStateType = {
+    dialogs: Array<DialogsType>,
+    messages: Array<MessagesType>
+}
 
 let initialReducer = {
     dialogs: [
@@ -31,7 +46,7 @@ let initialReducer = {
     ]
 }
 
-const messageReducer = (state = initialReducer, action) => {
+const messageReducer = (state: InitialStateType = initialReducer, action: any): InitialStateType => {
     let stateCopy;
 
     switch (action.type) {
@@ -46,7 +61,12 @@ const messageReducer = (state = initialReducer, action) => {
     }
 }
 
-export const addTextMessageDispatchCreator = (newMessageTextDialogs) => {
+type AddTextMessageDispatchCreatorType = {
+    type: typeof ADD_TEXT_MESSAGE,
+    fieldDialogsMessage: string
+}
+
+export const addTextMessageDispatchCreator = (newMessageTextDialogs: string): AddTextMessageDispatchCreatorType  => {
     return {
         type: ADD_TEXT_MESSAGE,
         fieldDialogsMessage: newMessageTextDialogs

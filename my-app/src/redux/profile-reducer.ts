@@ -1,13 +1,46 @@
 import {profileAPI} from "../dal/api";
 import {stopSubmit} from "redux-form";
+import {PhotosType} from "../types/types";
 
-const ADD_POST = 'profile/ADD-POST';
-const DELETE_POST = 'profile/DELETE-POST';
-const SET_USERS_PROFILE = 'profile/SET-USERS-PROFILE';
-const SET_USER_PROFILE_STATUS = 'profile/SET-USER-PROFILE-STATUS';
-const SET_SAVE_PHOTO = 'profile/SET-SAVE-PHOTO';
+const ADD_POST: string = 'profile/ADD-POST';
+const DELETE_POST: string = 'profile/DELETE-POST';
+const SET_USERS_PROFILE: string = 'profile/SET-USERS-PROFILE';
+const SET_USER_PROFILE_STATUS: string = 'profile/SET-USER-PROFILE-STATUS';
+const SET_SAVE_PHOTO: string = 'profile/SET-SAVE-PHOTO';
 
-let initialReducer = {
+type PostsType = {
+    id: number,
+    message: string,
+    countLikes: number
+}
+
+type ContactsType = {
+    github: string,
+    vk: string,
+    facebook: string,
+    instagram: string,
+    twitter: string,
+    website: string,
+    youtube: string,
+    mainLink: string
+}
+
+type ProfileType = {
+    userId: number,
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    contacts: ContactsType,
+    photos: PhotosType
+}
+
+type InitialStateType = {
+    posts: Array<PostsType>,
+    profile: ProfileType | null,
+    status: null | string
+}
+
+let initialReducer: InitialStateType = {
     posts: [
         {
             id: 1,
@@ -24,7 +57,7 @@ let initialReducer = {
     status: null
 }
 
-const profileReducer = (state = initialReducer, action) => {
+const profileReducer = (state: InitialStateType = initialReducer, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
@@ -55,50 +88,75 @@ const profileReducer = (state = initialReducer, action) => {
         case SET_SAVE_PHOTO:
             return {
                 ...state,
-                profile: {...state.profile, photos: action.photos}
+                profile: {...state.profile, photos: action.photos} as ProfileType
             }
         default:
             return state;
     }
 }
 
-export const addPostDispatchCreator = (filedPostMessage) => {
+type AddPostDispatchCreatorType = {
+    type: typeof ADD_POST,
+    filedPostMessage: string
+}
+
+export const addPostDispatchCreator = (filedPostMessage: string): AddPostDispatchCreatorType => {
     return {
         type: ADD_POST,
         filedPostMessage: filedPostMessage
     }
 }
 
-export const deletePostActionCreator = (postId) => {
+type DeletePostActionCreatorType = {
+    type: typeof DELETE_POST,
+    postId: number
+}
+
+export const deletePostActionCreator = (postId: number): DeletePostActionCreatorType => {
     return {
         type: DELETE_POST,
         postId: postId
     }
 }
 
-export const setUsersProfileActionCreator = (profile) => {
+type SetUsersProfileActionCreatorType = {
+    type: typeof SET_USERS_PROFILE,
+    usersProfile: ProfileType
+}
+
+export const setUsersProfileActionCreator = (profile: ProfileType): SetUsersProfileActionCreatorType => {
     return {
         type: SET_USERS_PROFILE,
         usersProfile: profile
     }
 }
 
-export const setSavePhotoActionCreator = (photos) => {
+type SetSavePhotoActionCreatorType = {
+    type: typeof SET_SAVE_PHOTO,
+    photos: PhotosType
+}
+
+export const setSavePhotoActionCreator = (photos: PhotosType): SetSavePhotoActionCreatorType => {
     return {
         type: SET_SAVE_PHOTO,
         photos: photos
     }
 }
 
-export const setUsersStatusProfileActionCreator = (userId) => {
+type SetUsersStatusProfileActionCreatorType = {
+    type: typeof SET_USER_PROFILE_STATUS,
+    userStatusProfile: number
+}
+
+export const setUsersStatusProfileActionCreator = (userId: number): SetUsersStatusProfileActionCreatorType => {
     return {
         type: SET_USER_PROFILE_STATUS,
         userStatusProfile: userId
     }
 }
 
-export const getProfileThunkCreator = (userId) => {
-    return (dispatch) => {
+export const getProfileThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
         profileAPI.getProfile(userId)
             .then(data => {
                 dispatch(setUsersProfileActionCreator(data));
@@ -106,8 +164,8 @@ export const getProfileThunkCreator = (userId) => {
     }
 }
 
-export const getProfileStatusThunkCreator = (userId) => {
-    return (dispatch) => {
+export const getProfileStatusThunkCreator = (userId: number) => {
+    return (dispatch: any) => {
         profileAPI.getStatusProfile(userId)
             .then(data => {
                 dispatch(setUsersStatusProfileActionCreator(data));
@@ -115,8 +173,8 @@ export const getProfileStatusThunkCreator = (userId) => {
     }
 }
 
-export const updateStatusThunkCreator = (status) => {
-    return async (dispatch) => {
+export const updateStatusThunkCreator = (status: number) => {
+    return async (dispatch: any) => {
         try {
             const response = await profileAPI.updateStatusProfile(status);
             if (response.data.resultCode === 0) {
@@ -128,8 +186,8 @@ export const updateStatusThunkCreator = (status) => {
     }
 }
 
-export const savePhotoProfileThunkCreator = (photos) => {
-    return async (dispatch) => {
+export const savePhotoProfileThunkCreator = (photos: PhotosType) => {
+    return async (dispatch: any) => {
         let response = await profileAPI.updatePhotoProfile(photos);
         if (response.data.resultCode === 0) {
             dispatch(setSavePhotoActionCreator(response.data.data.photos));
@@ -137,8 +195,8 @@ export const savePhotoProfileThunkCreator = (photos) => {
     }
 }
 
-export const saveProfileInfoThunkCreator = (profile) => {
-    return async (dispatch) => {
+export const saveProfileInfoThunkCreator = (profile: ProfileType) => {
+    return async (dispatch: any) => {
         const response = await profileAPI.saveProfileInfo(profile);
         if (response.data.resultCode !== 0) {
             const messageResponse = response.data.messages;

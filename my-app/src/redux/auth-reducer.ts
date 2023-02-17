@@ -1,10 +1,18 @@
 import {authAPI} from "../dal/api";
 import {stopSubmit} from "redux-form";
 
-const SET_USER_DATA = 'auth/SET-USER-DATA';
-const SET_CAPTCHA = 'auth/SET-CAPTCHA';
+const SET_USER_DATA: string = 'auth/SET-USER-DATA';
+const SET_CAPTCHA: string = 'auth/SET-CAPTCHA';
 
-let initialReducer = {
+type InitialStateType = {
+    userId: null | number,
+    email: null | string,
+    login: null | string,
+    isAuth: false | boolean,
+    captcha: null | string
+}
+
+let initialReducer: InitialStateType = {
     userId: null,
     email: null,
     login: null,
@@ -12,7 +20,7 @@ let initialReducer = {
     captcha: null
 }
 
-const authReducer = (state = initialReducer, action) => {
+const authReducer = (state: InitialStateType = initialReducer, action: any): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
         case SET_CAPTCHA:
@@ -25,14 +33,35 @@ const authReducer = (state = initialReducer, action) => {
     }
 }
 
-export const setAuthUserDataActionCreator = (userId, email, login, isAuth) => {
+type SetDataPayloadType = {
+    userId: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean | null
+}
+
+type SetAuthUserDataActionCreatorType = {
+    type: typeof SET_USER_DATA,
+    data: SetDataPayloadType
+}
+
+type SetDataCaptchaType = {
+    captcha: string | null
+}
+
+type GetCaptchaActionCreatorType = {
+    type: typeof SET_CAPTCHA,
+    data: SetDataCaptchaType
+}
+
+export const setAuthUserDataActionCreator = (userId: number | null, email: string | null, login: string | null, isAuth: boolean): SetAuthUserDataActionCreatorType => {
     return {
         type: SET_USER_DATA,
         data: {userId, email, login, isAuth}
     }
 }
 
-export const getCaptchaActionCreator = (captcha) => {
+export const getCaptchaActionCreator = (captcha: string | null): GetCaptchaActionCreatorType => {
     return {
         type: SET_CAPTCHA,
         data: {captcha}
@@ -40,7 +69,7 @@ export const getCaptchaActionCreator = (captcha) => {
 }
 
 export const getAuthThunkCreator = () => {
-    return (dispatch) => {
+    return (dispatch: any) => {
         return authAPI.getAuth()
             .then(data => {
                 if (data.resultCode === 0) {
@@ -51,8 +80,8 @@ export const getAuthThunkCreator = () => {
     }
 }
 
-export const logInThunkCreator = (email, password, rememberMe, captcha) => {
-    return (dispatch) => {
+export const logInThunkCreator = (email: string, password: string, rememberMe: string, captcha: any) => {
+    return (dispatch: any) => {
         authAPI.logIn(email, password, rememberMe, captcha)
             .then(response => {
                 if (response.data.resultCode === 0) {
@@ -69,7 +98,7 @@ export const logInThunkCreator = (email, password, rememberMe, captcha) => {
 }
 
 export const logOutThunkCreator = () => {
-    return (dispatch) => {
+    return (dispatch: any) => {
         authAPI.logOut()
             .then(response => {
                 if (response.data.resultCode === 0) {
@@ -80,7 +109,7 @@ export const logOutThunkCreator = () => {
 }
 
 export const captchaThunkCreator = () => {
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         const response = await authAPI.getCaptcha();
         const captcha = response.url;
         dispatch(getCaptchaActionCreator(captcha));

@@ -1,5 +1,5 @@
 import {userAPI} from "../dal/api";
-import {PhotosType} from "../types/types";
+import {UserType} from "../types/types";
 
 const FOLLOW: string = 'user/FOLLOW';
 const UNFOLLOW: string = 'user/UNFOLLOW';
@@ -11,14 +11,6 @@ const TOGGLE_IS_FETCHING: string = 'user/TOGGLE-IS-FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS: string = 'user/TOGGLE-IS-FOLLOWING-PROGRESS';
 
 const limitCountUsers: number = 500;
-
-type UserType = {
-    id: number,
-    name: string,
-    photos: PhotosType,
-    status: null | string,
-    followed: boolean
-}
 
 type InitialStateType = {
     users: Array<UserType>,

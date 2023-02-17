@@ -12,10 +12,10 @@ import {initializeUserThunkCreator} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader";
 import {compose} from "redux";
 import {withSuspense} from "./hoc/withSuspense";
+import UsersContainer from "./components/Users/UsersContainer";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
-const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
 
 class App extends React.Component {
     constructor(props) {
@@ -49,7 +49,7 @@ class App extends React.Component {
                             <Route path="/news" element={<News/>}/>
                             <Route path="/music" element={<Music/>}/>
                             <Route path="/settings" element={<Settings/>}/>
-                            <Route path="/users" element={withSuspense(UsersContainer)}/>
+                            <Route path="/users" element={<UsersContainer title={"Hello people"}/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
                             <Route path="*" element={<div>404 NOT FOUND</div>}/>
                             <Route path="/" element={<Navigate to='/profile'/>}/>

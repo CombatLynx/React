@@ -1,23 +1,31 @@
 import React, {useEffect, useState} from "react";
-import classes from "../PaginatonUsers/PaginationUsers.module.css"
+import classes from "./PaginationUsers.module.css";
 
-const PaginationUsers = (props) => {
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+type PropsType = {
+    totalUsersCount: number,
+    pageSize: number,
+    portionSize: number,
+    currentPage: number,
+    onCurrentPage: (page: number) => void
+}
+
+const PaginationUsers: React.FC<PropsType> = ({totalUsersCount, pageSize, portionSize, currentPage, onCurrentPage}) => {
+    let pagesCount = Math.ceil(totalUsersCount / pageSize);
 
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
     }
 
-    let portionCount = Math.ceil(pagesCount / props.portionSize);
-    let [portionNumber, setPortionNumber] = useState(1);
+    let portionCount = Math.ceil(pagesCount / portionSize);
+    let [portionNumber, setPortionNumber] = useState<number>(1);
 
     useEffect(() => {
-        setPortionNumber(Math.ceil(props.currentPage / props.portionSize))
-    }, [props.currentPage]);
+        setPortionNumber(Math.ceil(currentPage / portionSize))
+    }, [currentPage]);
 
-    let leftPortionPageNumber = (portionNumber - 1) * props.portionSize + 1;
-    let rightPortionPageNumber = portionNumber * props.portionSize;
+    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
+    let rightPortionPageNumber = portionNumber * portionSize;
 
     const prevPortionBlock = () => {
         setPortionNumber(portionNumber - 1);
@@ -39,10 +47,10 @@ const PaginationUsers = (props) => {
                         return page >= leftPortionPageNumber && page <= rightPortionPageNumber
                     })
                     .map(page => {
-                        return <span className={props.currentPage === page ? classes["select-page"] : ""}
+                        return <span className={currentPage === page ? classes["select-page"] : ""}
                                      key={page}
                                      onClick={() => {
-                                         props.onCurrentPage(page)
+                                         onCurrentPage(page)
                                      }}>{page}</span>
                     })
                 }

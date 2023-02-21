@@ -1,4 +1,5 @@
 import axios from "axios";
+import {ProfileType} from "../types/types";
 
 const instance = axios.create({
     withCredentials: true,
@@ -6,37 +7,37 @@ const instance = axios.create({
 })
 
 export const userAPI = {
-    getUsers: (currentPage, pageSize) => {
+    getUsers: (currentPage: number, pageSize: number) => {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => {
                 return response.data;
             })
     },
-    onFollow: (userId) => {
+    onFollow: (userId: number) => {
         return instance.post(`follow/${userId}`)
     },
-    onUnfollow: (userId) => {
+    onUnfollow: (userId: number) => {
         return instance.delete(`follow/${userId}`)
     }
 }
 
 export const profileAPI = {
-    getProfile: (userId) => {
+    getProfile: (userId: number) => {
         return instance.get(`profile/${userId}`)
             .then(response => {
                 return response.data;
             })
     },
-    getStatusProfile: (userId) => {
+    getStatusProfile: (userId: number) => {
         return instance.get(`profile/status/${userId}`)
             .then(response => {
                 return response.data;
             })
     },
-    updateStatusProfile: (status) => {
+    updateStatusProfile: (status: string) => {
         return instance.put(`profile/status`, {status: status})
     },
-    updatePhotoProfile: (photoFile) => {
+    updatePhotoProfile: (photoFile: any) => {
         let formData = new FormData();
         formData.append('file', photoFile);
         return instance.put(`profile/photo`, formData, {
@@ -45,20 +46,38 @@ export const profileAPI = {
             }
         })
     },
-    saveProfileInfo: (profile) => {
+    saveProfileInfo: (profile: ProfileType) => {
         return instance.put(`profile`, profile)
     }
 }
 
+export enum ResultCodes {
+    SUCCESS = 0,
+    ERROR = 1
+}
+
+type GetAuthType = {
+    data: {
+        id: number,
+        email: string,
+        login: string
+    },
+    resultCode: ResultCodes,
+    messages: Array<string>
+}
+
 export const authAPI = {
     getAuth: () => {
-        return instance.get(`auth/me`)
+        return instance.get<GetAuthType>(`auth/me`)
             .then(response => {
                 return response.data;
             })
     },
-    logIn: (email, password, rememberMe, captcha = null) => {
-        return instance.post(`auth/login`, {email: email, password: password, rememberMe: rememberMe, captcha: captcha});
+    logIn: (email: string, password: string, rememberMe: boolean, captcha: string) => {
+        return instance.post(`auth/login`, {email: email, password: password, rememberMe: rememberMe, captcha: captcha})
+            .then(response => {
+                return response.data;
+            })
     },
     logOut: () => {
         return instance.delete(`auth/login`);

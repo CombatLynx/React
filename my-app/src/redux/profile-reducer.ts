@@ -1,6 +1,6 @@
 import {profileAPI} from "../dal/api";
 import {stopSubmit} from "redux-form";
-import {PhotosType} from "../types/types";
+import {PhotosType, ProfileType} from "../types/types";
 
 const ADD_POST: string = 'profile/ADD-POST';
 const DELETE_POST: string = 'profile/DELETE-POST';
@@ -14,7 +14,7 @@ type PostsType = {
     countLikes: number
 }
 
-type ContactsType = {
+export type ContactsType = {
     github: string,
     vk: string,
     facebook: string,
@@ -23,15 +23,6 @@ type ContactsType = {
     website: string,
     youtube: string,
     mainLink: string
-}
-
-type ProfileType = {
-    userId: number,
-    lookingForAJob: boolean,
-    lookingForAJobDescription: string,
-    fullName: string,
-    contacts: ContactsType,
-    photos: PhotosType
 }
 
 type InitialStateType = {
@@ -145,13 +136,13 @@ export const setSavePhotoActionCreator = (photos: PhotosType): SetSavePhotoActio
 
 type SetUsersStatusProfileActionCreatorType = {
     type: typeof SET_USER_PROFILE_STATUS,
-    userStatusProfile: number
+    userStatusProfile: string
 }
 
-export const setUsersStatusProfileActionCreator = (userId: number): SetUsersStatusProfileActionCreatorType => {
+export const setUsersStatusProfileActionCreator = (status: string): SetUsersStatusProfileActionCreatorType => {
     return {
         type: SET_USER_PROFILE_STATUS,
-        userStatusProfile: userId
+        userStatusProfile: status
     }
 }
 
@@ -173,7 +164,7 @@ export const getProfileStatusThunkCreator = (userId: number) => {
     }
 }
 
-export const updateStatusThunkCreator = (status: number) => {
+export const updateStatusThunkCreator = (status: string) => {
     return async (dispatch: any) => {
         try {
             const response = await profileAPI.updateStatusProfile(status);

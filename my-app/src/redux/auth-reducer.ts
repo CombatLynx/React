@@ -1,5 +1,7 @@
-import {authAPI} from "../dal/api";
+import {authAPI, ResultCodes} from "../dal/api";
 import {stopSubmit} from "redux-form";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const SET_USER_DATA: string = 'auth/SET-USER-DATA';
 const SET_CAPTCHA: string = 'auth/SET-CAPTCHA';
@@ -72,7 +74,7 @@ export const getAuthThunkCreator = () => {
     return (dispatch: any) => {
         return authAPI.getAuth()
             .then(data => {
-                if (data.resultCode === 0) {
+                if (data.resultCode === ResultCodes.SUCCESS) {
                     let {id, email, login} = data.data;
                     dispatch(setAuthUserDataActionCreator(id, email, login, true));
                 }
@@ -80,15 +82,15 @@ export const getAuthThunkCreator = () => {
     }
 }
 
-export const logInThunkCreator = (email: string, password: string, rememberMe: string, captcha: any) => {
+export const logInThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: any) => {
     return (dispatch: any) => {
         authAPI.logIn(email, password, rememberMe, captcha)
-            .then(response => {
-                if (response.data.resultCode === 0) {
+            .then(data => {
+                if (data.resultCode === ResultCodes.SUCCESS) {
                     dispatch(getAuthThunkCreator())
-                } else {
+                } else if (data.resultCode === ResultCodes.ERROR) {
                     dispatch(captchaThunkCreator())
-                    let messageResponse = response.data.messages;
+                    let messageResponse = data.messages;
                     messageResponse && messageResponse.length > 0
                         ? dispatch(stopSubmit('login', {_error: messageResponse}))
                         : dispatch(stopSubmit('login', {_error: `There's a mistake somewhere`}))

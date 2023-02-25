@@ -10,14 +10,19 @@
     grid-template-areas:
     "h h h"
     "n c c";
-    grid-template-rows: 60px 1fr;
-    grid-template-columns: 2fr 10fr;
+    grid-template-rows: 130px 1fr;
+    grid-template-columns: 3fr 9fr;
 
-    max-width: 1400px;
-    margin: 0 10px 0 10px;
+    max-width: 1340px;
+    margin: 20px 20px 20px 20px;
+
+    border-radius: 20px;
 }
 
 .app-wrapper__container__content {
     grid-area: c;
-    background: pink;
+    background: rgb(132, 168, 214);
+    margin-left: 20px;
+    border-radius: 20px;
+    padding: 20px;
 }

@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./Header.module.css";
 import {NavLink} from "react-router-dom";
 import TimerForStaying from "./TimerForStaying/TimerForStaying";
+import logoHeader from "../../assets/images/emblem_195x195.png"
 
 const Header = (props) => {
     return (
@@ -9,9 +10,9 @@ const Header = (props) => {
             <div className={classes["header-item"]}>
                 <TimerForStaying/>
             </div>
-            <div className={classes["header-item"]}>
-                <img
-                    src="https://img2.freepng.ru/20180402/hze/kisspng-service-mark-symbol-registered-trademark-symbol-service-5ac256c44ba545.3203033915226856363099.jpg"
+            <div className={`${classes["header-item"]} ${classes["header__logo-position"]}`}>
+                <img className={classes.logo}
+                    src={logoHeader}
                     alt="logo"/>
             </div>
             <div className={classes["login-block"] + classes["header-item"]}>

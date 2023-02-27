@@ -21,7 +21,9 @@
 
 .app-wrapper__container__content {
     grid-area: c;
-    background: rgb(132, 168, 214);
+    /*background: rgb(132, 168, 214);*/
+    background: rgb(230, 230, 230);
+    border: 2px solid rgb(110, 110, 110);
     margin-left: 20px;
     border-radius: 20px;
     padding: 20px;

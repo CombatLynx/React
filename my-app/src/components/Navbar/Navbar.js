@@ -7,11 +7,11 @@ const setActive = ({isActive}) => (isActive ? classes.active : '');
 
 const Navbar = (props) => {
 
-    let dataSidebar = props.dataNavbar.friends.map(
-        (elemSidebar) => {
-            return <NavbarFriends key={elemSidebar.id} name={elemSidebar.name} id={elemSidebar.id}/>
-        }
-    );
+    // let dataSidebar = props.dataNavbar.friends.map(
+    //     (elemSidebar) => {
+    //         return <NavbarFriends key={elemSidebar.id} name={elemSidebar.name} id={elemSidebar.id}/>
+    //     }
+    // );
 
     return (
         <nav className={classes.nav}>
@@ -35,9 +35,9 @@ const Navbar = (props) => {
                                                                    to="/settings">Settings</NavLink>
                 </li>
             </ul>
-            <div className={classes["nav-menu__sidebar"]}>Friends
-                <div className={classes["nav-menu__sidebar__friends"]}>{dataSidebar}</div>
-            </div>
+            {/*<div className={classes["nav-menu__sidebar"]}>Friends*/}
+            {/*    <div className={classes["nav-menu__sidebar__friends"]}>{dataSidebar}</div>*/}
+            {/*</div>*/}
         </nav>
     );
 }

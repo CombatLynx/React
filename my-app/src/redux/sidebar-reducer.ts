@@ -22,7 +22,9 @@ let initialReducer = {
     ] as Array<FriendsType>
 }
 
-const sidebarReducer = (state: InitialStateType = initialReducer, action: any): InitialStateType => {
+type ActionCreatorsTypes = null
+
+const sidebarReducer = (state: InitialStateType = initialReducer, action: ActionCreatorsTypes): InitialStateType => {
     return state;
 }
 

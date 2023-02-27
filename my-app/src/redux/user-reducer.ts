@@ -208,7 +208,7 @@ type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionCreator
 export const followThunkCreator = (userId: number): ThunkType => {
     return async (dispatch) => {
         dispatch(setFollowingProgressActionCreator(true, userId));
-        let response = await userAPI.onFollow(userId);
+        const response = await userAPI.onFollow(userId);
         if (response.data.resultCode === 0) {
             dispatch(followActionCreator(userId));
         }
@@ -219,7 +219,7 @@ export const followThunkCreator = (userId: number): ThunkType => {
 export const unfollowThunkCreator = (userId: number): ThunkType => {
     return async (dispatch) => {
         dispatch(setFollowingProgressActionCreator(true, userId));
-        let response = await userAPI.onUnfollow(userId);
+        const response = await userAPI.onUnfollow(userId);
         if (response.data.resultCode === 0) {
             dispatch(unfollowActionCreator(userId));
         }

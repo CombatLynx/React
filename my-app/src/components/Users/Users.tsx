@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import User from "./User";
 import PaginationUsers from "./PaginatonUsers/PaginationUsers";
 import {UserType} from "../../types/types";
@@ -15,7 +15,7 @@ type PropsType = {
     onCurrentPage: (page: number) => void
 }
 
-const Users: React.FC<PropsType> = (props) => {
+const Users: FC<PropsType> = (props) => {
     let users = props.users.map(
         (user) => {
             return <User user={user}

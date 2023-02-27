@@ -1,6 +1,10 @@
 import {getAuthThunkCreator} from "./auth-reducer";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
-const INITIALIZE_USER: string = 'app/INITIALIZE-USER';
+enum ActionTypes {
+    INITIALIZE_USER = 'app/INITIALIZE-USER'
+}
 
 type InitialStateType = {
     initialized: boolean
@@ -10,9 +14,11 @@ let initialReducer: InitialStateType = {
     initialized: false
 }
 
-const appReducer = (state: InitialStateType = initialReducer, action: any): InitialStateType => {
+type ActionCreatorsTypes = InitializeUserActionCreatorType
+
+const appReducer = (state: InitialStateType = initialReducer, action: ActionCreatorsTypes): InitialStateType => {
     switch (action.type) {
-        case INITIALIZE_USER:
+        case ActionTypes.INITIALIZE_USER:
             return {
                 ...state,
                 initialized: true
@@ -23,17 +29,19 @@ const appReducer = (state: InitialStateType = initialReducer, action: any): Init
 }
 
 type InitializeUserActionCreatorType = {
-    type: typeof INITIALIZE_USER
+    type: ActionTypes.INITIALIZE_USER
 }
 
 export const initializeUserActionCreator = (): InitializeUserActionCreatorType => {
     return {
-        type: INITIALIZE_USER
+        type: ActionTypes.INITIALIZE_USER
     }
 }
 
-export const initializeUserThunkCreator = () => (dispatch: any) => {
-    let promise = dispatch(getAuthThunkCreator());
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionCreatorsTypes>;
+
+export const initializeUserThunkCreator = (): ThunkType => async (dispatch) => {
+    const promise = dispatch(getAuthThunkCreator());
     Promise.all([promise])
         .then(() => {
             dispatch(initializeUserActionCreator())

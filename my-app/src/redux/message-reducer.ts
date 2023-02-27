@@ -1,4 +1,6 @@
-const ADD_TEXT_MESSAGE: string = 'message/ADD-TEXT-MESSAGE';
+enum ActionTypes {
+    ADD_TEXT_MESSAGE = 'message/ADD-TEXT-MESSAGE'
+}
 
 type DialogsType = {
     id: number,
@@ -46,11 +48,13 @@ let initialReducer = {
     ]
 }
 
-const messageReducer = (state: InitialStateType = initialReducer, action: any): InitialStateType => {
+type ActionCreatorsTypes = AddTextMessageDispatchCreatorType
+
+const messageReducer = (state: InitialStateType = initialReducer, action: ActionCreatorsTypes): InitialStateType => {
     let stateCopy;
 
     switch (action.type) {
-        case ADD_TEXT_MESSAGE:
+        case ActionTypes.ADD_TEXT_MESSAGE:
             stateCopy = {
                 ...state,
                 messages: [...state.messages, {id: 4, message: action.fieldDialogsMessage}]
@@ -62,13 +66,13 @@ const messageReducer = (state: InitialStateType = initialReducer, action: any): 
 }
 
 type AddTextMessageDispatchCreatorType = {
-    type: typeof ADD_TEXT_MESSAGE,
+    type: ActionTypes.ADD_TEXT_MESSAGE,
     fieldDialogsMessage: string
 }
 
 export const addTextMessageDispatchCreator = (newMessageTextDialogs: string): AddTextMessageDispatchCreatorType  => {
     return {
-        type: ADD_TEXT_MESSAGE,
+        type: ActionTypes.ADD_TEXT_MESSAGE,
         fieldDialogsMessage: newMessageTextDialogs
     }
 }

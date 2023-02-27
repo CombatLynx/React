@@ -66,6 +66,20 @@ type GetAuthType = {
     messages: Array<string>
 }
 
+type LogInType = {
+    data: {
+        userId: number
+    },
+    resultCode: ResultCodes,
+    messages: Array<string>
+}
+
+type LogOutType = {
+    data: {},
+    resultCode: ResultCodes,
+    messages: Array<string>
+}
+
 export const authAPI = {
     getAuth: () => {
         return instance.get<GetAuthType>(`auth/me`)
@@ -74,13 +88,13 @@ export const authAPI = {
             })
     },
     logIn: (email: string, password: string, rememberMe: boolean, captcha: string) => {
-        return instance.post(`auth/login`, {email: email, password: password, rememberMe: rememberMe, captcha: captcha})
+        return instance.post<LogInType>(`auth/login`, {email: email, password: password, rememberMe: rememberMe, captcha: captcha})
             .then(response => {
                 return response.data;
             })
     },
     logOut: () => {
-        return instance.delete(`auth/login`);
+        return instance.delete<LogOutType>(`auth/login`);
     },
     getCaptcha: () => {
         return instance.get(`security/get-captcha-url`)

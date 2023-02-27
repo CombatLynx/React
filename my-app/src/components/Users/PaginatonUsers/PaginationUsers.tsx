@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import classes from "./PaginationUsers.module.css";
 
 type PropsType = {
@@ -9,7 +9,7 @@ type PropsType = {
     onCurrentPage: (page: number) => void
 }
 
-const PaginationUsers: React.FC<PropsType> = ({totalUsersCount, pageSize, portionSize, currentPage, onCurrentPage}) => {
+const PaginationUsers: FC<PropsType> = ({totalUsersCount, pageSize, portionSize, currentPage, onCurrentPage}) => {
     let pagesCount = Math.ceil(totalUsersCount / pageSize);
 
     let pages = [];

@@ -1,8 +1,8 @@
-import {userAPI} from "../dal/api";
 import {UserType} from "../types/types";
 import {Dispatch} from "redux";
 import {AppStateType} from "./redux-store";
 import {ThunkAction} from "redux-thunk";
+import {userAPI} from "../dal/users-api";
 
 enum ActionTypes {
     FOLLOW = 'user/FOLLOW',

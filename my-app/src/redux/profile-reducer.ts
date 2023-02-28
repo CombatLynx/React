@@ -1,8 +1,9 @@
-import {profileAPI} from "../dal/api";
 import {stopSubmit} from "redux-form";
 import {PhotosType, ProfileType} from "../types/types";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
+import {profileAPI} from "../dal/profile-api";
+import {ResultCodes} from "../dal/api";
 
 enum ActionTypes {
     ADD_POST = 'profile/ADD-POST',
@@ -189,7 +190,7 @@ export const updateStatusThunkCreator = (status: string): ThunkType => {
 export const savePhotoProfileThunkCreator = (photos: PhotosType): ThunkType => {
     return async (dispatch) => {
         const response = await profileAPI.updatePhotoProfile(photos);
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === ResultCodes.SUCCESS) {
             dispatch(setSavePhotoActionCreator(response.data.data.photos));
         }
     }

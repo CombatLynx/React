@@ -2,19 +2,24 @@ import {ResultCodes} from "../dal/api";
 import {FormAction, stopSubmit} from "redux-form";
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
 import {authAPI} from "../dal/auth-api";
-import actions from "redux-form/lib/actions";
 
 enum typesActions {
     SET_USER_DATA = 'auth/SET-USER-DATA',
     SET_CAPTCHA = 'auth/SET-CAPTCHA'
 }
 
-export type InitialStateType = typeof initialReducer
+export type InitialStateType = {
+    userId: null | number,
+    email: null | string,
+    login: null | string,
+    isAuth: false | boolean,
+    captcha: null | string
+}
 
-type ActionsType = InferActionsTypes<typeof actions>
+type ActionsType = InferActionsTypes<typeof actionCreators>
 type ThunkType = BaseThunkType<ActionsType | FormAction>
 
-let initialReducer = {
+let initialReducer: InitialStateType = {
     userId: null,
     email: null,
     login: null,

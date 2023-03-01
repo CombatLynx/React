@@ -1,5 +1,5 @@
-import React from "react";
-import profileReducer, {addPostDispatchCreator, deletePostActionCreator} from "./profile-reducer";
+import profileReducer, {actionCreators} from "./profile-reducer";
+import {ProfileType} from "../types/types";
 
 let state = {
     posts: [
@@ -13,18 +13,20 @@ let state = {
             message: "It is my post",
             countLikes: 7
         }
-    ]
+    ],
+    profile: null as ProfileType | null,
+    status: null
 }
 
 it('count posts', () => {
-    let action = addPostDispatchCreator('Hello');
+    let action = actionCreators.addPostDispatchCreator('Hello');
     let newState = profileReducer(state, action);
 
     expect(newState.posts[2].message).toBe('Hello');
 });
 
 it('delete post', () => {
-    let action = deletePostActionCreator(2);
+    let action = actionCreators.deletePostActionCreator(2);
     let newState = profileReducer(state, action);
 
     expect(newState.posts.length).toBe(1);

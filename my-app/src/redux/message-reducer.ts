@@ -1,20 +1,17 @@
-enum ActionTypes {
+import {InferActionsTypes} from "./redux-store";
+
+enum typesActions {
     ADD_TEXT_MESSAGE = 'message/ADD-TEXT-MESSAGE'
 }
 
-type DialogsType = {
+type DialogType = {
     id: number,
-    name: string
+    name: string | null
 }
 
-type MessagesType = {
+type MessageType = {
     id: number,
     message: string
-}
-
-type InitialStateType = {
-    dialogs: Array<DialogsType>,
-    messages: Array<MessagesType>
 }
 
 let initialReducer = {
@@ -31,7 +28,7 @@ let initialReducer = {
             id: 3,
             name: "Jones"
         }
-    ],
+    ] as Array<DialogType>,
     messages: [
         {
             id: 1,
@@ -45,16 +42,18 @@ let initialReducer = {
             id: 3,
             message: "npx cfcr Message"
         }
-    ]
+    ] as Array<MessageType>
 }
 
-type ActionCreatorsTypes = AddTextMessageDispatchCreatorType
+export type InitialStateType = typeof initialReducer
 
-const messageReducer = (state: InitialStateType = initialReducer, action: ActionCreatorsTypes): InitialStateType => {
+type ActionsType = InferActionsTypes<typeof actionCreators>
+
+const messageReducer = (state: InitialStateType = initialReducer, action: ActionsType): InitialStateType => {
     let stateCopy;
 
     switch (action.type) {
-        case ActionTypes.ADD_TEXT_MESSAGE:
+        case typesActions.ADD_TEXT_MESSAGE:
             stateCopy = {
                 ...state,
                 messages: [...state.messages, {id: 4, message: action.fieldDialogsMessage}]
@@ -65,16 +64,11 @@ const messageReducer = (state: InitialStateType = initialReducer, action: Action
     }
 }
 
-type AddTextMessageDispatchCreatorType = {
-    type: ActionTypes.ADD_TEXT_MESSAGE,
-    fieldDialogsMessage: string
-}
-
-export const addTextMessageDispatchCreator = (newMessageTextDialogs: string): AddTextMessageDispatchCreatorType  => {
-    return {
-        type: ActionTypes.ADD_TEXT_MESSAGE,
+export const actionCreators = {
+    addTextMessageDispatchCreator: (newMessageTextDialogs: string) => ({
+        type: typesActions.ADD_TEXT_MESSAGE,
         fieldDialogsMessage: newMessageTextDialogs
-    }
+    } as const)
 }
 
 export default messageReducer;

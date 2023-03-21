@@ -4,12 +4,12 @@ enum typesActions {
     ADD_TEXT_MESSAGE = 'message/ADD-TEXT-MESSAGE'
 }
 
-type DialogType = {
+export type DialogType = {
     id: number,
     name: string | null
 }
 
-type MessageType = {
+export type MessageType = {
     id: number,
     message: string
 }

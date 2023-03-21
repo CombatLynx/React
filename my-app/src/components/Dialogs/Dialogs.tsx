@@ -1,14 +1,29 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem";
 import DialogMessage from "./DialogMessage";
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../common/FormsControls/FormsControls";
 import {maxLengthString, required} from "../../utils/validators";
+import {DialogType, MessageType} from "../../redux/message-reducer";
 
 const maxLengthString50 = maxLengthString(50);
 
-const Dialogs = (props) => {
+type PropsType = {
+    dialogs: Array<DialogType>,
+    messages: Array<MessageType>,
+    sendMessage: (messageText: string) => void
+}
+
+type PropsFormType = {}
+
+export type NewMessageFormValuesType = {
+    fieldDialogsMessage: string
+}
+
+type NewMessageFormValuesKeysType = Extract<keyof NewMessageFormValuesType, string>
+
+const Dialogs: FC<PropsType> = (props) => {
 
     let dataPersons = props.dialogs.map(
         (dialogElement) => {
@@ -22,7 +37,7 @@ const Dialogs = (props) => {
         }
     );
 
-    const sendMessageDialogs = (values) => {
+    const sendMessageDialogs = (values: NewMessageFormValuesType) => {
         props.sendMessage(values.fieldDialogsMessage);
     }
 
@@ -31,7 +46,7 @@ const Dialogs = (props) => {
             <div className={classes["dialogs-items"]}>
                 {dataPersons}
             </div>
-            <div className={classes["dialogs-messages"]}>
+            <div>
                 {dataMessages}
             </div>
             <DialogsReduxForm onSubmit={sendMessageDialogs}/>
@@ -39,7 +54,7 @@ const Dialogs = (props) => {
     );
 }
 
-const DialogsForm = (props) => {
+const DialogsForm: FC<InjectedFormProps<NewMessageFormValuesType, PropsFormType> & PropsFormType> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -56,7 +71,7 @@ const DialogsForm = (props) => {
     );
 }
 
-let DialogsReduxForm = reduxForm(
+const DialogsReduxForm = reduxForm<NewMessageFormValuesType>(
     {form: 'dialogsMessage'}
 )(DialogsForm)
 

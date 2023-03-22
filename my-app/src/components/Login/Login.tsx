@@ -1,14 +1,26 @@
-import React from "react";
-import {Field, reduxForm} from "redux-form";
+import React, {FC} from "react";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Navigate} from "react-router-dom";
 import {Input} from "../common/FormsControls/FormsControls";
 import {maxLengthString, required} from "../../utils/validators";
 import classes from "../Login/Login.module.css";
+import {MapDispatchPropsType, MapStateToPropsType} from "./LoginContainer";
 
 const maxLengthString20 = maxLengthString(20);
 
-const Login = (props) => {
-    const onSubmit = (formData) => {
+export type LoginFormValuesType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string | null
+}
+
+type LoginFormOwnProps = {
+    captcha: string | null
+}
+
+const Login: FC<MapStateToPropsType & MapDispatchPropsType> = (props) => {
+    const onSubmit = (formData: any) => {
         props.onLogin(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
 
@@ -24,7 +36,7 @@ const Login = (props) => {
     );
 }
 
-const LoginForm = (props) => {
+const LoginForm: FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProps> & LoginFormOwnProps> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -72,7 +84,7 @@ const LoginForm = (props) => {
     );
 }
 
-let LoginReduxForm = reduxForm(
+let LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnProps>(
     {form: 'login'}
 )(LoginForm)
 

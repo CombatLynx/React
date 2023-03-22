@@ -1,4 +1,5 @@
-import React from "react";
+import {FC} from "react";
+import {Field, WrappedFieldProps} from "redux-form";
 import classes from "./FormsControls.module.css";
 
 const FormControl = (props) => {
@@ -29,4 +30,21 @@ export const Input = (props) => {
     return (
         <FormControl {...props}><input {...props.input} placeholder={props.placeholder}/></FormControl>
     );
+}
+
+export function createField(placeholder: string | undefined,
+                            name: string,
+                            validators: Array<string>,
+                            component: FC<WrappedFieldProps>,
+                            props = {}, text = "") {
+    return (
+        <div>
+            <Field placeholder={placeholder}
+                   name={name}
+                   validate={validators}
+                   component={component}
+                   {...props}
+            /> {text}
+        </div>
+    )
 }

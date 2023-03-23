@@ -2,8 +2,8 @@ import React, {FC} from "react";
 import classes from "./Dialogs.module.css";
 import DialogItem from "./DialogItem";
 import DialogMessage from "./DialogMessage";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Textarea} from "../common/FormsControls/FormsControls";
+import {InjectedFormProps, reduxForm} from "redux-form";
+import {createField, Textarea} from "../common/FormsControls/FormsControls";
 import {maxLengthString, required} from "../../utils/validators";
 import {DialogType, MessageType} from "../../redux/message-reducer";
 
@@ -58,11 +58,7 @@ const DialogsForm: FC<InjectedFormProps<NewMessageFormValuesType, PropsFormType>
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder="Enter new message"
-                       component={Textarea}
-                       name={"fieldDialogsMessage"}
-                       validate={[required, maxLengthString50]}>
-                </Field>
+                {createField<NewMessageFormValuesKeysType>("Enter new message", "fieldDialogsMessage",[required, maxLengthString50], Textarea)}
             </div>
             <div>
                 <button>Send message</button>

@@ -4,7 +4,7 @@ import Login from "./Login";
 import {logInThunkCreator} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 
-const LoginContainer: FC<> = (props) => {
+const LoginContainer: FC<any> = (props) => {
     return (
         <>
             <Login onLogin={props.onLogin}

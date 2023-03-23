@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Navigate} from "react-router-dom";
-import {Input} from "../common/FormsControls/FormsControls";
+import {createField, Input} from "../common/FormsControls/FormsControls";
 import {maxLengthString, required} from "../../utils/validators";
 import classes from "../Login/Login.module.css";
 import {MapDispatchPropsType, MapStateToPropsType} from "./LoginContainer";
@@ -12,15 +12,17 @@ export type LoginFormValuesType = {
     email: string,
     password: string,
     rememberMe: boolean,
-    captcha: string | null
+    captcha: string
 }
+
+export type LoginFormPropertiesType = keyof LoginFormValuesType
 
 type LoginFormOwnProps = {
     captcha: string | null
 }
 
 const Login: FC<MapStateToPropsType & MapDispatchPropsType> = (props) => {
-    const onSubmit = (formData: any) => {
+    const onSubmit = (formData: LoginFormValuesType) => {
         props.onLogin(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
 
@@ -40,27 +42,13 @@ const LoginForm: FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProps> & 
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={"email"}
-                       placeholder={"Login"}
-                       type={"email"}
-                       component={Input}
-                       validate={[required, maxLengthString20]}
-                />
+                {createField("Email", "email",[required, maxLengthString20], Input)}
             </div>
             <div>
-                <Field name={"password"}
-                       placeholder={"Password"}
-                       type={"password"}
-                       component={Input}
-                       validate={[required, maxLengthString20]}
-                />
+                {createField("Password", "password",[required, maxLengthString20], Input, {type: "password"})}
             </div>
             <div>
-                <Field name={"rememberMe"}
-                       type={"checkbox"}
-                       component={"input"}
-                />
-                <span>remember me</span>
+                {createField(undefined, "rememberMe", [], Input, {type: "checkbox"}, "rememberMe")}
             </div>
             <div>
                 <button>Login</button>

@@ -7,10 +7,6 @@ type FormControlPropsType = {
     children: React.ReactNode
 }
 
-// type PlaceholderType = {
-//     placeholder: string | undefined
-// }
-
 const FormControl: FC<WrappedFieldProps & FormControlPropsType> = (props) => {
     const {touched, error} = props.meta;
     const hasError = touched && error;
@@ -34,8 +30,6 @@ export const Textarea: FC<WrappedFieldProps> = (props) => {
         <FormControl {...props}><textarea {...props.input} {...props}/></FormControl>
     );
 }
-
-// placeholder={props.placeholder}
 
 export const Input: FC<WrappedFieldProps> = (props) => {
     return (

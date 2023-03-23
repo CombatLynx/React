@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {InjectedFormProps, reduxForm} from "redux-form";
 import {Navigate} from "react-router-dom";
 import {createField, Input} from "../common/FormsControls/FormsControls";
 import {maxLengthString, required} from "../../utils/validators";
@@ -8,14 +8,14 @@ import {MapDispatchPropsType, MapStateToPropsType} from "./LoginContainer";
 
 const maxLengthString20 = maxLengthString(20);
 
-export type LoginFormValuesType = {
+type LoginFormValuesType = {
     email: string,
     password: string,
     rememberMe: boolean,
     captcha: string
 }
 
-export type LoginFormPropertiesType = keyof LoginFormValuesType
+type LoginFormValuesKeysType = Extract<keyof LoginFormValuesType, string>
 
 type LoginFormOwnProps = {
     captcha: string | null
@@ -42,13 +42,13 @@ const LoginForm: FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProps> & 
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                {createField("Email", "email",[required, maxLengthString20], Input)}
+                {createField<LoginFormValuesKeysType>("Email", "email",[required, maxLengthString20], Input)}
             </div>
             <div>
-                {createField("Password", "password",[required, maxLengthString20], Input, {type: "password"})}
+                {createField<LoginFormValuesKeysType>("Password", "password",[required, maxLengthString20], Input, {type: "password"})}
             </div>
             <div>
-                {createField(undefined, "rememberMe", [], Input, {type: "checkbox"}, "rememberMe")}
+                {createField<LoginFormValuesKeysType>(undefined, "rememberMe", [], Input, {type: "checkbox"}, "rememberMe")}
             </div>
             <div>
                 <button>Login</button>
@@ -62,10 +62,7 @@ const LoginForm: FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProps> & 
             {props.captcha && <img src={props.captcha} alt={"captcha"}/>}
             {props.captcha &&
                 <div>
-                    <Field name={"captcha"}
-                           type={"captcha"}
-                           component={"input"}
-                    />
+                    {createField<LoginFormValuesKeysType>(undefined, "captcha", [], Input, {type: "captcha"})}
                 </div>
             }
         </form>

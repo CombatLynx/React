@@ -13,14 +13,20 @@ import Preloader from "./components/common/Preloader";
 import {compose} from "redux";
 import {withSuspense} from "./hoc/withSuspense";
 import UsersContainer from "./components/Users/UsersContainer";
+import {AppStateType} from "./redux/redux-store";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+type MapPropsType = {
+    initialized: boolean
+}
+
+type MapDispatchPropsType = {
+    initializeUser: () => void
+}
+
+class App extends React.Component<MapPropsType & MapDispatchPropsType> {
 
     componentDidMount() {
         this.props.initializeUser();
@@ -61,7 +67,7 @@ class App extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         initialized: state.app.initialized
     }

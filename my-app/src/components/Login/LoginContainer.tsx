@@ -4,7 +4,7 @@ import Login from "./Login";
 import {logInThunkCreator} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 
-const LoginContainer: FC<any> = (props) => {
+const LoginContainer: FC<MapStateToPropsType & MapDispatchPropsType> = (props) => {
     return (
         <>
             <Login onLogin={props.onLogin}
@@ -14,19 +14,6 @@ const LoginContainer: FC<any> = (props) => {
         </>
     )
 }
-
-// class LoginContainer extends React.Component {
-//     render() {
-//         return (
-//             <>
-//                 <Login onLogin={this.props.onLogin}
-//                        isAuth={this.props.isAuth}
-//                        captcha={this.props.captcha}
-//                 />
-//             </>
-//         );
-//     }
-// }
 
 export type MapStateToPropsType = {
     isAuth: boolean,

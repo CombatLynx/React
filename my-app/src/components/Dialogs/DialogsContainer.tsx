@@ -13,7 +13,7 @@ let mapStateToProps = (state: AppStateType) => {
     }
 }
 
-export default compose(
+export default compose<React.ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, {
         sendMessage: actionCreators.addTextMessageDispatchCreator

@@ -18,8 +18,10 @@ type PropsType = {
 type PropsFormType = {}
 
 export type NewMessageFormValuesType = {
-    fieldDialogsMessage: string
+    fieldDialogsMessage: string,
+    sendMessage: (values: string) => void
 }
+
 
 type NewMessageFormValuesKeysType = Extract<keyof NewMessageFormValuesType, string>
 

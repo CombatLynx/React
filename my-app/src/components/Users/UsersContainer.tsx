@@ -8,7 +8,6 @@ import {
 import Preloader from "../common/Preloader";
 import Users from "./Users";
 import {compose} from "redux";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {
     getCurrentPage,
     getIsFetching, getIsFollowing,
@@ -18,7 +17,7 @@ import {
 } from "../../redux/selectors/users-selectors";
 import {UserType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";
-import any = jasmine.any;
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type MapStatePropsType = {
     currentPage: number,

@@ -12,7 +12,7 @@ enum typesActions {
     SET_SAVE_PHOTO = 'profile/SET-SAVE-PHOTO'
 }
 
-type PostsType = {
+export type PostsType = {
     id: number,
     message: string,
     countLikes: number
@@ -32,7 +32,8 @@ export type ContactsType = {
 type InitialStateType = {
     posts: Array<PostsType>,
     profile: ProfileType | null,
-    status: null | string
+    status: null | string,
+    newTextPost: null | string
 }
 
 type ActionsType = InferActionsTypes<typeof actionCreators>
@@ -50,9 +51,10 @@ let initialReducer: InitialStateType = {
             message: "It is my post",
             countLikes: 7
         }
-    ],
+    ] as Array<PostsType>,
     profile: null,
-    status: null
+    status: null,
+    newTextPost: null
 }
 
 const profileReducer = (state: InitialStateType = initialReducer, action: ActionsType): InitialStateType => {

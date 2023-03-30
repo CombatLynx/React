@@ -15,7 +15,8 @@ let state = {
         }
     ],
     profile: null as ProfileType | null,
-    status: null
+    status: null,
+    newTextPost: null
 }
 
 it('count posts', () => {

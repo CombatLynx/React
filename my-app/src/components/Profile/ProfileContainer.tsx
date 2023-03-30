@@ -8,26 +8,71 @@ import {
     saveProfileInfoThunkCreator,
     updateStatusThunkCreator
 } from "../../redux/profile-reducer";
-import {useLocation, useParams} from "react-router-dom";
+import {NavigateFunction, Params, useLocation, useNavigate, useParams} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {AppStateType} from "../../redux/redux-store";
+import {ProfileType} from "../../types/types";
 
-function withRouter(Component) {
-    function ComponentWithRouterProp(props) {
-        let location = useLocation();
-        let params = useParams();
-        return (
-            <Component
-                {...props}
-                router={{ location, params }}
-            />
-        );
-    }
-    return ComponentWithRouterProp;
+// type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+//
+// type MapDispatchToPropsType = {
+//     getProfile: () => void,
+//     getStatusProfile: () => void,
+//     updateStatusProfile: () => void,
+//     savePhotoProfile: () => void,
+//     saveProfileInfo: () => void
+// }
+
+// function withRouter(Component) {
+//     function ComponentWithRouterProp(props) {
+//         let location = useLocation();
+//         let navigate = useNavigate();
+//         let params = useParams();
+//         return (
+//             <Component
+//                 {...props}
+//                 router={{ location, navigate, params }}
+//             />
+//         );
+//     }
+//     return ComponentWithRouterProp;
+// }
+
+interface PropsType extends PropsWithRouter {
+    authorizedUserId: boolean,
+    status: string,
+    profile: ProfileType,
+    isOwner: boolean
 }
 
-class ProfileContainer extends React.Component {
+interface Router {
+    location: Location
+    navigate: NavigateFunction
+    params: Readonly<Params<string>>
+}
+
+export interface PropsWithRouter {
+    router: Router
+}
+
+export function withRouter<T extends PropsWithRouter>(
+    Component: React.FC<T>
+): React.FC<Omit<T, "router">> {
+    function ComponentWithRouterProp(props: T) {
+        let location = useLocation()
+        let navigate = useNavigate()
+        let params = useParams()
+        return <Component {...props} router={{location, navigate, params}}/>
+    }
+
+    return ComponentWithRouterProp as React.FC<Omit<T, "router">>
+}
+
+class ProfileContainer extends React.Component<PropsType> {
     refreshProfile() {
+        const { userId } = useParams();
+
         if (!this.props.router.params.userId) {
             this.props.router.params.userId = this.props.authorizedUserId;
             if (!this.props.authorizedUserId) {
@@ -64,7 +109,7 @@ class ProfileContainer extends React.Component {
     }
 }
 
-let mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,

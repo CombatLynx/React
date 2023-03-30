@@ -1,21 +1,37 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, FC, useState} from "react";
 import classes from "./ProfileInfo.module.css";
 import Preloader from "../../common/Preloader";
+// @ts-ignore
 import profileImage from "../../../assets/images/avatar.jpg";
-import title from "../../../assets/images/title.webp"
 import ProfileStatusWithHook from "./ProfileStatus/ProfileStatusWithHook";
 import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileInfoEditReduxForm from "./ProfileInfoFormEdit";
+import {ProfileType} from "../../../types/types";
+import {ContactsType} from "../../../redux/profile-reducer";
 
-const ProfileInfo = ({profile, ...props}) => {
+type PropsType = {
+    profile: ProfileType,
+    isOwner: boolean,
+    status: string,
+    authorizedUserId: boolean,
+    savePhotoProfile: (file: File) => void,
+    updateStatusProfile: (status: string) => void,
+    saveProfileInfo: (profile: ProfileType) => Promise<any>,
+    aboutMe: string,
+    contacts: Array<ContactsType>
+}
+
+const ProfileInfo: FC<PropsType> = ({profile, ...props}) => {
     const [editMode, setEditMode] = useState(false);
 
     if (!profile) {
         return <Preloader></Preloader>
     }
 
-    const onMainPhotoSelected = (e) => {
-        props.savePhotoProfile(e.target.files[0]);
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length) {
+            props.savePhotoProfile(e.target.files[0]);
+        }
     }
 
     const goToEditMode = () => {
@@ -26,7 +42,8 @@ const ProfileInfo = ({profile, ...props}) => {
         setEditMode(false);
     }
 
-    const onSubmitProfileInfo = (formData) => {
+    const onSubmitProfileInfo = (formData: ProfileType) => {
+        // todo: remove then
         props.saveProfileInfo(formData).then(
             () => {
                 setEditMode(false);
@@ -61,10 +78,13 @@ const ProfileInfo = ({profile, ...props}) => {
                 />
                 : <ProfileInfoForm profile={profile}
                                    goToEditMode={goToEditMode}
+                                   aboutMe={props.aboutMe}
+                                   authorizedUserId={props.authorizedUserId}
+                                   contacts={props.contacts}
+                                   isOwner={props.isOwner}
                 />
             }
             <ProfileStatusWithHook status={props.status}
-                                   profile={profile}
                                    updateStatusProfile={props.updateStatusProfile}
             />
         </div>

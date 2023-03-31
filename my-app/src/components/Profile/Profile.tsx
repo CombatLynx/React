@@ -6,12 +6,12 @@ import {ProfileType} from "../../types/types";
 import {ContactsType} from "../../redux/profile-reducer";
 
 type PropsType = {
-    authorizedUserId: boolean,
-    isOwner: boolean,
-    status: string,
-    profile: ProfileType,
+    authorizedUserId: boolean | null,
+    isOwner: any,
+    status: string | null,
+    profile: ProfileType | null,
     savePhotoProfile: (file: File) => void,
-    updateStatusProfile: (status: string) => void,
+    updateStatusProfile: (status: string | null) => void,
     saveProfileInfo: (profile: ProfileType) => Promise<any>,
     aboutMe: string,
     contacts: Array<ContactsType>,

@@ -2,8 +2,8 @@ import React, {ChangeEvent, FC, useEffect, useState} from "react";
 import classes from "./ProfileStatus.module.css";
 
 type PropsType = {
-    status: string,
-    updateStatusProfile: (status: string) => void
+    status: string | null,
+    updateStatusProfile: (status: string | null) => void
 }
 
 const ProfileStatus: FC<PropsType> = (props) => {

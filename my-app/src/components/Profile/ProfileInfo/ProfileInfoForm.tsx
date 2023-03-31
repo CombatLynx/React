@@ -5,7 +5,7 @@ import {ContactsType} from "../../../redux/profile-reducer";
 type ProfileInfoFormPropsType = {
     profile: ProfileType,
     isOwner: boolean,
-    authorizedUserId: boolean,
+    authorizedUserId: boolean | null,
     goToEditMode: () => void,
     aboutMe: string,
     contacts: Array<ContactsType>

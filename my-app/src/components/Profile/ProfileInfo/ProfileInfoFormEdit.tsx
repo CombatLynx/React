@@ -12,7 +12,7 @@ const maxLengthString500 = maxLengthString(500);
 type ProfileFormValuesType = {
     profile: ProfileType,
     isOwner: boolean,
-    authorizedUserId: boolean,
+    authorizedUserId: boolean | null,
     exitToEditMode: () => void
 }
 

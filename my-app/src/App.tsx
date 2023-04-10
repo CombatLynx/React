@@ -14,19 +14,24 @@ import {compose} from "redux";
 import {AppStateType} from "./redux/redux-store";
 import {withSuspense} from "./hoc/withSuspense";
 import UsersContainer from "./components/Users/UsersContainer";
+import {FriendsType} from "./redux/sidebar-reducer";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 
-type MapPropsType = {
-    initialized: boolean
+type DataNavbar = {
+    dataNavbar: Array<FriendsType>
+}
+
+type MapStatePropsType = {
+    initialized: boolean,
 }
 
 type MapDispatchPropsType = {
     initializeUser: () => void
 }
 
-class App extends React.Component<MapPropsType & MapDispatchPropsType> {
+class App extends React.Component<MapStatePropsType & MapDispatchPropsType & DataNavbar> {
 
     componentDidMount() {
         this.props.initializeUser();
@@ -67,7 +72,7 @@ class App extends React.Component<MapPropsType & MapDispatchPropsType> {
     }
 }
 
-const mapStateToProps = (state: AppStateType) => {
+const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         initialized: state.app.initialized
     }

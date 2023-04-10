@@ -56,10 +56,6 @@ const ProfileInfo: FC<PropsType> = ({profile, ...props}) => {
 
     return (
         <div className={classes["profile-info"]}>
-            {/*<img className={classes["profile-img"]}*/}
-            {/*     src={title}*/}
-            {/*     alt="images"*/}
-            {/*/>*/}
             <img className={classes["profile-img__local"]}
                  src={profile.photos.small !== null
                      ? profile.photos.large

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import classes from "../TimerForStaying/TimerForStaying.module.css";
 
 const TimerForStaying = () => {
 
@@ -27,7 +26,7 @@ const TimerForStaying = () => {
     }, [seconds, minutes, hours]);
 
     return (
-        <div className={classes.timer}>
+        <div>
             <div>Время прибывания на сайте</div>
             <div>
                 {seconds < 10

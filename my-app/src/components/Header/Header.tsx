@@ -1,10 +1,18 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./Header.module.css";
 import {NavLink} from "react-router-dom";
 import TimerForStaying from "./TimerForStaying/TimerForStaying";
+// @ts-ignore
 import logoHeader from "../../assets/images/emblem_195x195.png"
 
-const Header = (props) => {
+type PropsType = {
+    isAuth: boolean,
+    login: string | null,
+    userId: null | number,
+    logOut: () => void
+}
+
+const Header: FC<PropsType> = (props) => {
     return (
         <header className={classes.header}>
             <div className={classes["header-item"]}>

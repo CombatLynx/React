@@ -4,7 +4,7 @@ import NavbarFriends from "./NavbarFriends";
 
 describe("NavbarFriends", () => {
   test("matches snapshot", () => {
-    const wrapper = shallow(<NavbarFriends />);
+    const wrapper = shallow(<NavbarFriends  name={"Misha"}/>);
     expect(wrapper).toMatchSnapshot();
   });
 });

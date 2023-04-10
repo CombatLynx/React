@@ -1,17 +1,23 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./Navbar.module.css";
 import {NavLink} from "react-router-dom";
 import NavbarFriends from "./NavbarFriends";
+import {InitialStateType} from "../../redux/sidebar-reducer";
 
-const setActive = ({isActive}) => (isActive ? classes.active : '');
 
-const Navbar = (props) => {
+const setActive = ({isActive}: {isActive: boolean}) => (isActive ? classes.active : '');
 
-    // let dataSidebar = props.dataNavbar.friends.map(
-    //     (elemSidebar) => {
-    //         return <NavbarFriends key={elemSidebar.id} name={elemSidebar.name} id={elemSidebar.id}/>
-    //     }
-    // );
+type PropsType = {
+    dataNavbar: InitialStateType
+}
+
+const Navbar: FC<PropsType> = (props) => {
+
+    let dataSidebar = props.dataNavbar.friends.map(
+        (elemSidebar) => {
+            return <NavbarFriends key={elemSidebar.id} name={elemSidebar.name} id={elemSidebar.id}/>
+        }
+    );
 
     return (
         <nav className={classes.nav}>
@@ -35,9 +41,9 @@ const Navbar = (props) => {
                                                                    to="/settings">Settings</NavLink>
                 </li>
             </ul>
-            {/*<div className={classes["nav-menu__sidebar"]}>Friends*/}
-            {/*    <div className={classes["nav-menu__sidebar__friends"]}>{dataSidebar}</div>*/}
-            {/*</div>*/}
+            <div className={classes["nav-menu__sidebar"]}>Friends
+                <div className={classes["nav-menu__sidebar__friends"]}>{dataSidebar}</div>
+            </div>
         </nav>
     );
 }

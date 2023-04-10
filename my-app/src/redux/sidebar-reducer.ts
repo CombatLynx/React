@@ -1,6 +1,6 @@
-type InitialStateType = typeof initialReducer;
+export type InitialStateType = typeof initialReducer;
 
-type FriendsType = {
+export type FriendsType = {
     id: number,
     name: string
 }

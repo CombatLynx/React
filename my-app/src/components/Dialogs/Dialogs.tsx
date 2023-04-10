@@ -22,7 +22,6 @@ export type NewMessageFormValuesType = {
     sendMessage: (values: string) => void
 }
 
-
 type NewMessageFormValuesKeysType = Extract<keyof NewMessageFormValuesType, string>
 
 const Dialogs: FC<PropsType> = (props) => {

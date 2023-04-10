@@ -9,6 +9,10 @@ type MapStateToPropsType = {
     newTextPost: null | string
 }
 
+type MapDispatchPropsType = {
+    addPost: (filedPostMessage: string) => void
+}
+
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         dataPost: state.profilePage.posts,
@@ -16,6 +20,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {
+export default connect<MapStateToPropsType, MapDispatchPropsType, {}, AppStateType>(
+    mapStateToProps, {
     addPost: actionCreators.addPostDispatchCreator
 })(MyPosts);

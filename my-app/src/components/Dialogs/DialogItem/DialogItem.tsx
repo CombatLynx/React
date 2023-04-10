@@ -1,10 +1,15 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./DialogItem.module.css";
 import {NavLink} from "react-router-dom";
 
-const setActive = ({ isActive }) => (isActive ? classes.active: '');
+type PropsType = {
+    id: number,
+    name: string | null
+}
 
-const DialogItem = (props) => {
+const setActive = ({ isActive }: {isActive: boolean}) => (isActive ? classes.active: '');
+
+const DialogItem: FC<PropsType> = (props) => {
   return (
       <div className={classes["dialogs-items__element"]}>
         <NavLink className={setActive} to={"/dialogs/" + props.id}>{props.name}</NavLink>

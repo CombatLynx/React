@@ -14,7 +14,7 @@ type PropsType = {
     updateStatusProfile: (status: string | null) => void,
     saveProfileInfo: (profile: ProfileType) => Promise<any>,
     aboutMe: string,
-    contacts: Array<ContactsType>,
+    contacts: Array<ContactsType>
 }
 
 const Profile: FC<PropsType> = (props) => {
@@ -30,7 +30,7 @@ const Profile: FC<PropsType> = (props) => {
                          aboutMe={props.aboutMe}
                          contacts={props.contacts}
             />
-            <MyPostsContainer></MyPostsContainer>
+            <MyPostsContainer/>
         </div>
     );
 }

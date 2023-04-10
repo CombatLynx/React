@@ -1,7 +1,11 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./NavbarFriends.module.css";
 
-const NavbarFriends = (props) => {
+type PropsType = {
+    name: string
+}
+
+const NavbarFriends: FC<PropsType> = (props) => {
     return (
         <div className={classes["navbar-friends"]}>{props.name}</div>
     );

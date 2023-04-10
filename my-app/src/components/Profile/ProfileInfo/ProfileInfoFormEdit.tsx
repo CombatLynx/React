@@ -9,11 +9,15 @@ const maxLengthString50 = maxLengthString(50);
 const maxLengthString100 = maxLengthString(100);
 const maxLengthString500 = maxLengthString(500);
 
-type ProfileFormValuesType = {
+interface ProfileFormValuesType extends SubmitReduxFormType {
     profile: ProfileType,
     isOwner: boolean,
     authorizedUserId: boolean | null,
     exitToEditMode: () => void
+}
+
+type SubmitReduxFormType = {
+    onSubmit: any
 }
 
 type ProfileFormValuesKeysType = GetStringKeys<ProfileType>
@@ -29,7 +33,7 @@ const ProfileInfoFormEdit: FC<InjectedFormProps<ProfileType, ProfileFormValuesTy
                 </div>
             }</div>
             {props.isOwner === props.authorizedUserId && <div>
-                {/*<button onSubmit={props.onSubmit}>Save</button>*/}
+                <button onSubmit={props.onSubmit}>Save</button>
                 <button onClick={props.exitToEditMode}>Close form</button>
             </div>}
             <div>

@@ -31,6 +31,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {
+export default connect<MapStateToPropsType, MapDispatchPropsType, {}, AppStateType>(
+    mapStateToProps, {
     onLogin: logInThunkCreator
 })(LoginContainer);

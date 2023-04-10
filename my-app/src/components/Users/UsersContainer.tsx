@@ -85,7 +85,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 export default compose(
     withAuthRedirect,
-    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
+    connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(
+        mapStateToProps, {
         getUsers: getUsersThunkCreator,
         follow: followThunkCreator,
         unfollow: unfollowThunkCreator

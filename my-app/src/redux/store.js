@@ -2,7 +2,7 @@ import profileReducer from "./profile-reducer";
 import messageReducer from "./message-reducer";
 import sidebarReducer from "./sidebar-reducer";
 
-let store = {
+const store = {
     _state: {
         profilePage: {
             posts: [

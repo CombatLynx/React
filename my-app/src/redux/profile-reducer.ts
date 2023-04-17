@@ -115,8 +115,7 @@ export const actionCreators = {
     setUsersStatusProfileActionCreator: (status: string) => ({
         type: typesActions.SET_USER_PROFILE_STATUS,
         userStatusProfile: status
-    } as const),
-
+    } as const)
 }
 
 export const getProfileThunkCreator = (userId: number): ThunkType => {

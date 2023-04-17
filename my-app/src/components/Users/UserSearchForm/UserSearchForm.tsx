@@ -1,35 +1,36 @@
-import {Formik, FormikHelpers, FormikValues} from "formik";
+import {Field, Form, Formik, FormikValues} from "formik";
+import {FC} from "react";
 
-const UserSearchForm = () => {
-    const submitForm = (values: FormikValues, actions: FormikHelpers<{name: string}>) => {
+type PropsType = {
+    onFilterChange: (filter: FormikValues) => void
+}
+
+const usersSearchFormValidate = (values: any) => {
+    return {}
+}
+
+const UserSearchForm: FC<PropsType> = (props) => {
+    const submitForm = (values: FormikValues, {setSubmitting}: {setSubmitting: (isSubmitting: boolean) => void}) => {
         setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
-        }, 1000);
+            props.onFilterChange(values)
+            setSubmitting(false)
+        }, 1000)
     }
 
     return (
-        <div>
-            <Formik
-                initialValues={{name: ''}}
-                onSubmit={submitForm}
-            >
-                {props => (
-                    <form onSubmit={props.handleSubmit}>
-                        <input
-                            type="text"
-                            onChange={props.handleChange}
-                            onBlur={props.handleBlur}
-                            value={props.values.name}
-                            name="name"
-                        />
-                        {props.errors.name && <div id="feedback">{props.errors.name}</div>}
-                        <button type="submit">Submit</button>
-                    </form>
-                )}
-            </Formik>
-        </div>
-    )
+        <Formik
+            initialValues={{name: ''}}
+            validate={usersSearchFormValidate}
+            onSubmit={submitForm}
+        >
+            {({isSubmitting}) => (
+                <Form>
+                    <Field type={"text"} name={"term"}></Field>
+                    <button type="submit" disabled={isSubmitting}>Find</button>
+                </Form>
+            )}
+        </Formik>
+    );
 }
 
 export default UserSearchForm;

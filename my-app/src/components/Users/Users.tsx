@@ -3,6 +3,7 @@ import User from "./User";
 import PaginationUsers from "./PaginatonUsers/PaginationUsers";
 import {UserType} from "../../types/types";
 import UserSearchForm from "./UserSearchForm/UserSearchForm";
+import {FormikValues} from "formik";
 
 type PropsType = {
     users: Array<UserType>,
@@ -13,7 +14,8 @@ type PropsType = {
     pageSize: number,
     portionSize: number,
     currentPage: number,
-    onCurrentPage: (page: number) => void
+    onCurrentPage: (page: number) => void,
+    onFilterChange: (filter: FormikValues) => void
 }
 
 const Users: FC<PropsType> = (props) => {
@@ -30,7 +32,8 @@ const Users: FC<PropsType> = (props) => {
     return (
         <div>
             <div>
-                <UserSearchForm/>
+                <UserSearchForm onFilterChange={props.onFilterChange}
+                />
             </div>
             <PaginationUsers totalUsersCount={props.totalUsersCount}
                              pageSize={props.pageSize}

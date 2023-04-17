@@ -142,113 +142,16 @@ export const actionCreators = {
     } as const)
 }
 
-// type FollowActionCreatorType = {
-//     type: ActionTypes.FOLLOW,
-//     userId: number
-// }
-//
-// export const followActionCreator = (userId: number): FollowActionCreatorType => {
-//     return {
-//         type: ActionTypes.FOLLOW,
-//         userId: userId
-//     }
-// }
-//
-// type UnfollowActionCreatorType = {
-//     type: ActionTypes.UNFOLLOW,
-//     userId: number
-// }
-//
-// export const unfollowActionCreator = (userId: number): UnfollowActionCreatorType => {
-//     return {
-//         type: ActionTypes.UNFOLLOW,
-//         userId: userId
-//     }
-// }
-
-// type SetUsersActionCreatorType = {
-//     type: ActionTypes.SET_USERS,
-//     users: Array<UserType>
-// }
-//
-// export const setUsersActionCreator = (users: Array<UserType>): SetUsersActionCreatorType => {
-//     return {
-//         type: ActionTypes.SET_USERS,
-//         users: users
-//     }
-// }
-
-// type SetCurrentPageActionCreatorType = {
-//     type: ActionTypes.SET_CURRENT_PAGE,
-//     currentPage: number
-// }
-//
-// export const setCurrentPageActionCreator = (currentPage: number): SetCurrentPageActionCreatorType => {
-//     return {
-//         type: ActionTypes.SET_CURRENT_PAGE,
-//         currentPage: currentPage
-//     }
-// }
-
-// type SetTotalCountActionCreatorType = {
-//     type: ActionTypes.SET_USERS_TOTAL_COUNT,
-//     totalCount: number
-// }
-//
-// export const setTotalCountActionCreator = (countUsers: number): SetTotalCountActionCreatorType => {
-//     return {
-//         type: ActionTypes.SET_USERS_TOTAL_COUNT,
-//         totalCount: countUsers
-//     }
-// }
-
-// type SetIsFetchingActionCreatorType = {
-//     type: ActionTypes.TOGGLE_IS_FETCHING,
-//     toggleIsFetching: boolean
-// }
-//
-// export const setIsFetchingActionCreator = (isFetching: boolean): SetIsFetchingActionCreatorType => {
-//     return {
-//         type: ActionTypes.TOGGLE_IS_FETCHING,
-//         toggleIsFetching: isFetching
-//     }
-// }
-
-// type SetFollowingProgressActionCreatorType = {
-//     type: ActionTypes.TOGGLE_IS_FOLLOWING_PROGRESS,
-//     toggleIsFollowing: boolean,
-//     userId: number
-// }
-//
-// export const setFollowingProgressActionCreator = (isFollow: boolean, userId: number): SetFollowingProgressActionCreatorType => {
-//     return {
-//         type: ActionTypes.TOGGLE_IS_FOLLOWING_PROGRESS,
-//         toggleIsFollowing: isFollow,
-//         userId: userId
-//     }
-// }
-
-// type SetFilterActionCreatorType = {
-//     type: ActionTypes.SET_FILTER,
-//     payload: any
-// }
-//
-// export const setFilterActionCreator = (term: string): SetFilterActionCreatorType => {
-//     return {
-//         type: ActionTypes.SET_FILTER,
-//         payload: {term}
-//     }
-// }
-
 export const getUsersThunkCreator = (currentPage: number, pageSize: number, term: string): ThunkType => {
     return async (dispatch) => {
         dispatch(actionCreators.setIsFetchingActionCreator(true));
+        dispatch(actionCreators.setCurrentPageActionCreator(currentPage));
+        dispatch(actionCreators.setFilterActionCreator(term));
+
         let data = await userAPI.getUsers(currentPage, pageSize, term);
         dispatch(actionCreators.setIsFetchingActionCreator(false));
         dispatch(actionCreators.setUsersActionCreator(data.items));
         dispatch(actionCreators.setTotalCountActionCreator(data.totalCount));
-        dispatch(actionCreators.setCurrentPageActionCreator(currentPage));
-        dispatch(actionCreators.setFilterActionCreator(term));
     }
 }
 

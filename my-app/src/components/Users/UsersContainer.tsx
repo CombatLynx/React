@@ -18,6 +18,7 @@ import {
 import {UserType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {FormikValues} from "formik";
 
 type MapStatePropsType = {
     currentPage: number,
@@ -48,7 +49,13 @@ class UsersContainer extends React.Component<PropsType> {
     }
 
     onCurrentPage = (currentPage: number) => {
-        this.props.getUsers(currentPage, this.props.pageSize, "");
+        const {pageSize} = this.props;
+        this.props.getUsers(currentPage, pageSize, "");
+    }
+
+    onFilterChange = (filter: FormikValues) => {
+        const {currentPage, pageSize} = this.props;
+        this.props.getUsers(currentPage, pageSize, filter.term);
     }
 
     render() {
@@ -57,6 +64,7 @@ class UsersContainer extends React.Component<PropsType> {
                 <div>{this.props.title}</div>
                 <div>{this.props.isFetching ? <Preloader /> : null}</div>
                 <Users onCurrentPage={this.onCurrentPage}
+                       onFilterChange={this.onFilterChange}
                        totalUsersCount={this.props.totalUsersCount}
                        pageSize={this.props.pageSize}
                        currentPage={this.props.currentPage}

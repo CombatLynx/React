@@ -20,12 +20,14 @@ const Header: FC<PropsType> = (props) => {
             </div>
             <div className={`${classes["header-item"]} ${classes["header__logo-position"]}`}>
                 <img className={classes.logo}
-                    src={logoHeader}
-                    alt="logo"/>
+                     src={logoHeader}
+                     alt="logo"/>
             </div>
-            <div className={classes["login-block"] + classes["header-item"]}>
-                <div>{props.isAuth
-                    ? <div>{props.login + " " + props.userId}
+            <div className={classes["login-block"] + ' ' + classes["header-item"]}>
+                <div className={classes.login}>{props.isAuth
+                    ? <div>
+                        <div>{props.login}</div>
+                        <div>{props.userId}</div>
                         <div>
                             <button onClick={props.logOut}>Logout</button>
                         </div>

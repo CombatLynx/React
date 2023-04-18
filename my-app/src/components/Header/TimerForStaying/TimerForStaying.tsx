@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import classes from "./TimerForStaying.module.css";
 
 const TimerForStaying = () => {
 
@@ -26,22 +27,24 @@ const TimerForStaying = () => {
     }, [seconds, minutes, hours]);
 
     return (
-        <div>
-            <div>Время прибывания на сайте</div>
-            <div>
-                {seconds < 10
-                    ? `0${seconds}`
-                    : `${seconds}`
-                }<span>:sec</span>
-                {minutes < 10
-                    ? `0${minutes}`
-                    : `${minutes}`
-                }<span>:min</span>
-                {hours < 10
-                    ? `0${hours}`
-                    : `${hours}`
-                }<span>:hours</span>
-            </div>
+        <div className={classes.wrapper}>
+            <div className={classes.timer}>
+                <div>Время прибывания на сайте</div>
+                <div>
+                    {seconds < 10
+                        ? `0${seconds}`
+                        : `${seconds}`
+                    }<span>:sec</span>
+                    {minutes < 10
+                        ? `0${minutes}`
+                        : `${minutes}`
+                    }<span>:min</span>
+                    {hours < 10
+                        ? `0${hours}`
+                        : `${hours}`
+                    }<span>:hours</span>
+                </div>
+                </div>
         </div>
     );
 }

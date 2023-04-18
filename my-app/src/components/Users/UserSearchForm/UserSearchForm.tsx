@@ -22,23 +22,43 @@ const UserSearchForm: FC<PropsType> = React.memo((props) => {
     }
 
     return (
-        <Formik
-            initialValues={{name: '', friend: 'null'}}
-            validate={usersSearchFormValidate}
-            onSubmit={submitForm}
-        >
-            {({isSubmitting}) => (
-                <Form>
-                    <Field type={"text"} name={"term"}></Field>
-                    <Field name={"friend"} as={"select"}>
-                        <option value={"null"}>All</option>
-                        <option value={"true"}>Only followed</option>
-                        <option value={"false"}>Only unfollowed</option>
-                    </Field>
-                    <button type="submit" disabled={isSubmitting}>Find</button>
-                </Form>
-            )}
-        </Formik>
+        <div>
+            <Formik
+                initialValues={{name: '', friend: 'null'}}
+                validate={usersSearchFormValidate}
+                onSubmit={submitForm}
+            >
+                {({isSubmitting}) => (
+                    <Form>
+                        <Field type={"text"} name={"term"}></Field>
+                        <Field name={"friend"} as={"select"}>
+                            <option value={"null"}>All</option>
+                            <option value={"true"}>Only followed</option>
+                            <option value={"false"}>Only unfollowed</option>
+                        </Field>
+                        <button type="submit" disabled={isSubmitting}>Find</button>
+                    </Form>
+                )}
+            </Formik>
+            <Formik
+                enableReinitialize
+                onSubmit={(values, {setSubmitting}) => {
+                    values.q = '';
+                    setSubmitting(false);
+                }}
+                initialValues={{q: "initial value"}}
+                render={({resetForm}) => (
+                    <Form>
+                        <Field name="q"/>
+                        <button type="submit">
+                            Reset form
+                        </button>
+                        {" "}
+                        {/* <== Reset */}
+                    </Form>
+                )}
+            />
+        </div>
     );
 })
 

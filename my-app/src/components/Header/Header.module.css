@@ -6,15 +6,16 @@
     width: 100%;
     margin-bottom: 20px;
     border-radius: 20px;
+    justify-content: space-between;
 }
 
 .header-item {
     display: flex;
-    width: 100%;
+    align-items: center;
 }
 
 .login-block {
-    float: right;
+    margin: 0 14px 0 14px;
 }
 
 .logo {
@@ -24,5 +25,15 @@
 }
 
 .header__logo-position {
-    align-items: center;
+    /*align-items: center;*/
+    /*display: flex;*/
+    /*justify-content: flex-end;*/
+}
+
+.login {
+    background: rgb(230, 230, 230);
+    padding: 20px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
 }

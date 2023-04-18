@@ -32,3 +32,7 @@ export const getIsFollowing = (state: AppStateType) => {
 export const getPortionSize = (state: AppStateType) => {
     return state.userPage.portionSize;
 }
+
+export const getUsersFilter = (state: AppStateType) => {
+    return state.userPage.filter;
+}

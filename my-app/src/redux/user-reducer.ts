@@ -2,6 +2,7 @@ import {UserType} from "../types/types";
 import {BaseThunkType, InferActionsTypes} from "./redux-store";
 import {userAPI} from "../dal/users-api";
 import {FormAction} from "redux-form";
+import {FormikValues} from "formik";
 
 enum typesActions {
     FOLLOW = 'user/FOLLOW',
@@ -14,7 +15,10 @@ enum typesActions {
     SET_FILTER = 'user/SET-FILTER'
 }
 
-const limitCountUsers: number = 500;
+type FilterType = {
+    term: string,
+    friend: null | boolean
+}
 
 type InitialStateType = {
     users: Array<UserType>,
@@ -25,9 +29,7 @@ type InitialStateType = {
     isFetching: boolean,
     isFollowing: Array<number>,
     fake: number,
-    filter: {
-        term: string
-    }
+    filter: FilterType
 }
 
 type ActionsType = InferActionsTypes<typeof actionCreators>
@@ -43,7 +45,8 @@ let initialReducer: InitialStateType = {
     isFollowing: [] as Array<number>,
     fake: 0,
     filter: {
-        term: ''
+        term: '',
+        friend: null
     }
 }
 
@@ -82,7 +85,7 @@ const usersReducer = (state: InitialStateType = initialReducer, action: ActionsT
         case typesActions.SET_USERS_TOTAL_COUNT:
             return {
                 ...state,
-                totalUsersCount: action.totalCount - (action.totalCount - limitCountUsers)
+                totalUsersCount: action.totalCount
             }
         case typesActions.TOGGLE_IS_FETCHING:
             return {
@@ -99,7 +102,7 @@ const usersReducer = (state: InitialStateType = initialReducer, action: ActionsT
         case typesActions.SET_FILTER:
             return {
                 ...state,
-                filter: action.payload
+                filter: action.payload as FilterType
             }
         default:
             return state;
@@ -136,19 +139,19 @@ export const actionCreators = {
         toggleIsFollowing: isFollow,
         userId: userId
     } as const),
-    setFilterActionCreator: (term: string) => ({
+    setFilterActionCreator: (filter: FormikValues) => ({
         type: typesActions.SET_FILTER,
-        payload: {term}
+        payload: filter
     } as const)
 }
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number, term: string): ThunkType => {
+export const getUsersThunkCreator = (currentPage: number, pageSize: number, filter: FormikValues): ThunkType => {
     return async (dispatch) => {
         dispatch(actionCreators.setIsFetchingActionCreator(true));
         dispatch(actionCreators.setCurrentPageActionCreator(currentPage));
-        dispatch(actionCreators.setFilterActionCreator(term));
+        dispatch(actionCreators.setFilterActionCreator(filter));
 
-        let data = await userAPI.getUsers(currentPage, pageSize, term);
+        let data = await userAPI.getUsers(currentPage, pageSize, filter.term, filter.friend);
         dispatch(actionCreators.setIsFetchingActionCreator(false));
         dispatch(actionCreators.setUsersActionCreator(data.items));
         dispatch(actionCreators.setTotalCountActionCreator(data.totalCount));

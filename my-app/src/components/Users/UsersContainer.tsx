@@ -13,7 +13,7 @@ import {
     getIsFetching, getIsFollowing,
     getPageSize, getPortionSize,
     getTotalUsersCount,
-    getUsers
+    getUsers, getUsersFilter
 } from "../../redux/selectors/users-selectors";
 import {UserType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";
@@ -27,13 +27,14 @@ type MapStatePropsType = {
     totalUsersCount: number,
     portionSize: number,
     isFollowing: Array<number>,
-    users: Array<UserType>
+    users: Array<UserType>,
+    filter: FormikValues
 }
 
 type MapDispatchPropsType = {
     follow: (userId: number) => void,
     unfollow: (userId: number) => void,
-    getUsers: (currentPage: number, pageSize: number, term: string) => void
+    getUsers: (currentPage: number, pageSize: number, filter: FormikValues) => void
 }
 
 type OwnPropsType = {
@@ -45,17 +46,18 @@ type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
 class UsersContainer extends React.Component<PropsType> {
 
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize, "");
+        const {filter} = this.props;
+        this.props.getUsers(this.props.currentPage, this.props.pageSize, filter);
     }
 
     onCurrentPage = (currentPage: number) => {
-        const {pageSize} = this.props;
-        this.props.getUsers(currentPage, pageSize, "");
+        const {pageSize, filter} = this.props;
+        this.props.getUsers(currentPage, pageSize, filter);
     }
 
     onFilterChange = (filter: FormikValues) => {
-        const {currentPage, pageSize} = this.props;
-        this.props.getUsers(currentPage, pageSize, filter.term);
+        const {pageSize} = this.props;
+        this.props.getUsers(1, pageSize, filter);
     }
 
     render() {
@@ -87,7 +89,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         isFollowing: getIsFollowing(state),
-        portionSize: getPortionSize(state)
+        portionSize: getPortionSize(state),
+        filter: getUsersFilter(state)
     }
 }
 

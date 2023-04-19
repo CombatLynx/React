@@ -1,47 +1,80 @@
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
 import User from "./User";
 import PaginationUsers from "./PaginatonUsers/PaginationUsers";
-import {UserType} from "../../types/types";
 import UserSearchForm from "./UserSearchForm/UserSearchForm";
 import {FormikValues} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    getCurrentPage,
+    getIsFollowing,
+    getPageSize,
+    getPortionSize,
+    getTotalUsersCount,
+    getUsers, getUsersFilter
+} from "../../redux/selectors/users-selectors";
+import {followThunkCreator, getUsersThunkCreator, unfollowThunkCreator} from "../../redux/user-reducer";
 
-type PropsType = {
-    users: Array<UserType>,
-    follow: (userId: number) => void,
-    unfollow: (userId: number) => void,
-    isFollowing: Array<number>,
-    totalUsersCount: number,
-    pageSize: number,
-    portionSize: number,
-    currentPage: number,
-    onCurrentPage: (page: number) => void,
-    onFilterChange: (filter: FormikValues) => void
-}
+export const Users: FC = () => {
 
-const Users: FC<PropsType> = (props) => {
-    const users = props.users.map(
+    const users = useSelector(getUsers)
+    const isFollowing = useSelector(getIsFollowing)
+    const totalUsersCount = useSelector(getTotalUsersCount)
+    const pageSize = useSelector(getPageSize)
+    const currentPage = useSelector(getCurrentPage)
+    const portionSize = useSelector(getPortionSize)
+    const filter = useSelector(getUsersFilter)
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        // @ts-ignore
+        dispatch(getUsersThunkCreator(currentPage, pageSize, filter));
+    }, [])
+
+    const onCurrentPage = (currentPage: number) => {
+        // @ts-ignore
+        dispatch(getUsersThunkCreator(currentPage, pageSize, filter));
+    }
+
+    const onFilterChange = (filter: FormikValues) => {
+        // @ts-ignore
+        dispatch(getUsersThunkCreator(1, pageSize, filter));
+    }
+
+    const follow = (userId: number) => {
+        // @ts-ignore
+        dispatch(followThunkCreator(userId))
+    }
+
+    const unfollow = (userId: number) => {
+        // @ts-ignore
+        dispatch(unfollowThunkCreator(userId))
+    }
+
+    const usersProps = users.map(
         (user) => {
             return <User key={user.id}
                          user={user}
-                         follow={props.follow}
-                         unfollow={props.unfollow}
-                         isFollowing={props.isFollowing}
+                         follow={follow}
+                         unfollow={unfollow}
+                         isFollowing={isFollowing}
             />
         })
 
     return (
         <div>
             <div>
-                <UserSearchForm onFilterChange={props.onFilterChange}
+                <UserSearchForm onFilterChange={onFilterChange}
                 />
             </div>
-            <PaginationUsers totalUsersCount={props.totalUsersCount}
-                             pageSize={props.pageSize}
-                             currentPage={props.currentPage}
-                             onCurrentPage={props.onCurrentPage}
-                             portionSize={props.portionSize}
+            <PaginationUsers
+                totalUsersCount={totalUsersCount}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onCurrentPage={onCurrentPage}
+                portionSize={portionSize}
             />
-            {users}
+            {usersProps}
         </div>
     );
 }

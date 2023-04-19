@@ -13,8 +13,8 @@ import Preloader from "./components/common/Preloader";
 import {compose} from "redux";
 import {AppStateType} from "./redux/redux-store";
 import {withSuspense} from "./hoc/withSuspense";
-import UsersContainer from "./components/Users/UsersContainer";
 import {FriendsType} from "./redux/sidebar-reducer";
+import {UsersPage} from "./components/Users/UsersPage";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
@@ -60,7 +60,7 @@ class App extends React.Component<MapStatePropsType & MapDispatchPropsType & Dat
                             <Route path="/news" element={<News/>}/>
                             <Route path="/music" element={<Music/>}/>
                             <Route path="/settings" element={<Settings/>}/>
-                            <Route path="/users" element={<UsersContainer title={"Hello people"}/>}/>
+                            <Route path="/users" element={<UsersPage title={"Hello people"}/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
                             <Route path="*" element={<div>404 NOT FOUND</div>}/>
                             <Route path="/" element={<Navigate to='/profile'/>}/>

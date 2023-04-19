@@ -1,19 +1,18 @@
 import React from "react";
 import {connect} from "react-redux";
-import {
-    followThunkCreator,
-    getUsersThunkCreator,
-    unfollowThunkCreator
-} from "../../redux/user-reducer";
+import {followThunkCreator, getUsersThunkCreator, unfollowThunkCreator} from "../../redux/user-reducer";
 import Preloader from "../common/Preloader";
 import Users from "./Users";
 import {compose} from "redux";
 import {
     getCurrentPage,
-    getIsFetching, getIsFollowing,
-    getPageSize, getPortionSize,
+    getIsFetching,
+    getIsFollowing,
+    getPageSize,
+    getPortionSize,
     getTotalUsersCount,
-    getUsers, getUsersFilter
+    getUsers,
+    getUsersFilter
 } from "../../redux/selectors/users-selectors";
 import {UserType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";

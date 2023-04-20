@@ -27,28 +27,28 @@ export const Users: FC = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        // @ts-ignore
-        dispatch(getUsersThunkCreator(currentPage, pageSize, filter));
+        //todo: typing dispatch hook
+        dispatch<any>(getUsersThunkCreator(currentPage, pageSize, filter))
     }, [])
 
-    const onCurrentPage = (currentPage: number) => {
-        // @ts-ignore
-        dispatch(getUsersThunkCreator(currentPage, pageSize, filter));
+    const onCurrentPage = (currentPage: number): any => {
+        //todo: typing dispatch hook
+        dispatch<any>(getUsersThunkCreator(currentPage, pageSize, filter))
     }
 
     const onFilterChange = (filter: FormikValues) => {
-        // @ts-ignore
-        dispatch(getUsersThunkCreator(1, pageSize, filter));
+        //todo: typing dispatch hook
+        dispatch<any>(getUsersThunkCreator(1, pageSize, filter))
     }
 
     const follow = (userId: number) => {
-        // @ts-ignore
-        dispatch(followThunkCreator(userId))
+        //todo: typing dispatch hook
+        dispatch<any>(followThunkCreator(userId))
     }
 
     const unfollow = (userId: number) => {
-        // @ts-ignore
-        dispatch(unfollowThunkCreator(userId))
+        //todo: typing dispatch hook
+        dispatch<any>(unfollowThunkCreator(userId))
     }
 
     const usersProps = users.map(

@@ -6,7 +6,6 @@ import Music from "./components/Music";
 import Settings from "./components/Settings/Settings";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginContainer from "./components/Login/LoginContainer";
 import {connect} from "react-redux";
 import {initializeUserThunkCreator} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader";
@@ -15,6 +14,7 @@ import {AppStateType} from "./redux/redux-store";
 import {withSuspense} from "./hoc/withSuspense";
 import {FriendsType} from "./redux/sidebar-reducer";
 import {UsersPage} from "./components/Users/UsersPage";
+import {LoginContainer} from "./components/Login/LoginContainer";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));

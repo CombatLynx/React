@@ -4,7 +4,9 @@ import {Navigate} from "react-router-dom";
 import {createField, GetStringKeys, Input} from "../common/FormsControls/FormsControls";
 import {maxLengthString, required} from "../../utils/validators";
 import classes from "../Login/Login.module.css";
-import {MapDispatchPropsType, MapStateToPropsType} from "./LoginContainer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../redux/redux-store";
+import {logInThunkCreator} from "../../redux/auth-reducer";
 
 const maxLengthString20 = maxLengthString(20);
 
@@ -21,19 +23,25 @@ type LoginFormOwnProps = {
     captcha: string | null
 }
 
-const Login: FC<MapStateToPropsType & MapDispatchPropsType> = (props) => {
+const Login: FC = () => {
+
+    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    const captcha = useSelector((state: AppStateType) => state.auth.captcha)
+
+    const dispatch = useDispatch()
+
     const onSubmit = (formData: LoginFormValuesType) => {
-        props.onLogin(formData.email, formData.password, formData.rememberMe, formData.captcha);
+        dispatch<any>(logInThunkCreator(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
-    if (props.isAuth) {
+    if (isAuth) {
         return <Navigate to={"/profile"}/>
     }
 
     return (
         <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit} captcha={props.captcha}/>
+            <LoginReduxForm onSubmit={onSubmit} captcha={captcha}/>
         </div>
     );
 }

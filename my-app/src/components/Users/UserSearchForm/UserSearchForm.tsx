@@ -1,5 +1,7 @@
 import {Field, Form, Formik, FormikValues} from "formik";
 import React, {FC} from "react";
+import {useSelector} from "react-redux";
+import {getUsersFilter} from "../../../redux/selectors/users-selectors";
 
 type PropsType = {
     onFilterChange: (filter: FormikValues) => void
@@ -10,6 +12,8 @@ const usersSearchFormValidate = (values: any) => {
 }
 
 const UserSearchForm: FC<PropsType> = React.memo((props) => {
+    const filter = useSelector(getUsersFilter)
+
     const submitForm = (values: FormikValues, {setSubmitting}: { setSubmitting: (isSubmitting: boolean) => void }) => {
         const filter: FormikValues = {
             term: values.term,
@@ -24,7 +28,8 @@ const UserSearchForm: FC<PropsType> = React.memo((props) => {
     return (
         <div>
             <Formik
-                initialValues={{name: '', friend: 'null'}}
+                enableReinitialize
+                initialValues={{term: filter.term, friend: filter.friend}}
                 validate={usersSearchFormValidate}
                 onSubmit={submitForm}
             >
@@ -40,24 +45,6 @@ const UserSearchForm: FC<PropsType> = React.memo((props) => {
                     </Form>
                 )}
             </Formik>
-            <Formik
-                enableReinitialize
-                onSubmit={(values, {setSubmitting}) => {
-                    values.q = '';
-                    setSubmitting(false);
-                }}
-                initialValues={{q: "initial value"}}
-                render={({resetForm}) => (
-                    <Form>
-                        <Field name="q"/>
-                        <button type="submit">
-                            Reset form
-                        </button>
-                        {" "}
-                        {/* <== Reset */}
-                    </Form>
-                )}
-            />
         </div>
     );
 })

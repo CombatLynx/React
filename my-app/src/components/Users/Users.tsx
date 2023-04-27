@@ -10,12 +10,20 @@ import {
     getPageSize,
     getPortionSize,
     getTotalUsersCount,
-    getUsers, getUsersFilter
+    getUsers,
+    getUsersFilter
 } from "../../redux/selectors/users-selectors";
 import {followThunkCreator, getUsersThunkCreator, unfollowThunkCreator} from "../../redux/user-reducer";
+import {useLocation, useNavigate} from "react-router-dom";
+import queryString from "querystring";
 
-export const Users: FC = () => {
+type ParsedType = {
+    term?: string,
+    page?: string,
+    friend?: string
+}
 
+export const Users: FC = React.memo(() => {
     const users = useSelector(getUsers)
     const isFollowing = useSelector(getIsFollowing)
     const totalUsersCount = useSelector(getTotalUsersCount)
@@ -25,10 +33,51 @@ export const Users: FC = () => {
     const filter = useSelector(getUsersFilter)
 
     const dispatch = useDispatch()
+    const navigation = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
+        const query: ParsedType = {}
+
+        if (filter.term) query.term = filter.term
+        if (filter.friend) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.page = String(currentPage)
+
+        navigation({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage])
+
+    useEffect(() => {
+        const {search} = location
+        const parsed = queryString.parse(search.substring(1)) as ParsedType
+
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (parsed.page) {
+            actualPage = Number(parsed.page)
+        }
+
+        if (parsed.term) {
+            actualFilter = {...actualFilter, term: parsed.term as string}
+        }
+
+        switch (parsed.friend) {
+            case 'null':
+                actualFilter = {...actualFilter, friend: null}
+                break
+            case 'true':
+                actualFilter = {...actualFilter, friend: true}
+                break
+            case 'false':
+                actualFilter = {...actualFilter, friend: false}
+                break
+        }
+
         //todo: typing dispatch hook
-        dispatch<any>(getUsersThunkCreator(currentPage, pageSize, filter))
+        dispatch<any>(getUsersThunkCreator(actualPage, pageSize, actualFilter))
     }, [])
 
     const onCurrentPage = (currentPage: number): any => {
@@ -77,6 +126,6 @@ export const Users: FC = () => {
             {usersProps}
         </div>
     );
-}
+})
 
 export default Users;

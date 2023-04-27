@@ -18,6 +18,7 @@ import {LoginContainer} from "./components/Login/LoginContainer";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
+const ChatPage = React.lazy(() => import("./pages/chat/ChatPage"));
 
 type DataNavbar = {
     dataNavbar: Array<FriendsType>
@@ -62,6 +63,7 @@ class App extends React.Component<MapStatePropsType & MapDispatchPropsType & Dat
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersPage title={"Hello people"}/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
+                            <Route path="/chat" element={withSuspense(ChatPage)}/>
                             <Route path="*" element={<div>404 NOT FOUND</div>}/>
                             <Route path="/" element={<Navigate to='/profile'/>}/>
                         </Routes>

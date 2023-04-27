@@ -15,7 +15,7 @@ const Navbar: FC<PropsType> = (props) => {
 
     let dataSidebar = props.dataNavbar.friends.map(
         (elemSidebar) => {
-            return <NavbarFriends key={elemSidebar.id} name={elemSidebar.name} id={elemSidebar.id}/>
+            return <NavbarFriends key={elemSidebar.id} name={elemSidebar.name}/>
         }
     );
 
@@ -33,6 +33,9 @@ const Navbar: FC<PropsType> = (props) => {
                 </li>
                 <li className={classes["nav-menu__item"]}><NavLink className={setActive}
                                                                    to="/users">Users</NavLink>
+                </li>
+                <li className={classes["nav-menu__item"]}><NavLink className={setActive}
+                                                                   to="/chat">Chat</NavLink>
                 </li>
                 <li className={classes["nav-menu__item"]}><NavLink className={setActive}
                                                                    to="/music">Music</NavLink>

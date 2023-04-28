@@ -11,14 +11,18 @@ import {initializeUserThunkCreator} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader";
 import {compose} from "redux";
 import {AppStateType} from "./redux/redux-store";
-import {withSuspense} from "./hoc/withSuspense";
 import {FriendsType} from "./redux/sidebar-reducer";
 import {UsersPage} from "./components/Users/UsersPage";
 import {LoginContainer} from "./components/Login/LoginContainer";
+import {withSuspense} from "./hoc/withSuspense";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 const ChatPage = React.lazy(() => import("./pages/chat/ChatPage"));
+
+const SuspendedDialogs = withSuspense(DialogsContainer)
+const SuspendedProfile = withSuspense(ProfileContainer)
+const SuspendedChatPage = withSuspense(ChatPage)
 
 type DataNavbar = {
     dataNavbar: Array<FriendsType>
@@ -52,18 +56,18 @@ class App extends React.Component<MapStatePropsType & MapDispatchPropsType & Dat
                     <div className="app-wrapper__container__content">
                         <Routes>
                             <Route path='/profile/:userId'
-                                   element={withSuspense(ProfileContainer)}>
+                                   element={<SuspendedProfile/>}>
                             </Route>
                             <Route path='/profile'
-                                   element={withSuspense(ProfileContainer)}/>
+                                   element={<SuspendedProfile/>}/>
                             <Route path="/dialogs"
-                                   element={withSuspense(DialogsContainer)}/>
+                                   element={<SuspendedDialogs/>}/>
                             <Route path="/news" element={<News/>}/>
                             <Route path="/music" element={<Music/>}/>
                             <Route path="/settings" element={<Settings/>}/>
                             <Route path="/users" element={<UsersPage title={"Hello people"}/>}/>
                             <Route path="/login" element={<LoginContainer/>}/>
-                            <Route path="/chat" element={withSuspense(ChatPage)}/>
+                            <Route path="/chat" element={<SuspendedChatPage/>}/>
                             <Route path="*" element={<div>404 NOT FOUND</div>}/>
                             <Route path="/" element={<Navigate to='/profile'/>}/>
                         </Routes>

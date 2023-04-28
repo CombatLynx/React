@@ -27,14 +27,14 @@ type NewMessageFormValuesKeysType = Extract<keyof NewMessageFormValuesType, stri
 const Dialogs: FC<PropsType> = (props) => {
 
     let dataPersons = props.dialogs.map(
-        (dialogElement) => {
-            return <DialogItem name={dialogElement.name} id={dialogElement.id}></DialogItem>
+        (dialogElement, index) => {
+            return <DialogItem name={dialogElement.name} id={dialogElement.id} key={index}></DialogItem>
         }
     );
 
     let dataMessages = props.messages.map(
-        (messageElement) => {
-            return <DialogMessage message={messageElement.message}></DialogMessage>
+        (messageElement, index) => {
+            return <DialogMessage message={messageElement.message} key={index}></DialogMessage>
         }
     );
 

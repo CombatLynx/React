@@ -12,8 +12,8 @@ type PropsType = {
 const MyPosts: FC<PropsType> = React.memo(props => {
 
     const dataPost = props.dataPost.map(
-        (dataElement) => {
-            return <Post message={dataElement.message} countLikes={dataElement.countLikes}></Post>
+        (dataElement, index) => {
+            return <Post message={dataElement.message} countLikes={dataElement.countLikes} key={index}></Post>
         }
     )
 

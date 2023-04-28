@@ -1,6 +1,5 @@
 import React, {FC} from "react";
 import classes from "./Users.module.css";
-// @ts-ignore
 import userPhoto from "../../assets/images/icon-man.png";
 import {NavLink} from "react-router-dom";
 import {UserType} from "../../types/types";
@@ -21,7 +20,7 @@ const User: FC<PropsType> = ({user, follow, unfollow, isFollowing}) => {
                           <div>
                               <NavLink to={"/profile/" + user.id}>
                                 <img className={classes.photo}
-                                     src={user.photos.small !== null ? user.photos.small : userPhoto} alt="image"/>
+                                     src={user.photos.small !== null ? user.photos.small : userPhoto} alt={"userPhoto"}/>
                               </NavLink>
                           </div>
                           <div>{user.followed

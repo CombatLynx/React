@@ -1,18 +1,21 @@
 import React, {ChangeEvent, FC, useEffect, useState} from "react";
 import classes from "../../pages/chat/Chat.module.css";
-// @ts-ignore
-import profileImage from "../../assets/images/avatar.jpg";
+import {ChatMessageType} from "../../dal/chat-api";
+import {useDispatch, useSelector} from "react-redux";
+import {sendMessage, startMessagesListening, stopMessagesListening} from "../../redux/chat-reducer";
+import {AppStateType} from "../../redux/redux-store";
 
-const ws = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+export const Chat: FC = React.memo(() => {
+    const dispatch = useDispatch()
 
-export type ChatMessageType = {
-    message: string,
-    photo: string
-    userId: number
-    userName: string
-}
+    useEffect(() => {
+        dispatch<any>(startMessagesListening())
 
-export const Chat: FC = () => {
+        return () => {
+            dispatch<any>(stopMessagesListening())
+        }
+    }, [])
+
     return (
         <div>
             <div className={classes.chat}>Chat</div>
@@ -24,28 +27,21 @@ export const Chat: FC = () => {
             </div>
         </div>
     )
-}
+})
 
-export const Messages: FC = () => {
-    const [messages, setMessages] = useState<ChatMessageType[]>([])
-
-    useEffect(() => {
-        ws.onmessage = (e) => {
-            let newMessages = JSON.parse(e.data)
-            setMessages((prevMessage) => [...prevMessage, ...newMessages])
-        }
-    }, [])
+export const Messages: FC = React.memo(() => {
+    const messages = useSelector((state: AppStateType) => state.chat.messages)
 
     return (
         <div>
-            {messages.map((message) => {
-                return <Message message={message}/>
+            {messages.map((message, index) => {
+                return <Message message={message} key={index}/>
             })}
         </div>
     )
-}
+})
 
-export const Message: FC<{message: ChatMessageType}> = ({message}) => {
+export const Message: FC<{message: ChatMessageType}> = React.memo(({message}) => {
     return (
         <div>
             <img className={classes["chat-img__local"]} src={message.photo} alt={"img"}/>
@@ -53,17 +49,22 @@ export const Message: FC<{message: ChatMessageType}> = ({message}) => {
             <div>{message.message}</div>
         </div>
     )
-}
+})
 
-export const AddMessageForm: FC = () => {
+export const AddMessageForm: FC = React.memo(() => {
     const [message, setMessage] = useState('')
+    const dispatch = useDispatch()
 
     const changeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(e.currentTarget.value)
     }
 
-    const sendMessage = () => {
-        ws.send(message)
+    const sendMessageHandler = () => {
+        if (!message) {
+            return
+        }
+
+        dispatch<any>(sendMessage(message))
         setMessage('')
     }
 
@@ -71,8 +72,8 @@ export const AddMessageForm: FC = () => {
         <div>
             <textarea onChange={changeMessage} value={message}></textarea>
             <div>
-                <button onClick={sendMessage} type={"submit"}>Send</button>
+                <button disabled={false} onClick={sendMessageHandler}>Send</button>
             </div>
         </div>
     )
-}
+})

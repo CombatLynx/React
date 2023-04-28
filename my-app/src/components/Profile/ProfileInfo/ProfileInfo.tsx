@@ -1,7 +1,6 @@
 import React, {ChangeEvent, FC, useState} from "react";
 import classes from "./ProfileInfo.module.css";
 import Preloader from "../../common/Preloader";
-// @ts-ignore
 import profileImage from "../../../assets/images/avatar.jpg";
 import ProfileStatusWithHook from "./ProfileStatus/ProfileStatusWithHook";
 import ProfileInfoForm from "./ProfileInfoForm";

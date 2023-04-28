@@ -15,3 +15,8 @@ declare module "*.module.scss" {
     const classes: { [key: string]: string };
     export default classes;
 }
+
+// For Image
+declare module '*.jpg';
+declare module '*.png';
+declare module '*.gif';

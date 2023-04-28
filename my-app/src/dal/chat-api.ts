@@ -7,8 +7,8 @@ export type ChatMessageType = {
 
 type SubscriberType = (messages: ChatMessageType[]) => void
 
-// type SubscribersType = Array<SubscriberType>
-let subscribers = [] as SubscriberType[]
+type SubscribersType = Array<SubscriberType>
+let subscribers: SubscribersType = []
 
 let ws: WebSocket
 

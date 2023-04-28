@@ -11,7 +11,6 @@ import {initializeUserThunkCreator} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader";
 import {compose} from "redux";
 import {AppStateType} from "./redux/redux-store";
-import {FriendsType} from "./redux/sidebar-reducer";
 import {UsersPage} from "./components/Users/UsersPage";
 import {LoginContainer} from "./components/Login/LoginContainer";
 import {withSuspense} from "./hoc/withSuspense";
@@ -24,10 +23,6 @@ const SuspendedDialogs = withSuspense(DialogsContainer)
 const SuspendedProfile = withSuspense(ProfileContainer)
 const SuspendedChatPage = withSuspense(ChatPage)
 
-type DataNavbar = {
-    dataNavbar: Array<FriendsType>
-}
-
 type MapStatePropsType = {
     initialized: boolean,
 }
@@ -36,7 +31,7 @@ type MapDispatchPropsType = {
     initializeUser: () => void
 }
 
-class App extends React.Component<MapStatePropsType & MapDispatchPropsType & DataNavbar> {
+class App extends React.Component<MapStatePropsType & MapDispatchPropsType> {
 
     componentDidMount() {
         this.props.initializeUser();

@@ -7,6 +7,7 @@ import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileInfoEditReduxForm from "./ProfileInfoFormEdit";
 import {ProfileType} from "../../../types/types";
 import {ContactsType} from "../../../redux/profile-reducer";
+import {useDispatch} from "react-redux";
 
 type PropsType = {
     profile: ProfileType | null,
@@ -22,6 +23,7 @@ type PropsType = {
 
 const ProfileInfo: FC<PropsType> = ({profile, ...props}) => {
     const [editMode, setEditMode] = useState(false);
+    // const dispatch = useDispatch()
 
     if (!profile) {
         return <Preloader></Preloader>
@@ -30,6 +32,7 @@ const ProfileInfo: FC<PropsType> = ({profile, ...props}) => {
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
             props.savePhotoProfile(e.target.files[0]);
+            // dispatch<any>(savePhotoProfileThunkCreator(e.target.files[0]))
         }
     }
 
@@ -44,6 +47,7 @@ const ProfileInfo: FC<PropsType> = ({profile, ...props}) => {
     const onSubmitProfileInfo = (formData: ProfileType) => {
         // todo: remove then
         props.saveProfileInfo(formData).then(
+        // dispatch<any>(saveProfileInfoThunkCreator(formData)).then(
             () => {
                 setEditMode(false);
             },

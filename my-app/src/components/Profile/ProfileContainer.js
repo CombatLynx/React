@@ -19,12 +19,58 @@ function withRouter(Component) {
         return (
             <Component
                 {...props}
-                router={{ location, params }}
+                router={{location, params}}
             />
         );
     }
+
     return ComponentWithRouterProp;
 }
+
+// const ProfileContainer: FC = (props) => {
+//     const params = useParams()
+//     const navigate = useNavigate()
+//     const dispatch = useDispatch()
+//
+//     const profile = useSelector((state: AppStateType) => state.profilePage.profile)
+//     const status = useSelector((state: AppStateType) => state.profilePage.status)
+//     const authorizedUserId = useSelector((state: AppStateType) => state.auth.userId)
+//
+//     let userId = Number(params.userId)
+//
+//     const refreshProfile = () => {
+//         if (!userId) {
+//             userId = Number(authorizedUserId)
+//             if (!authorizedUserId) {
+//                 navigate('/login')
+//             }
+//         }
+//
+//         dispatch<any>(getProfileThunkCreator(userId))
+//         dispatch<any>(getProfileStatusThunkCreator(userId))
+//     }
+//
+//     useEffect(() => {
+//         refreshProfile()
+//     }, [])
+//
+//     useEffect(() => {
+//         refreshProfile()
+//     }, [userId])
+//
+//     return (
+//         <Profile aboutMe={""}
+//                  contacts={[]}
+//                  authorizedUserId={authorizedUserId as boolean | null}
+//                  isOwner={userId}
+//                  status={status}
+//                  profile={profile}
+//                  // updateStatusProfile={this.props.updateStatusProfile}
+//                  // savePhotoProfile={this.props.savePhotoProfile}
+//                  // saveProfileInfo={this.props.saveProfileInfo}
+//         />
+//     );
+// }
 
 class ProfileContainer extends React.Component {
     refreshProfile() {

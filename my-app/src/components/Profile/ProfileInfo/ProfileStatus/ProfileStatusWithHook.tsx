@@ -1,5 +1,6 @@
 import React, {ChangeEvent, FC, useEffect, useState} from "react";
 import classes from "./ProfileStatus.module.css";
+import {useDispatch} from "react-redux";
 
 type PropsType = {
     status: string | null,
@@ -9,6 +10,7 @@ type PropsType = {
 const ProfileStatus: FC<PropsType> = (props) => {
     const [editMode, setEditMode] = useState(false);
     const [status, setStatus] = useState(props.status);
+    // const dispatch = useDispatch()
 
     const activateEditMode = () => {
         setEditMode(true);
@@ -16,6 +18,7 @@ const ProfileStatus: FC<PropsType> = (props) => {
 
     const deactivateEditMode = () => {
         setEditMode(false);
+        // dispatch<any>(updateStatusThunkCreator(status))
         props.updateStatusProfile(status);
     }
 

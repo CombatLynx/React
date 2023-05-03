@@ -20,7 +20,8 @@ type PropsType = {
 const Profile: FC<PropsType> = (props) => {
     return (
         <div className={classes.profile}>
-            <ProfileInfo savePhotoProfile={props.savePhotoProfile}
+            <ProfileInfo
+                         savePhotoProfile={props.savePhotoProfile}
                          authorizedUserId={props.authorizedUserId}
                          isOwner={props.isOwner}
                          status={props.status}

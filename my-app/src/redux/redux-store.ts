@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
     form: formReducer
 });
 
-type RootReducerType = typeof rootReducer; // (globalState: AppStateType) => AppStateType
+type RootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<RootReducerType>
 
 type PropertiesTypes<T> = T extends { [key: string]: infer U } ? U : never

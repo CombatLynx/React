@@ -18,7 +18,7 @@ export const profileAPI = {
                 return response.data;
             })
     },
-    updateStatusProfile: (status: string) => {
+    updateStatusProfile: (status: string | null) => {
         return instance.put<ResponseType>(`profile/status`, {status: status})
     },
     updatePhotoProfile: (photoFile: any) => {

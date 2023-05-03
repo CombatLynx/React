@@ -112,7 +112,7 @@ export const actionCreators = {
         type: typesActions.SET_SAVE_PHOTO,
         photos: photos
     } as const),
-    setUsersStatusProfileActionCreator: (status: string) => ({
+    setUsersStatusProfileActionCreator: (status: string | null) => ({
         type: typesActions.SET_USER_PROFILE_STATUS,
         userStatusProfile: status
     } as const)
@@ -132,7 +132,7 @@ export const getProfileStatusThunkCreator = (userId: number): ThunkType => {
     }
 }
 
-export const updateStatusThunkCreator = (status: string): ThunkType => {
+export const updateStatusThunkCreator = (status: string | null): ThunkType => {
     return async (dispatch) => {
         try {
             const response = await profileAPI.updateStatusProfile(status);
@@ -145,7 +145,7 @@ export const updateStatusThunkCreator = (status: string): ThunkType => {
     }
 }
 
-export const savePhotoProfileThunkCreator = (photos: PhotosType): ThunkType => {
+export const savePhotoProfileThunkCreator = (photos: File): ThunkType => {
     return async (dispatch) => {
         const response = await profileAPI.updatePhotoProfile(photos);
         if (response.data.resultCode === ResultCodes.SUCCESS) {

@@ -1,6 +1,8 @@
-import {FC} from "react";
+import React, {FC} from "react";
 import {Chat} from "./Chat";
 import classes from "./ChatPage.module.css";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 const ChatPage: FC = () => {
     return (
@@ -10,4 +12,6 @@ const ChatPage: FC = () => {
     );
 }
 
-export default ChatPage
+export default compose<React.ComponentType>(
+    withAuthRedirect
+)(ChatPage)

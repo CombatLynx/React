@@ -3,6 +3,8 @@ import {useSelector} from "react-redux";
 import Preloader from "../common/Preloader";
 import Users from "./Users";
 import {getIsFetching} from "../../redux/selectors/users-selectors";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type OwnPropsType = {
     title: string
@@ -10,7 +12,7 @@ type OwnPropsType = {
 
 type PropsType = OwnPropsType;
 
-export const UsersPage: FC<PropsType> = (props) => {
+const UsersPage: FC<PropsType> = (props) => {
     const isFetching = useSelector(getIsFetching)
 
     return (
@@ -21,3 +23,7 @@ export const UsersPage: FC<PropsType> = (props) => {
         </>
     );
 }
+
+export default compose<React.ComponentType>(
+    withAuthRedirect
+)(UsersPage)

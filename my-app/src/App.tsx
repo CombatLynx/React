@@ -10,17 +10,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {initializeUserThunkCreator} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader";
 import {AppStateType} from "./redux/redux-store";
-import {UsersPage} from "./components/Users/UsersPage";
 import {LoginContainer} from "./components/Login/LoginContainer";
 import {withSuspense} from "./hoc/withSuspense";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
-const ChatPage = React.lazy(() => import("./pages/chat/ChatPage"));
+const ChatPageContainer = React.lazy(() => import("./pages/chat/ChatPage"));
+const UsersPageContainer = React.lazy(() => import("./components/Users/UsersPage"));
 
 const SuspendedDialogs = withSuspense(DialogsContainer)
 const SuspendedProfile = withSuspense(ProfileContainer)
-const SuspendedChatPage = withSuspense(ChatPage)
+const SuspendedChatPage = withSuspense(ChatPageContainer)
+const SuspendedUsersPage = withSuspense(UsersPageContainer)
 
 const App: FC = () => {
     const dispatch = useDispatch()
@@ -51,7 +52,7 @@ const App: FC = () => {
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/settings" element={<Settings/>}/>
-                        <Route path="/users" element={<UsersPage title={"Hello people"}/>}/>
+                        <Route path="/users" element={<SuspendedUsersPage/>}/>
                         <Route path="/login" element={<LoginContainer/>}/>
                         <Route path="/chat" element={<SuspendedChatPage/>}/>
                         <Route path="*" element={<div>404 NOT FOUND</div>}/>

@@ -42,13 +42,9 @@ const App: FC = () => {
                 <NavbarContainer/>
                 <div className="app-wrapper__container__content">
                     <Routes>
-                        <Route path='/profile/:userId'
-                               element={<SuspendedProfile/>}>
-                        </Route>
-                        <Route path='/profile'
-                               element={<SuspendedProfile/>}/>
-                        <Route path="/dialogs"
-                               element={<SuspendedDialogs/>}/>
+                        <Route path="/profile/:userId" element={<SuspendedProfile/>}/>
+                        <Route path="/profile" element={<SuspendedProfile/>}/>
+                        <Route path="/dialogs" element={<SuspendedDialogs/>}/>
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/settings" element={<Settings/>}/>

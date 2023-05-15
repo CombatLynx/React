@@ -1,16 +1,6 @@
 import React from "react";
-import Profile from "./Profile";
-import {connect, useDispatch, useSelector} from "react-redux";
-import {
-    getProfileStatusThunkCreator,
-    getProfileThunkCreator,
-    savePhotoProfileThunkCreator,
-    saveProfileInfoThunkCreator,
-    updateStatusThunkCreator
-} from "../../redux/profile-reducer";
+import {useDispatch, useSelector} from "react-redux";
 import {useLocation, useParams} from "react-router-dom";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import {compose} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 
 // function withRouter(Component) {
@@ -87,9 +77,11 @@ const ProfileContainerHook = () => {
     }
 
     return (
-        <div></div>
+        <div>1</div>
     )
 }
+
+export default ProfileContainerHook
 
 // class ProfileContainer extends React.Component {
 //     refreshProfile() {

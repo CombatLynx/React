@@ -9,6 +9,7 @@ import { reducer as formReducer } from 'redux-form';
 import appReducer from "./app-reducer";
 import chatReducer from "./chat-reducer";
 import {useDispatch} from "react-redux";
+import gamesReducer from "./games-reducer";
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     app: appReducer,
     chat: chatReducer,
+    games: gamesReducer,
     form: formReducer
 });
 

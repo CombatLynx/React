@@ -41,6 +41,9 @@ const Navbar: FC<PropsType> = (props) => {
                                                                    to="/music">Music</NavLink>
                 </li>
                 <li className={classes["nav-menu__item"]}><NavLink className={setActive}
+                                                                   to="/gameQuestion">Game "Question"</NavLink>
+                </li>
+                <li className={classes["nav-menu__item"]}><NavLink className={setActive}
                                                                    to="/settings">Settings</NavLink>
                 </li>
             </ul>

@@ -1,45 +1,68 @@
-import {FC, useState} from "react";
-import {QuestionCard} from "./QuestionCard";
-import {useSelector} from "react-redux";
+import {FC, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../redux/redux-store";
-import classes from "./Question.module.css"
+import classes from "./Question.module.css";
+import {actionCreators} from "../../../redux/games-reducer";
 
 export const QuestionPage: FC = () => {
     const players = useSelector((state: AppStateType) => state.games.players)
-    console.log(players)
+    const [countPlayers, setCountPlayer] = useState(players)
+    const dispatch = useDispatch()
 
-    let points: number[] = []
-
-    players.map((player) => {
-        points.push(player.points)
-    })
-    console.log(points)
-
-    let [state, setState] = useState(points)
-    console.log(state)
-
-    const reducePoints = () => {
-        setState(state.map((point) => {
-            return point - 1
+    const handleIncreaseClick = (playerId: number) => {
+        setCountPlayer(countPlayers.map(player => {
+            if (player.id === playerId) {
+                return {
+                    ...player,
+                    points: player.points + 1
+                }
+            } else {
+                return player
+            }
         }))
     }
 
+    const handleReducesClick = () => {
+        setCountPlayer(countPlayers.map(player => {
+            return {
+                ...player,
+                points: player.points - 1
+            }
+        }))
+    }
+
+    useEffect(() => {
+        dispatch(actionCreators.addPointsDispatchCreator(countPlayers))
+    }, [countPlayers])
+
     return (
         <>
-            <div className={classes.gameField}>
-                <div className={classes.versus}>VS</div>
-                {
-                    players.map((player) => {
-                        return <QuestionCard key={player.id}
-                                             name={player.name}
-                                             surname={player.surname}
-                                             points={player.points}
-                        />
-                    })
-                }
-            </div>
-            <div className={classes.buttonMinus}>
-                <button onClick={reducePoints}>—</button>
+            <div className={classes.gameFieldPosition}>
+                <div className={classes.gameField}>
+                    <div className={classes.versus}>VS</div>
+                    {
+                        countPlayers.map(player => (
+                            <div key={player.id} className={classes.card}>
+                                <div className={classes.cardElement}>
+                                    <div className={classes.players}>
+                                        <div>{player.name}</div>
+                                        <div>{player.surname}</div>
+                                    </div>
+                                    <div className={classes.countPoints}>{player.points}</div>
+                                    <div className={classes.buttonPlus}>
+                                        <button onClick={() => {
+                                            handleIncreaseClick(player.id)
+                                        }}>+
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+                <div className={classes.buttonMinus}>
+                    <button onClick={handleReducesClick}>—</button>
+                </div>
             </div>
         </>
     )

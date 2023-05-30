@@ -1,7 +1,7 @@
 import {InferActionsTypes} from "./redux-store";
 
 enum typesActions {
-    GET_POINTS = 'games/GET-POINTS'
+    SET_POINTS = 'games/SET-POINTS'
 }
 
 export type PlayersType = {
@@ -25,8 +25,7 @@ let initialReducer = {
             surname: "Вельмискина",
             points: 0
         }
-    ] as Array<PlayersType>,
-    // count: 0
+    ] as Array<PlayersType>
 }
 
 export type InitialStateType = typeof initialReducer
@@ -35,21 +34,20 @@ type ActionsType = InferActionsTypes<typeof actionCreators>
 
 const gamesReducer = (state: InitialStateType = initialReducer, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case typesActions.GET_POINTS:
-            return <InitialStateType>{
+        case typesActions.SET_POINTS:
+            return {
                 ...state,
-                players: [...state.players],
-                points: action.points
-            }
+                players: [...action.payload]
+            };
         default:
             return state;
     }
 }
 
 export const actionCreators = {
-    addPointsDispatchCreator: (points: number) => ({
-        type: typesActions.GET_POINTS,
-        points: points
+    addPointsDispatchCreator: (payload: Array<PlayersType>) => ({
+        type: typesActions.SET_POINTS,
+        payload
     } as const)
 }
 

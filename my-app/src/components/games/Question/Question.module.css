@@ -42,12 +42,30 @@
     display: flex;
 }
 
-.buttonPlus {
+.buttonCard {
+    display: flex;
+}
+
+.buttonPlus,
+.buttonMinus {
     display: flex;
     margin-bottom: 10px;
 }
 
+.buttonPlus {
+    margin-right: 5px;
+}
+
 .buttonMinus {
+    margin-left: 5px;
+}
+
+.buttonPlus button:hover,
+.buttonMinusMain button:hover {
+    cursor: pointer;
+}
+
+.buttonMinusMain {
     background: pink;
     border-radius: 0 0 20px 20px;
     padding: 20px 0 20px 0;
@@ -56,13 +74,14 @@
     justify-content: center;
 }
 
-.buttonPlus button {
+.buttonPlus button,
+.buttonMinus button {
     width: 40px;
     height: 40px;
     font-size: 20px;
 }
 
-.buttonMinus button {
+.buttonMinusMain button {
     width: 60px;
     height: 40px;
     font-size: 20px;

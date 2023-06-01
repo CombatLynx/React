@@ -9,7 +9,7 @@ enum typesActions {
 }
 
 export type InitialStateType = {
-    userId: null | number,
+    userId: any,
     email: null | string,
     login: null | string,
     isAuth: false | boolean,

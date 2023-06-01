@@ -7,7 +7,6 @@ import ProfileInfoForm from "./ProfileInfoForm";
 import ProfileInfoEditReduxForm from "./ProfileInfoFormEdit";
 import {ProfileType} from "../../../types/types";
 import {ContactsType} from "../../../redux/profile-reducer";
-import {useDispatch} from "react-redux";
 
 type PropsType = {
     profile: ProfileType | null,

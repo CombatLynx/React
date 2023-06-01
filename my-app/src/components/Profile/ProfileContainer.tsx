@@ -1,7 +1,17 @@
-import React from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useLocation, useParams} from "react-router-dom";
+import React, {FC, useEffect} from "react";
+import {connect, useDispatch, useSelector} from "react-redux";
+import {useNavigate, useParams} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
+import {
+    getProfileStatusThunkCreator,
+    getProfileThunkCreator,
+    savePhotoProfileThunkCreator,
+    saveProfileInfoThunkCreator,
+    updateStatusThunkCreator
+} from "../../redux/profile-reducer";
+import Profile from "./Profile";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 // function withRouter(Component) {
 //     function ComponentWithRouterProp(props) {
@@ -63,25 +73,60 @@ import {AppStateType} from "../../redux/redux-store";
 //     );
 // }
 
-const ProfileContainerHook = () => {
-    const params = useParams()
-    const location = useLocation()
+const ProfileContainerHook: FC<any> = (props) => {
+    let {userId} = useParams()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const authorizedUserId = useSelector((state: AppStateType) => state.auth.userId)
+    const status = useSelector((state: AppStateType) => state.profilePage.status)
+    const profile = useSelector((state: AppStateType) => state.profilePage.profile)
 
-    const refresh = () => {
-        let userId = params.userId
+    const refreshProfile = () => {
         if (!userId) {
+            userId = authorizedUserId
+            if (!authorizedUserId) {
+                navigate('/login')
+            }
         }
+
+        dispatch<any>(getProfileThunkCreator(userId as any))
+        dispatch<any>(getProfileStatusThunkCreator(userId as any))
     }
 
+    useEffect(() => {
+        refreshProfile()
+    }, [])
+
+    useEffect(() => {
+        refreshProfile()
+    }, [userId])
+
     return (
-        <div>1</div>
+        <>
+            <Profile {...props}
+                     authorizedUserId={authorizedUserId}
+                     isOwner={userId}
+                     status={status}
+                     profile={profile}
+                     savePhotoProfile={props.savePhotoProfile}
+                     saveProfileInfo={props.saveProfileInfo}
+                     updateStatusProfile={props.updateStatusProfile}
+            />
+        </>
     )
 }
 
-export default ProfileContainerHook
+export default compose(
+    connect(null, {
+        getProfile: getProfileThunkCreator,
+        getStatusProfile: getProfileStatusThunkCreator,
+        updateStatusProfile: updateStatusThunkCreator,
+        savePhotoProfile: savePhotoProfileThunkCreator,
+        saveProfileInfo: saveProfileInfoThunkCreator
+    }),
+    // withAuthRedirect
+)(ProfileContainerHook);
 
 // class ProfileContainer extends React.Component {
 //     refreshProfile() {

@@ -13,6 +13,7 @@ import {AppStateType} from "./redux/redux-store";
 import {LoginContainer} from "./components/Login/LoginContainer";
 import {withSuspense} from "./hoc/withSuspense";
 import {QuestionPage} from "./components/games/Question/QuestionPage";
+import {GitHubUsers} from "./components/parsing/GitHubUsersParsing/GitHubUsers";
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
@@ -49,6 +50,7 @@ const App: FC = () => {
                         <Route path="/news" element={<News/>}/>
                         <Route path="/music" element={<Music/>}/>
                         <Route path="/gameQuestion" element={<QuestionPage/>}/>
+                        <Route path="/gitHubUsersParsing" element={<GitHubUsers/>}/>
                         <Route path="/settings" element={<Settings/>}/>
                         <Route path="/users" element={<SuspendedUsersPage/>}/>
                         <Route path="/login" element={<LoginContainer/>}/>

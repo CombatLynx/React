@@ -1,0 +1,27 @@
+.activeUser {
+    background-color: white;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.wrapperItem {
+    /*background-color: pink;*/
+}
+
+.paddingUser {
+    padding-right: 10px;
+}
+
+.listUsers li {
+    margin-bottom: 20px;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 10px 12px 10px 12px;
+}
+
+.listUsers li:hover {
+    color: rgb(110, 110, 110);
+    cursor: pointer;
+}

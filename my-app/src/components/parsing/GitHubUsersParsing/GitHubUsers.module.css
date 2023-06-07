@@ -7,7 +7,29 @@
 }
 
 .wrapperItem {
-    /*background-color: pink;*/
+    display: block;
+}
+
+.userDetailsLogin {
+    color: red;
+}
+
+.wrapperItemDetails {
+    margin-left: 40px;
+}
+
+.wrapperItemDetails div {
+    margin-bottom: 10px;
+}
+
+.wrapperItemDetails img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.wrapperItemDetails a {
+    word-break: break-all;
 }
 
 .paddingUser {

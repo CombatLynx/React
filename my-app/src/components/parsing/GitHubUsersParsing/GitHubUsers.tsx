@@ -12,18 +12,19 @@ type SearchResultType = {
     items: Array<UserSearchResultType>
 }
 
+type UserType = {
+    id: number,
+    login: string,
+    avatar_url: string,
+    html_url: string
+}
+
 export const GitHubUsers = () => {
     const [selectedUser, setSelectedUser] = useState<UserSearchResultType | null>(() => null)
+    const [userDetails, setUserDetails] = useState<null | UserType>(null)
     const [users, setUsers] = useState<Array<UserSearchResultType>>(() => [])
-    const [tempSearch, setTempSearch] = useState('')
-
-    const fetchData = (term: string) => {
-        const apiURL = `https://api.github.com/search/users?q=${term}`
-        axios.get<SearchResultType>(apiURL)
-            .then((response) => {
-                setUsers(response.data.items)
-            })
-    }
+    const [tempSearch, setTempSearch] = useState('it')
+    const [searchInitTerm, setSearchInitTerm] = useState('it')
 
     const addElemInput = (e: ChangeEvent<HTMLInputElement>) => {
         setTempSearch(e.currentTarget.value)
@@ -36,8 +37,24 @@ export const GitHubUsers = () => {
     }, [selectedUser])
 
     useEffect(() => {
-        fetchData('a')
-    }, [])
+        const apiURL = `https://api.github.com/search/users?q=${tempSearch}`
+        axios.get<SearchResultType>(apiURL)
+            .then((response) => {
+                setUsers(response.data.items)
+            })
+    }, [searchInitTerm])
+
+    useEffect(() => {
+        console.log("user detail")
+        if (selectedUser) {
+            const apiURL = `https://api.github.com/users/${selectedUser.login}`
+            axios.get<UserType>(apiURL)
+                .then((response) => {
+                    setUserDetails(response.data)
+                })
+        }
+
+    }, [selectedUser])
 
     return (
         <div className={classes.wrapper}>
@@ -50,7 +67,7 @@ export const GitHubUsers = () => {
                     />
                     <button type={"submit"}
                             onClick={() => {
-                                fetchData(tempSearch)
+                                setSearchInitTerm(tempSearch)
                             }}>find
                     </button>
                 </div>
@@ -68,18 +85,21 @@ export const GitHubUsers = () => {
                                 <div>login:<span className={classes.paddingUser}></span>
                                     {user.login}
                                 </div>
-                                <div>url:<span className={classes.paddingUser}></span>
-                                    <a href={user.url}>{user.url}</a>
-                                </div>
                             </li>
                         })
                     }
                     </ul>
                 </div>
             </div>
-            <div className={classes.wrapperItem}>
-                <div>Username</div>
-                <div>details</div>
+            <div className={classes.wrapperItem + ' ' + classes.wrapperItemDetails }>
+                {userDetails &&
+                    <>
+                        <div>Details user:</div>
+                        <div className={classes.userDetailsLogin}>{userDetails.login}</div>
+                        <div><img src={userDetails.avatar_url} alt={"user_detail"}/></div>
+                        <div><a href={userDetails.html_url}>{userDetails.html_url}</a></div>
+                    </>
+                }
             </div>
         </div>
     )

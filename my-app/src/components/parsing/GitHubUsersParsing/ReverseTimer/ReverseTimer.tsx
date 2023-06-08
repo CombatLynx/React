@@ -3,7 +3,8 @@ import {initialStartSeconds} from "../UserDetails/UserDetails";
 
 type ReverseTimerProps = {
     seconds: number,
-    onChangeSeconds: (seconds: number) => void
+    onChangeSeconds: (seconds: number) => void,
+    timerKey: number
 }
 
 export const ReverseTimer: FC<ReverseTimerProps> = (props) => {
@@ -27,7 +28,7 @@ export const ReverseTimer: FC<ReverseTimerProps> = (props) => {
         return () => {
             clearInterval(myInterval);
         };
-    }, [])
+    }, [props.timerKey])
 
     return (
         <div>

@@ -19,8 +19,8 @@ export const UserDetails: FC<UserDetailsPropsType> = (props) => {
             const apiURL = `https://api.github.com/users/${props.selectedUser.login}`
             axios.get<UserType>(apiURL)
                 .then((response) => {
-                    setUserDetails(response.data)
                     setSeconds(initialStartSeconds)
+                    setUserDetails(response.data)
                 })
         }
     }, [props.selectedUser])
@@ -36,8 +36,11 @@ export const UserDetails: FC<UserDetailsPropsType> = (props) => {
             {userDetails &&
                 <>
                     <div>Details user:
-                        <ReverseTimer seconds={seconds}
-                                      onChangeSeconds={(actualSeconds) => {setSeconds(actualSeconds)}}
+                        <ReverseTimer timerKey={userDetails.id}
+                                      seconds={seconds}
+                                      onChangeSeconds={(actualSeconds) => {
+                                          setSeconds(actualSeconds)
+                                      }}
                         />
                     </div>
                     <div className={classes.userDetailsLogin}>{userDetails.login}</div>
